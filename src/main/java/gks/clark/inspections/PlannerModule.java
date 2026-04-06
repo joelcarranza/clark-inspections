@@ -31,13 +31,36 @@
  */
 package gks.clark.inspections;
 
+import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
+import javax.swing.JComponent;
+
+import gks.clark.inspections.model.SiteFilter;
+import gks.control.BasicControl;
+import gks.field.list.FieldListFilter;
+import gks.field.storage.CreateCachesTask;
+import gks.field.storage.PersistentCacheManager;
+import gks.form.chooser.Chooser;
+import gks.ui.GuiUtils;
+import gks.ui.SimpleDialog;
+import gks.ui.SwingProxy;
 import gks.util.NavigateInterface;
+import gks.util.ResourceLoader;
 import gks.util.TabularModule;
+import gks.util.lang.ExceptionUtils;
 
 
-public class PlannerModule extends TabularModule {
+public class PlannerModule extends TabularModule implements PropertyChangeListener {
+	
+	public static final String WIN_FILTER = "winFilter";
+	private InspectionsControl control;
+	private AsyncInspectionsControl asyncControl;
 
 	public PlannerModule(NavigateInterface application) {
 		super(application);
@@ -50,16 +73,135 @@ public class PlannerModule extends TabularModule {
 
 		//setTitle(moduleTitle);
 
+		Properties controlProperties = ResourceLoader.getProperties("gks/clark/inspections/control.properties");		
+		control = new InspectionsControl();
+		control.setView(this);
+		control.configure(controlProperties);
+		
+		asyncControl = (AsyncInspectionsControl) control.createProxy(AsyncInspectionsControl.class);
+
+		control.addPropertyChangeListener(SwingProxy.createPropertyChangeListener(this));
+
     	buildView();
+    	
+    	setViewBusy(true);
+		setStatusMessage("Initializing...");
+        
+        new CreateCachesTask(this) {
+        	
+
+			@Override
+        	public void persistentCacheManagerCreated() {
+        		setViewBusy(false);
+				initialize(getCacheManager(), getCacheRoot());
+        	}
+        	
+        	@Override
+        	public void persistentCacheManagerCreationFailed(Exception e) {
+        		setViewBusy(false);
+        		setStatusMessage("Startup failed");
+				die(e);
+        	}
+        }.execute();
     }
+	
+	protected void initialize(final PersistentCacheManager cacheManager, final File cacheRoot) {
+		setViewBusy(true);
+		new javax.swing.SwingWorker<Void, Void>() {
+
+			@Override
+			protected Void doInBackground() throws Exception {
+				control.initialize(cacheManager, cacheRoot);
+				return null;
+			}
+			
+			public void done() {
+				setViewBusy(false);
+				
+				try {
+					get();
+					setStatusMessage("");
+				} catch (InterruptedException ignored) {
+				} catch (ExecutionException e) {
+					die(ExceptionUtils.unwrapToException(e));
+				}
+			}
+		}.execute();		
+	}
 	 
 	
 	public void actionShowFilter(ActionEvent e) {
-		
+		windowManager().show(WIN_FILTER);
 	}
 
 	public void actionOpen(ActionEvent e) {
 		
 	}
 
+	
+	public Window createWindow(String name) {
+		if(name.equals(WIN_FILTER)) {
+
+			Chooser<FieldListFilter> chooser = new Chooser<FieldListFilter>(this)
+			{
+				@Override
+				public void ok(FieldListFilter filter) {					
+					asyncControl.setFilter(filter);
+				}
+
+				@Override
+				public SimpleDialog buildAsDialog(JComponent parent, int modality) {
+					SimpleDialog dlg = super.buildAsDialog(parent, modality);
+					dlg.addAction("reset", "Reset", null, SimpleDialog.SW_CORNER);
+					return dlg;
+				}
+
+				@Override
+				protected void applyActionPerformed(SimpleDialog dlg) {
+					super.applyActionPerformed(dlg);
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String cmd = e.getActionCommand();
+					if(cmd.equals("reset")) {
+						setChoiceValues(new SiteFilter());
+					}
+					else {
+						super.actionPerformed(e);
+					}
+				}
+				
+				
+			};
+			GuiUtils.setImplementation(chooser,PlannerModule.class,this);
+			chooser.addChoice(new SiteFilter(),
+					"gks/clark/inspections/SiteFilter.xml","Sites by Circuit");
+
+//			chooser.setPreferredSizeFromChoiceIndex(1);
+			SimpleDialog dlg = chooser.buildAsDialog(this);
+			dlg.setTitle("Filter");
+			dlg.setDefaultCloseOperation(SimpleDialog.HIDE_ON_CLOSE);
+			return dlg;
+		}
+		else {
+			throw new RuntimeException(name);
+		}
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		String name = evt.getPropertyName();
+		Object value = evt.getNewValue();
+
+		if (name == BasicControl.PROPERTY_BUSY) {
+			setViewBusy(evt.getSource(),((Boolean) value).booleanValue());
+		}
+		else if (name == BasicControl.PROPERTY_STATUS_MESSAGE) {
+			setStatusMessage((String) value);
+		}
+		else if (name == BasicControl.PROPERTY_PROGRESS) {
+ 			setProgress(((Integer) value).intValue());
+		}
+	}		
 }

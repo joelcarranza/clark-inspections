@@ -8,4 +8,59 @@
 		<property name="classType" set="false"/>
 		<property name="reportKey" set="false"/>
 	</bean>
+	
+	
+	<bean class="gks.clark.inspections.model.SiteFilter">
+		<extend>gks.field.list.FieldListFilter</extend>
+	<property name="circuit" />
+
+    <derivedProperty name="itemType" class="Class">
+		<getter>			
+			return gks.clark.inspections.model.Site.class;
+		</getter>
+		
+	</derivedProperty>
+	
+	<derivedProperty name="filterName" >
+		<getter>
+			StringBuffer buffer = new StringBuffer();
+			if(!gks.util.Utils.isEmpty(getCircuit())) {
+				buffer.append(getCircuit());
+			}
+			return buffer.toString();
+		</getter>
+		
+	</derivedProperty>
+	<include>
+	 public String urlQueryString() {
+        gks.util.QueryBuilder buffer = new gks.util.QueryBuilder();
+        buffer.append("CIRCUIT", getCircuit());
+        return buffer.toString();
+    }
+    
+    public String displayString() {
+        StringBuffer buffer = new StringBuffer();
+        int count = 0;
+
+ 
+
+        if (getCircuit() != null) {
+            if (count > 0) {
+                buffer.append('\n');
+            }
+
+            buffer.append("Circuit");
+            buffer.append(": ");
+
+            // String
+            buffer.append(getCircuit());
+            count++;
+        }
+
+     
+
+        return buffer.toString();
+    }
+	</include>
+	</bean>
 </project>

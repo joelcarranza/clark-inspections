@@ -29,20 +29,12 @@
  */
 
  
-var JSONPage = require('JSONPage');
+var JavaLink = require('JavaLink');
 var Config = require('Config');
 
-JSONPage.useDefaultDataSource();
+JavaLink.useDefaultDataSource();
 
-
-JSONPage.process = function() {
-	var config = Config.get('inspections');
-
-	return {
-		username:this.environment.REMOTE_USER,
-		namespace: config.namespace || 'clark',
-		configPath: 'gks/clark/inspections/module.properties'
-	};
+JavaLink.process = function() {
 };
 
-JSONPage.run();
+JavaLink.run();
