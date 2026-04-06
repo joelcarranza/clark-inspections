@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<config>
+  <manager configVersion="3">
+    <iconPath>gks/clark/inspections/images</iconPath>
+    <iconExt>png</iconExt>
+  </manager>
+  <condition>
+    <online>true</online>
+    <inspections>false</inspections>
+    <inspection>false</inspection>
+    <list>false</list>
+    <listDirty>false</listDirty>
+    <canCreateList>false</canCreateList>
+    <map>false</map>
+    <site>false</site>
+    <open>false</open>
+    <abnormalConditionList>false</abnormalConditionList>
+    <damageAssessment>false</damageAssessment>
+    <condition>false</condition>
+    <itemSelected>false</itemSelected>
+    <itemsSelected>false</itemsSelected>
+    <selectedItemsMappable>false</selectedItemsMappable>
+  </condition>
+  <action key="filter">
+    <name>Edit filter...</name>
+    <tooltip>Modify the assignment list filter</tooltip>
+    <method>actionShowFilter</method>
+  </action>
+  <action key="open">
+    <name>Open Assessment</name>
+    <tooltip>View assessment report</tooltip>
+    <method>actionOpen</method>
+    <enabled>open</enabled>
+    <icon>reports</icon>
+  </action>
+  <toolbar>
+    <main>filter</main>
+  </toolbar>
+  <menubar>
+    <Tools>filter</Tools>
+  </menubar>
+</config>

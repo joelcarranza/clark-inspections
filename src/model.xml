@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<project>
+
+	<bean class="gks.clark.inspections.model.Site">
+		<extend>gks.field.FieldItem</extend>
+		<generateTableModel class="gks.clark.inspections.model.SiteTableModel" />
+
+		<property name="classType" set="false"/>
+		<property name="reportKey" set="false"/>
+	</bean>
+</project>

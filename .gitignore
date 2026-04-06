@@ -1,0 +1,17 @@
+
+# /
+/.settings
+/bin
+/release
+/mwm_cache
+/release
+/target
+/.project
+/.classpath
+
+# /src/main/resources/gks/clark/mwm/images/
+/src/main/resources/gks/clark/mwm/images/Thumbs.db
+
+# /src/package/build/
+/src/package/build/local.properties
+/src/package/build/.java-temp

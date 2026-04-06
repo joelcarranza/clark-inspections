@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.gatekeeper.navigate</groupId>
+	<name>CPU Inspections</name>
+	<version>1.0.0-SNAPSHOT</version>
+	<artifactId>clark-inspections</artifactId>
+	<packaging>jar</packaging>
+	<parent>
+		<artifactId>navigate-module</artifactId>
+		<groupId>com.gatekeeper</groupId>
+		<version>2.0.0</version>
+	</parent>
+	
+	<scm>
+		<connection>scm:git:git@github.com:Gatekeeper-Systems/clark-inspections.git</connection>
+		<developerConnection>scm:git:git@github.com:Gatekeeper-Systems/clark-inspections.git</developerConnection>
+	  <tag>HEAD</tag>
+  </scm>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.gatekeeper.navigate</groupId>
+			<artifactId>core</artifactId>
+			<version>6.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gatekeeper.navigate</groupId>
+			<artifactId>forms</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gatekeeper.navigate</groupId>
+			<artifactId>field</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gatekeeper.navigate</groupId>
+			<artifactId>core-test-utils</artifactId>
+			<version>5.0.0</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>
