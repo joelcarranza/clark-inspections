@@ -57,9 +57,7 @@ import gks.ui.SwingProxy;
 import gks.util.NavigateInterface;
 import gks.util.TabularModule;
 
-
 public class PlannerModule extends TabularModule implements PropertyChangeListener {
-	
 
 	private static final String WIN_DETAIL = "detail";
 	private static final String WIN_FILTER = "winFilter";
@@ -70,67 +68,63 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	public PlannerModule(NavigateInterface application) {
 		super(application);
 	}
-		
-	
+
 	@Override
 	public void start() throws Exception {
-    	super.start();
+		super.start();
 		configuration().inject(this);
 
 		control = new InspectionsControl();
-		
+
 		control.addPropertyChangeListener(SwingProxy.createPropertyChangeListener(this));
 
-    	buildView();
-    	
-    	tableView().setTableColumnSet(Site.class.getName());
-    }
+		buildView();
 
-	
+		tableView().setTableColumnSet(Site.class.getName());
+	}
+
 	public void actionShowFilter(ActionEvent e) {
 		windowManager().show(WIN_FILTER);
 	}
-	
+
 	public void actionNewList(ActionEvent e) {
 		SiteList siteList = new SiteList();
 		List<Site> sites = tableView().getData(Site.class);
 		siteList.setSites(sites.toArray(new Site[0]));
-		if(Editor.edit(this, siteList, "New List")) {
+		if (Editor.edit(this, siteList, "New List")) {
 			control.proxy().createList(siteList).onComplete(this, "onListSaved").start();
 		}
 	}
 
 	public void actionOpen(ActionEvent e) {
 		Window window = windowManager().show(WIN_DETAIL);
-        DetailsEditor<Object> editor = DetailsEditor.forWindow(window);
-        editor.view(tableView().getSelection());
+		DetailsEditor<Object> editor = DetailsEditor.forWindow(window);
+		editor.view(tableView().getSelection());
 	}
-	
+
 	public void actionOpenList(ActionEvent e) {
 		String listKey = "5"; // XXX: test
-		
-		control.proxy().
-		queryInspection(listKey).
-		onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] {listKey}).
-		execute();
-		
+
+		control.proxy().queryInspection(listKey)
+				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { listKey }).execute();
+
 	}
 
 	public void onSitesQueried(Site site[], SiteFilter siteFilter) {
 		this.inspectionListKey = null;
-		
+
 		SiteTableModel tableModel = new SiteTableModel();
 		tableModel.setValues(site);
 		tableView().setTableColumnSet(tableModel, Site.class.getName());
-		
+
 		actionManager().setConditional("site", site.length > 0);
 		actionManager().setConditional("inspection", false);
 		actionManager().setConditional("list", false);
 	}
-	
-	public void onInspectionsQueried(Inspection insp[], String listKey) {				
+
+	public void onInspectionsQueried(Inspection insp[], String listKey) {
 		this.inspectionListKey = listKey;
-		
+
 		InspectionTableModel tableModel = new InspectionTableModel();
 		tableModel.setValues(insp);
 		tableView().setTableColumnSet(tableModel, Inspection.class.getName());
@@ -139,26 +133,20 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		actionManager().setConditional("inspection", insp.length > 0);
 		actionManager().setConditional("site", false);
 	}
-	
-	
-	public void onListSaved(String listKey) {
-		control.proxy().
-			queryInspection(listKey).
-			onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] {listKey}).
-			execute();
-	}
-	
-	public Window createWindow(String name) {
-		if(name.equals(WIN_FILTER)) {
 
-			Chooser<SiteFilter> chooser = new Chooser<SiteFilter>(this)
-			{
+	public void onListSaved(String listKey) {
+		control.proxy().queryInspection(listKey)
+				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { listKey }).execute();
+	}
+
+	public Window createWindow(String name) {
+		if (name.equals(WIN_FILTER)) {
+
+			Chooser<SiteFilter> chooser = new Chooser<SiteFilter>(this) {
 				@Override
-				public void ok(SiteFilter filter) {					
-					control.proxy().
-						querySite(filter).
-						onComplete(PlannerModule.this, "onSitesQueried", new Object[] {filter}).
-						execute();
+				public void ok(SiteFilter filter) {
+					control.proxy().querySite(filter)
+							.onComplete(PlannerModule.this, "onSitesQueried", new Object[] { filter }).execute();
 				}
 
 				@Override
@@ -168,38 +156,32 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 					return dlg;
 				}
 
-
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					String cmd = e.getActionCommand();
-					if(cmd.equals("reset")) {
+					if (cmd.equals("reset")) {
 						setChoiceValues(new SiteFilter());
-					}
-					else {
+					} else {
 						super.actionPerformed(e);
 					}
 				}
-				
-				
+
 			};
-			GuiUtils.setImplementation(chooser,PlannerModule.class,this);
-			chooser.addChoice(new SiteFilter(),
-					"gks/clark/inspections/model/SiteFilter.xml","Sites by Circuit");
+			GuiUtils.setImplementation(chooser, PlannerModule.class, this);
+			chooser.addChoice(new SiteFilter(), "gks/clark/inspections/model/SiteFilter.xml", "Sites by Circuit");
 
 //			chooser.setPreferredSizeFromChoiceIndex(1);
 			SimpleDialog dlg = chooser.buildAsDialog(this);
 			dlg.setTitle("Filter");
 			dlg.setDefaultCloseOperation(SimpleDialog.HIDE_ON_CLOSE);
 			return dlg;
-		}
-		else if(name.equals(WIN_DETAIL)) {
-	        InspectionDetailsEditor view = new InspectionDetailsEditor(this);
-	        JFrame f = view.buildAsFrame();
-	        f.setTitle("Inspection");
-	        f.setPreferredSize(new Dimension(600, 400));
-	        return f;
-		}
-		else {
+		} else if (name.equals(WIN_DETAIL)) {
+			InspectionDetailsEditor view = new InspectionDetailsEditor(this);
+			JFrame f = view.buildAsFrame();
+			f.setTitle("Inspection");
+			f.setPreferredSize(new Dimension(600, 400));
+			return f;
+		} else {
 			throw new RuntimeException(name);
 		}
 	}
@@ -210,19 +192,16 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		Object value = evt.getNewValue();
 
 		if (name == BasicControl.PROPERTY_BUSY) {
-			setViewBusy(evt.getSource(),((Boolean) value).booleanValue());
-		}
-		else if (name == BasicControl.PROPERTY_STATUS_MESSAGE) {
+			setViewBusy(evt.getSource(), ((Boolean) value).booleanValue());
+		} else if (name == BasicControl.PROPERTY_STATUS_MESSAGE) {
 			setStatusMessage((String) value);
-		}
-		else if (name == BasicControl.PROPERTY_PROGRESS) {
- 			setProgress(((Integer) value).intValue());
+		} else if (name == BasicControl.PROPERTY_PROGRESS) {
+			setProgress(((Integer) value).intValue());
 		}
 	}
-	
+
 	public InspectionsControl getControl() {
 		return control;
 	}
 
-	
 }

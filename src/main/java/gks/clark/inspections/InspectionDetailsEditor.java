@@ -26,10 +26,10 @@
  *     E-Mail: info@gatekeeper.com
  *     URL:    http://www.gatekeeper.com
  */
- 
- /**
- * 
- */
+
+/**
+* 
+*/
 package gks.clark.inspections;
 
 import java.awt.event.ActionEvent;
@@ -50,17 +50,15 @@ public class InspectionDetailsEditor extends DetailsEditor<Inspection> {
 		module = mobileWorkOrdersModule;
 		setActionConfigPath("gks/clark/inspections/detailAction.xml");
 	}
-	
+
 	public void actionZoom(ActionEvent e) {
-		Inspection call = (Inspection)getSelectedValue();
-		module.mapCommand().
-		layer(module.getMapLayer()).
-		view(Collections.singleton(call),module.getMinZoomWidth()).
-		run();
+		Inspection call = (Inspection) getSelectedValue();
+		module.mapCommand().layer(module.getMapLayer()).view(Collections.singleton(call), module.getMinZoomWidth())
+				.run();
 	}
 
 	@Override
 	protected SwingWorker<?, ?> createSaveTask(Inspection value) {
-		return module.getControl().proxy().save(value);
+		return module.getControl().proxy().save(value).view(getVisibleForm().component());
 	}
 }

@@ -42,8 +42,8 @@ import gks.control.ControlTask;
 /**
  * Async proxy for {@link InspectionsControl}
  */
-public interface AsyncInspectionsControl  {
-	
+public interface AsyncInspectionsControl {
+
 	/**
 	 * @see InspectionsControl#querySite(SiteFilter)
 	 */
@@ -53,7 +53,7 @@ public interface AsyncInspectionsControl  {
 	 * @see InspectionsControl#queryInspection(String)
 	 */
 	public ControlTask queryInspection(String listKey);
-	
+
 	/**
 	 * @see InspectionsControl#createList(SiteList)
 	 */

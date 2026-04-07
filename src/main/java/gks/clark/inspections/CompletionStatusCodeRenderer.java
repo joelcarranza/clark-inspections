@@ -26,7 +26,7 @@
  *     E-Mail: info@gatekeeper.com
  *     URL:    http://www.gatekeeper.com
  */
- 
+
 package gks.clark.inspections;
 
 import java.awt.Color;
@@ -43,9 +43,9 @@ public class CompletionStatusCodeRenderer implements ValueRenderer {
 	public CompletionStatusCodeRenderer() {
 		complete = new CheckBoxIcon(true);
 		incomplete = new CheckBoxIcon(false);
-		
+
 	}
-	
+
 	public Color getBackground(Object value) {
 		return null;
 	}
@@ -59,10 +59,9 @@ public class CompletionStatusCodeRenderer implements ValueRenderer {
 	}
 
 	public Icon getIcon(Object value) {
-		if(((Boolean)value).booleanValue()) {
+		if (((Boolean) value).booleanValue()) {
 			return complete;
-		}
-		else {
+		} else {
 			return incomplete;
 		}
 	}

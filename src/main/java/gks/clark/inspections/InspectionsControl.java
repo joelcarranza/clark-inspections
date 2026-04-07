@@ -70,53 +70,48 @@ public class InspectionsControl extends BasicControl {
 	 * Create a list of inspections based on sites and various user parameters
 	 */
 	public String createList(SiteList siteList) throws DataTransferException {
-		 List<String> data = new ArrayList<String>();
-		 siteList.serializeModifiableToStream(new ServerLinkOutputStream(data));
-		
-		QueryBuilder q = new QueryBuilder();
-		q.append("data",Utils.join(ServerLink.WORDSEP, data));
+		List<String> data = new ArrayList<String>();
+		siteList.serializeModifiableToStream(new ServerLinkOutputStream(data));
 
-		
-		ServerLink link = new ServerLink(getHostname(),"/scripts/inspections/create_inspections", q.urlQueryString());
+		QueryBuilder q = new QueryBuilder();
+		q.append("data", Utils.join(ServerLink.WORDSEP, data));
+
+		ServerLink link = new ServerLink(getHostname(), "/scripts/inspections/create_inspections", q.urlQueryString());
 		try {
 			ServerLinkInputStream in = link.open();
-			while(in.next()) {
+			while (in.next()) {
 				return in.read();
 			}
-		}
-		finally {
+		} finally {
 			link.release();
 		}
-		
+
 		throw new DataTransferException("No data returned");
 	}
-	
-	
-	public void save(Inspection insp) throws DataTransferException {
-		 List<String> data = new ArrayList<String>();
-		 insp.serializeModifiableToStream(new ServerLinkOutputStream(data));
-		
-		QueryBuilder q = new QueryBuilder();
-		q.append("data",Utils.join(ServerLink.WORDSEP, data));
 
-		
-		ServerLink link = new ServerLink(getHostname(),"/scripts/inspections/update_inspection", q.urlQueryString());
+	public void save(Inspection insp) throws DataTransferException {
+		List<String> data = new ArrayList<String>();
+		insp.serializeModifiableToStream(new ServerLinkOutputStream(data));
+
+		QueryBuilder q = new QueryBuilder();
+		q.append("data", Utils.join(ServerLink.WORDSEP, data));
+
+		ServerLink link = new ServerLink(getHostname(), "/scripts/inspections/update_inspection", q.urlQueryString());
 		try {
 			ServerLinkInputStream in = link.open();
-			while(in.next()) {
+			while (in.next()) {
 			}
-		}
-		finally {
+		} finally {
 			link.release();
 		}
-		
+
 	}
-	
+
 	public AsyncInspectionsControl proxy() {
-    	if(proxy == null) {
-    		proxy = createProxy(AsyncInspectionsControl.class);
-    	}
-    	return proxy;
-    }
+		if (proxy == null) {
+			proxy = createProxy(AsyncInspectionsControl.class);
+		}
+		return proxy;
+	}
 
 }
