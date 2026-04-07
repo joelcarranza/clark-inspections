@@ -45,7 +45,9 @@ JavaLink.process = function() {
 			i.Y,
 			s.type,
 			s.equipment_id,
-			s.location
+			s.location,
+			i.completion_status,
+			i.comment
 		FROM WM_INSPECTION i
 		LEFT JOIN INSPECTION_SITE s ON i.asset_id = s.id
 		WHERE i.list_id =  ? 

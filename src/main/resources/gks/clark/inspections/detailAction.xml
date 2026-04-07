@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<config>
+  <manager configVersion="3">
+    <iconPath>gks/clark/inspections/images</iconPath>
+    <iconExt>png</iconExt>
+    <iconSize>32</iconSize>
+  </manager>
+<condition>
+    <canBack>false</canBack>
+    <canNext>false</canNext>
+  </condition>
+  <action key="first">
+    <method>actionFirst</method>
+    <enabled>canBack</enabled>
+  </action>
+  <action key="last">
+    <method>actionLast</method>
+    <enabled>canNext</enabled>
+  </action>
+  <action key="prev">
+    <method>actionBack</method>
+    <enabled>canBack</enabled>
+  </action>
+  <action key="next">
+    <method>actionNext</method>
+    <enabled>canNext</enabled>
+  </action>
+  <action key="save">
+    <method>actionSave</method>
+    <tooltip>Save this inspection</tooltip>
+  </action>
+    <toolbar>
+    <main>first prev next last | save</main>
+  </toolbar>
+</config>

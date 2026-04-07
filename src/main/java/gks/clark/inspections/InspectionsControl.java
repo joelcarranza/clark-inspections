@@ -89,6 +89,27 @@ public class InspectionsControl extends BasicControl {
 		throw new DataTransferException("No data returned");
 	}
 	
+	
+	public void save(Inspection insp) throws DataTransferException {
+		 List<String> data = new ArrayList<String>();
+		 insp.serializeModifiableToStream(new ServerLinkOutputStream(data));
+		
+		QueryBuilder q = new QueryBuilder();
+		q.append("data",Utils.join(ServerLink.WORDSEP, data));
+
+		
+		ServerLink link = new ServerLink(getHostname(),"/scripts/inspections/update_inspection", q.urlQueryString());
+		try {
+			ServerLinkInputStream in = link.open();
+			while(in.next()) {
+			}
+		}
+		finally {
+			link.release();
+		}
+		
+	}
+	
 	public AsyncInspectionsControl proxy() {
     	if(proxy == null) {
     		proxy = createProxy(AsyncInspectionsControl.class);

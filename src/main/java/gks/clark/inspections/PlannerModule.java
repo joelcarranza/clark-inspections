@@ -31,6 +31,7 @@
  */
 package gks.clark.inspections;
 
+import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
@@ -38,6 +39,7 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 
 import gks.clark.inspections.model.Inspection;
 import gks.clark.inspections.model.InspectionTableModel;
@@ -47,19 +49,26 @@ import gks.clark.inspections.model.SiteList;
 import gks.clark.inspections.model.SiteTableModel;
 import gks.control.BasicControl;
 import gks.form.chooser.Chooser;
+import gks.form.details.DetailsEditor;
 import gks.form.editor.Editor;
 import gks.ui.GuiUtils;
 import gks.ui.SimpleDialog;
 import gks.ui.SwingProxy;
 import gks.util.NavigateInterface;
+import gks.util.ResourceLoader;
 import gks.util.TabularModule;
 
 
 public class PlannerModule extends TabularModule implements PropertyChangeListener {
 	
+	/**
+	 * 
+	 */
+	private static final String WIN_DETAIL = "detail";
+
 	public static final String WIN_FILTER = "winFilter";
 
-	private InspectionsControl control;
+	InspectionsControl control;
 	private AsyncInspectionsControl asyncControl;
 
 	private String inspectionListKey;
@@ -100,7 +109,9 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	}
 
 	public void actionOpen(ActionEvent e) {
-		
+		Window window = windowManager().show(WIN_DETAIL);
+        DetailsEditor<Object> editor = DetailsEditor.forWindow(window);
+        editor.view(tableView().getSelection());
 	}
 	
 	public void actionOpenList(ActionEvent e) {
@@ -192,6 +203,13 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			dlg.setTitle("Filter");
 			dlg.setDefaultCloseOperation(SimpleDialog.HIDE_ON_CLOSE);
 			return dlg;
+		}
+		else if(name.equals(WIN_DETAIL)) {
+	        InspectionDetailsEditor view = new InspectionDetailsEditor(this);
+	        JFrame f = view.buildAsFrame();
+	        f.setTitle("Inspection");
+	        f.setPreferredSize(new Dimension(600, 400));
+	        return f;
 		}
 		else {
 			throw new RuntimeException(name);

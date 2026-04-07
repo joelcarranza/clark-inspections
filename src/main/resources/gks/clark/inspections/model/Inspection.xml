@@ -1,3 +1,4 @@
+
 <form>
 <script>
 function validate(results) {
@@ -13,7 +14,13 @@ function beforeCommit(values) {
 <body onValidate="validate" beforeUpdate="beforeUpdate" beforeCommit="beforeCommit">
 		<table cols="p f " hgap="3"  vgap="3">
 			<tr>
-				<td>Work Order</td><td><text id="workOrder"/></td>
+				<td>ID</td><td><readOnly id="key"/></td>
+			</tr>
+			<tr>
+				<td>Comption</td><td><combo id="completionStatus" dataClass="gks.clark.inspections.model.CompletionStatus" /></td>
+			</tr>
+			<tr>
+				<td>Comment</td><td><textArea id="comment"/></td>
 			</tr>
 		</table>
 </body>

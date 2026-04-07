@@ -44,9 +44,12 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     public static final int TYPE = 3;
     public static final int EQUIPMENT_IDENTIFIER = 4;
     public static final int LOCATION = 5;
-    public static final int MAP_KEY = 6;
+    public static final int COMPLETION_STATUS = 6;
+    public static final int COMMENT = 7;
+    public static final int MAP_KEY = 8;
     private static final String[] COLUMN_NAMES = {
-            "key", "x", "y", "type", "equipmentIdentifier", "location", "mapKey",
+            "key", "x", "y", "type", "equipmentIdentifier", "location",
+            "completionStatus", "comment", "mapKey",
         };
 
     public String getColumnName(int column) {
@@ -63,6 +66,9 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
         }
 
         switch (column) {
+        case COMPLETION_STATUS:
+            return gks.clark.inspections.model.CompletionStatus.class;
+
         case X:
         case Y:
             return Double.class;
@@ -94,6 +100,12 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
         case LOCATION:
             return v.getLocation();
 
+        case COMPLETION_STATUS:
+            return v.getCompletionStatus();
+
+        case COMMENT:
+            return v.getComment();
+
         case MAP_KEY:
             return v.getMapKey();
 
@@ -103,7 +115,7 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     }
 
     public int getColumnCount() {
-        return 7;
+        return 9;
     }
 
     protected Class<?> getValueClass() {

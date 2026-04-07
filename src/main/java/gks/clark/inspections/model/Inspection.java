@@ -49,6 +49,8 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
     String type;
     String equipmentIdentifier;
     String location;
+    gks.clark.inspections.model.CompletionStatus completionStatus;
+    String comment;
 
     /*
      ==========================================================================
@@ -100,6 +102,23 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         return location;
     }
 
+    public void setCompletionStatus(
+        gks.clark.inspections.model.CompletionStatus completionStatus) {
+        this.completionStatus = completionStatus;
+    }
+
+    public gks.clark.inspections.model.CompletionStatus getCompletionStatus() {
+        return completionStatus;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
     public String getMapKey() {
         return key;
     }
@@ -112,37 +131,33 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
     public void parseFromStream(gks.util.dto.DataTransferInputStream stream)
         throws gks.util.dto.DataTransferException {
         this.key = stream.read();
-
-        if (gks.util.Utils.isEmpty(this.key)) {
-            throw new gks.util.dto.DataTransferException(
-                "Missing required field key");
-        }
-
         this.x = stream.readDouble();
         this.y = stream.readDouble();
         this.type = stream.read();
         this.equipmentIdentifier = stream.read();
         this.location = stream.read();
+        this.completionStatus = stream.readCode(gks.clark.inspections.model.CompletionStatus.class);
+        this.comment = stream.read();
     }
 
     public void serializeToStream(gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
-        if (gks.util.Utils.isEmpty(this.key)) {
-            throw new gks.util.dto.DataTransferException(
-                "Missing required field key");
-        }
-
         stream.write(this.key);
         stream.write(this.x);
         stream.write(this.y);
         stream.write(this.type);
         stream.write(this.equipmentIdentifier);
         stream.write(this.location);
+        stream.write(this.completionStatus);
+        stream.write(this.comment);
     }
 
     public void serializeModifiableToStream(
         gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
+        stream.write(this.key);
+        stream.write(this.completionStatus);
+        stream.write(this.comment);
     }
 
     /**

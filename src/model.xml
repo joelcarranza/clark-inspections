@@ -1,6 +1,30 @@
 <?xml version="1.0"?>
 <project>
+	
+	<bean class="gks.clark.inspections.model.SiteFilter">
+		<implement>gks.util.dto.DataTransferObject</implement>
+	<property name="circuit" />
 
+ 
+	</bean>
+	
+	
+	<bean class="gks.clark.inspections.model.SiteList">
+		<implement>gks.util.dto.ServerTransferObject</implement>
+		<!--
+		<implement>gks.util.dto.DataTransferObject</implement>
+		-->
+
+		<property name="workOrder" class="String" />
+		<property name="sites" class="gks.clark.inspections.model.Site[]" />
+		
+		<derivedProperty name="key">
+			<getter>
+				return "";
+			</getter>
+		</derivedProperty>
+	</bean>
+	
 	<bean class="gks.clark.inspections.model.Site">
 		<implement>gks.util.dto.ServerTransferObject</implement>
 		<implement>gks.util.Mappable</implement>
@@ -30,17 +54,26 @@
 	</bean>
 	
 	
+	<bean class="gks.clark.inspections.model.CompletionStatus">
+		<extend>gks.util.OrderedCode</extend>
+	</bean>
+	
+	
 	<bean class="gks.clark.inspections.model.Inspection">
 		<implement>gks.util.dto.ServerTransferObject</implement>
 		<implement>gks.util.Mappable</implement>
 		
 		<generateTableModel class="gks.clark.inspections.model.InspectionTableModel" />
-		<property name="key" set="false" required="true"/>
+		<property name="key" set="false" key="true"/>
 		<property name="x" class="Double" set="false"/>
 		<property name="y" class="Double" set="false"/>
 		<property name="type" set="false"/>
 		<property name="equipmentIdentifier" set="false"/>
 		<property name="location" set="false"/>
+
+		<property name="completionStatus" class="gks.clark.inspections.model.CompletionStatus" />
+		<property name="comment" />
+
 
 		<derivedProperty name="mapKey">
 			<getter>
@@ -58,28 +91,5 @@
 		</include>
 	</bean>
 	
-	
-	<bean class="gks.clark.inspections.model.SiteFilter">
-		<implement>gks.util.dto.DataTransferObject</implement>
-	<property name="circuit" />
 
- 
-	</bean>
-	
-	
-	<bean class="gks.clark.inspections.model.SiteList">
-		<implement>gks.util.dto.ServerTransferObject</implement>
-		<!--
-		<implement>gks.util.dto.DataTransferObject</implement>
-		-->
-
-		<property name="workOrder" class="String" />
-		<property name="sites" class="gks.clark.inspections.model.Site[]" />
-		
-		<derivedProperty name="key">
-			<getter>
-				return "";
-			</getter>
-		</derivedProperty>
-	</bean>
 </project>
