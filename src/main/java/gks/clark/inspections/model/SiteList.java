@@ -36,9 +36,7 @@ package gks.clark.inspections.model;
  AUTO GENERATED FILE! - Do not edit, as your changes will be overwritten
  ==========================================================================
 */
-public class SiteList extends gks.field.list.FieldList {
-    private static final long serialVersionUID = -9154835041405707794L;
-
+public class SiteList implements gks.util.dto.DataTransferObject {
     /*
      ==========================================================================
      Fields
@@ -65,10 +63,7 @@ public class SiteList extends gks.field.list.FieldList {
      ==========================================================================
     */
     public void setScheduleDate(java.util.Date scheduleDate) {
-        if (!gks.util.Utils.equals(this.scheduleDate, scheduleDate)) {
-            this.scheduleDate = scheduleDate;
-            setChanged(true);
-        }
+        this.scheduleDate = scheduleDate;
     }
 
     public java.util.Date getScheduleDate() {
@@ -76,10 +71,7 @@ public class SiteList extends gks.field.list.FieldList {
     }
 
     public void setName(String name) {
-        if (!gks.util.Utils.equals(this.name, name)) {
-            this.name = name;
-            setChanged(true);
-        }
+        this.name = name;
     }
 
     public String getName() {
@@ -102,15 +94,6 @@ public class SiteList extends gks.field.list.FieldList {
         return planner;
     }
 
-    public String getDisplayName() {
-        return gks.util.Utils.nvl(getName(),
-            ((gks.clark.inspections.model.SiteFilter) getFilter()).getFilterName());
-    }
-
-    public Class getFilterType() {
-        return gks.clark.inspections.model.SiteFilter.class;
-    }
-
     /*
     ==========================================================================
     Server Serializable object methods
@@ -118,8 +101,6 @@ public class SiteList extends gks.field.list.FieldList {
     */
     public void parseFromStream(gks.util.dto.DataTransferInputStream stream)
         throws gks.util.dto.DataTransferException {
-        super.parseFromStream(stream);
-
         this.scheduleDate = stream.readDate();
         this.name = stream.read();
         this.totalNr = stream.readi();
@@ -130,55 +111,11 @@ public class SiteList extends gks.field.list.FieldList {
 
     public void serializeToStream(gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
-        super.serializeToStream(stream);
-
         stream.write(this.scheduleDate);
         stream.write(this.name);
         stream.write(this.totalNr);
         stream.write(this.completeNr);
         stream.write(this.completeDate);
         stream.write(this.planner);
-    }
-
-    public void serializeModifiableToStream(
-        gks.util.dto.DataTransferOutputStream stream)
-        throws gks.util.dto.DataTransferException {
-        super.serializeModifiableToStream(stream);
-
-        stream.write(this.scheduleDate);
-        stream.write(this.name);
-    }
-
-    /*
-    ==========================================================================
-    Externalizable implementation
-    ==========================================================================
-    */
-    public void readExternal(java.io.ObjectInput in)
-        throws java.io.IOException, ClassNotFoundException {
-        try {
-            parseFromStream(new gks.util.dto.BinaryTransferInputStream(in));
-        } catch (gks.util.dto.DataTransferException e) {
-            throw new java.io.IOException("Failure during readExternal()", e);
-        }
-    }
-
-    public void writeExternal(java.io.ObjectOutput out)
-        throws java.io.IOException {
-        try {
-            serializeToStream(new gks.util.dto.BinaryTransferOutputStream(out));
-        } catch (gks.util.dto.DataTransferException e) {
-            throw new java.io.IOException("Failure during writeExternal()", e);
-        }
-    }
-
-    /**
-             * Factory method for creating an ArrayTableModel which will
-             * serve this class. Table created is of class gks.clark.inspections.model.SiteListTableModel
-             *
-             * @see gks.clark.inspections.model.SiteListTableModel
-             */
-    public static gks.ui.table.ArrayTableModel createTableModel() {
-        return new gks.clark.inspections.model.SiteListTableModel();
     }
 }

@@ -38,32 +38,15 @@ package gks.clark.inspections.model;
  */
 public class SiteTableModel extends gks.ui.table.ArrayTableModel {
     private static final long serialVersionUID = 1L;
-    public static final int YMAX = 0;
-    public static final int DATA = 1;
-    public static final int XMAX = 2;
-    public static final int EDITABLE = 3;
-    public static final int MAP_KEY = 4;
-    public static final int EDITION = 5;
-    public static final int COMPLETED = 6;
-    public static final int YMIN = 7;
-    public static final int LOCKVERSION = 8;
-    public static final int VALID = 9;
-    public static final int XMIN = 10;
-    public static final int DISPLAY_STRING = 11;
-    public static final int MODIFIABLE_DATA = 12;
-    public static final int ID = 13;
-    public static final int REPORT_KEY = 14;
-    public static final int PERSISTENT = 15;
-    public static final int CLASS = 16;
-    public static final int MAPPABLE = 17;
-    public static final int KEY = 18;
-    public static final int CHANGED = 19;
-    public static final int CLASS_TYPE = 20;
+    public static final int KEY = 0;
+    public static final int X = 1;
+    public static final int Y = 2;
+    public static final int TYPE = 3;
+    public static final int EQUIPMENT_IDENTIFIER = 4;
+    public static final int LOCATION = 5;
+    public static final int MAP_KEY = 6;
     private static final String[] COLUMN_NAMES = {
-            "YMax", "data", "XMax", "editable", "mapKey", "edition", "completed",
-            "YMin", "lockversion", "valid", "XMin", "displayString",
-            "modifiableData", "ID", "reportKey", "persistent", "class",
-            "mappable", "key", "changed", "classType",
+            "key", "x", "y", "type", "equipmentIdentifier", "location", "mapKey",
         };
 
     public String getColumnName(int column) {
@@ -80,33 +63,9 @@ public class SiteTableModel extends gks.ui.table.ArrayTableModel {
         }
 
         switch (column) {
-        case CLASS:
-            return Class.class;
-
-        case DATA:
-        case MODIFIABLE_DATA:
-            return java.util.List.class;
-
-        case EDITABLE:
-        case COMPLETED:
-        case VALID:
-        case PERSISTENT:
-        case MAPPABLE:
-        case CHANGED:
-            return Boolean.class;
-
-        case YMAX:
-        case XMAX:
-        case YMIN:
-        case XMIN:
+        case X:
+        case Y:
             return Double.class;
-
-        case EDITION:
-        case LOCKVERSION:
-            return Integer.class;
-
-        case ID:
-            return Long.class;
 
         default:
             return String.class;
@@ -117,68 +76,26 @@ public class SiteTableModel extends gks.ui.table.ArrayTableModel {
         gks.clark.inspections.model.Site v = (gks.clark.inspections.model.Site) value;
 
         switch (column) {
-        case YMAX:
-            return new Double(v.getYMax());
-
-        case DATA:
-            return java.util.Arrays.asList(v.getData());
-
-        case XMAX:
-            return new Double(v.getXMax());
-
-        case EDITABLE:
-            return Boolean.valueOf(v.isEditable());
-
-        case MAP_KEY:
-            return v.getMapKey();
-
-        case EDITION:
-            return new Integer(v.getEdition());
-
-        case COMPLETED:
-            return Boolean.valueOf(v.isCompleted());
-
-        case YMIN:
-            return new Double(v.getYMin());
-
-        case LOCKVERSION:
-            return new Integer(v.getLockversion());
-
-        case VALID:
-            return Boolean.valueOf(v.isValid());
-
-        case XMIN:
-            return new Double(v.getXMin());
-
-        case DISPLAY_STRING:
-            return v.getDisplayString();
-
-        case MODIFIABLE_DATA:
-            return java.util.Arrays.asList(v.getModifiableData());
-
-        case ID:
-            return new Long(v.getID());
-
-        case REPORT_KEY:
-            return v.getReportKey();
-
-        case PERSISTENT:
-            return Boolean.valueOf(v.isPersistent());
-
-        case CLASS:
-            return v.getClass();
-
-        case MAPPABLE:
-            return Boolean.valueOf(v.isMappable());
-
         case KEY:
             return v.getKey();
 
-        case CHANGED:
-            return Boolean.valueOf(v.isChanged());
+        case X:
+            return v.getX();
 
-        case CLASS_TYPE:
-            return v.getClassType();
+        case Y:
+            return v.getY();
+
+        case TYPE:
+            return v.getType();
+
+        case EQUIPMENT_IDENTIFIER:
+            return v.getEquipmentIdentifier();
+
+        case LOCATION:
+            return v.getLocation();
+
+        case MAP_KEY:
+            return v.getMapKey();
 
         default:
             throw new IllegalArgumentException();
@@ -186,7 +103,7 @@ public class SiteTableModel extends gks.ui.table.ArrayTableModel {
     }
 
     public int getColumnCount() {
-        return 21;
+        return 7;
     }
 
     protected Class<?> getValueClass() {

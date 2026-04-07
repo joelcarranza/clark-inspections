@@ -36,9 +36,7 @@ package gks.clark.inspections.model;
  AUTO GENERATED FILE! - Do not edit, as your changes will be overwritten
  ==========================================================================
 */
-public class SiteFilter extends gks.field.list.FieldListFilter {
-    private static final long serialVersionUID = 1617871015443L;
-
+public class SiteFilter implements gks.util.dto.DataTransferObject {
     /*
      ==========================================================================
      Fields
@@ -55,38 +53,6 @@ public class SiteFilter extends gks.field.list.FieldListFilter {
     }
 
     /*
-    ==========================================================================
-    Code includes
-    ==========================================================================
-    */
-    public String urlQueryString() {
-        gks.util.QueryBuilder buffer = new gks.util.QueryBuilder();
-        buffer.append("CIRCUIT", getCircuit());
-
-        return buffer.toString();
-    }
-
-    public String displayString() {
-        StringBuffer buffer = new StringBuffer();
-        int count = 0;
-
-        if (getCircuit() != null) {
-            if (count > 0) {
-                buffer.append('\n');
-            }
-
-            buffer.append("Circuit");
-            buffer.append(": ");
-
-            // String
-            buffer.append(getCircuit());
-            count++;
-        }
-
-        return buffer.toString();
-    }
-
-    /*
      ==========================================================================
      Getter and setters
      ==========================================================================
@@ -99,20 +65,6 @@ public class SiteFilter extends gks.field.list.FieldListFilter {
         return circuit;
     }
 
-    public Class getItemType() {
-        return gks.clark.inspections.model.Site.class;
-    }
-
-    public String getFilterName() {
-        StringBuffer buffer = new StringBuffer();
-
-        if (!gks.util.Utils.isEmpty(getCircuit())) {
-            buffer.append(getCircuit());
-        }
-
-        return buffer.toString();
-    }
-
     /*
     ==========================================================================
     Server Serializable object methods
@@ -120,38 +72,11 @@ public class SiteFilter extends gks.field.list.FieldListFilter {
     */
     public void parseFromStream(gks.util.dto.DataTransferInputStream stream)
         throws gks.util.dto.DataTransferException {
-        super.parseFromStream(stream);
-
         this.circuit = stream.read();
     }
 
     public void serializeToStream(gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
-        super.serializeToStream(stream);
-
         stream.write(this.circuit);
-    }
-
-    /*
-    ==========================================================================
-    Externalizable implementation
-    ==========================================================================
-    */
-    public void readExternal(java.io.ObjectInput in)
-        throws java.io.IOException, ClassNotFoundException {
-        try {
-            parseFromStream(new gks.util.dto.BinaryTransferInputStream(in));
-        } catch (gks.util.dto.DataTransferException e) {
-            throw new java.io.IOException("Failure during readExternal()", e);
-        }
-    }
-
-    public void writeExternal(java.io.ObjectOutput out)
-        throws java.io.IOException {
-        try {
-            serializeToStream(new gks.util.dto.BinaryTransferOutputStream(out));
-        } catch (gks.util.dto.DataTransferException e) {
-            throw new java.io.IOException("Failure during writeExternal()", e);
-        }
     }
 }

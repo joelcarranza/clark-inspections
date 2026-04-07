@@ -35,50 +35,32 @@ package gks.clark.inspections;
 
 import java.io.File;
 
+import gks.clark.inspections.model.Site;
+import gks.clark.inspections.model.SiteFilter;
 import gks.clark.inspections.model.SiteList;
-import gks.field.control.ControlException;
-import gks.field.list.FieldListControl;
-import gks.field.storage.PersistentCacheManager;
+import gks.control.BasicControl;
+import gks.util.QueryBuilder;
+import gks.util.dto.DataTransferException;
 
-public class InspectionsControl extends FieldListControl {
-
-
-
-
-
-	public void initialize(PersistentCacheManager cacheManager, File cacheRoot) throws ControlException {
-		super.initializeWithCacheManager(cacheManager);
-		setFileRoot(new File(cacheRoot, "files"));
-		setOnline(true);
-	}
-
-
-	
-	File fileRoot = null;
-
+public class InspectionsControl extends BasicControl {
 	private AsyncInspectionsControl proxy;
 
-	public static final String PROPERTY_SIGNED_IN_TO_POWER_ON = "signedInToPowerOn";
-
-	
-	
-	public File getFileRoot() {
-		return fileRoot;
+	public Site[] querySite(SiteFilter filter) throws DataTransferException {
+		QueryBuilder q = new QueryBuilder();
+		q.append("CIRCUIT", filter.getCircuit());
+		return scriptQuery("/scripts/inspections/read_site", q, Site.class);
 	}
 
-
-
-
-	public void setFileRoot(File fileRoot) {
-		this.fileRoot = fileRoot;
+	
+	public void saveList(SiteList siteList, Site site[]) {
+		
 	}
-
-
-	  public AsyncInspectionsControl proxy() {
-	    	if(proxy == null) {
-	    		proxy = createProxy(AsyncInspectionsControl.class);
-	    	}
-	    	return proxy;
-	    }
+	
+	public AsyncInspectionsControl proxy() {
+    	if(proxy == null) {
+    		proxy = createProxy(AsyncInspectionsControl.class);
+    	}
+    	return proxy;
+    }
 
 }

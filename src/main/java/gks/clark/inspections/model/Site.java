@@ -36,16 +36,18 @@ package gks.clark.inspections.model;
  AUTO GENERATED FILE! - Do not edit, as your changes will be overwritten
  ==========================================================================
 */
-public class Site extends gks.field.list.FieldListItem {
-    private static final long serialVersionUID = 45419862103L;
-
+public class Site implements gks.util.dto.DataTransferObject, gks.util.Mappable {
     /*
      ==========================================================================
      Fields
      ==========================================================================
     */
-    String classType;
-    String reportKey;
+    String key;
+    Double x;
+    Double y;
+    String type;
+    String equipmentIdentifier;
+    String location;
 
     /*
      ==========================================================================
@@ -56,16 +58,49 @@ public class Site extends gks.field.list.FieldListItem {
     }
 
     /*
+    ==========================================================================
+    Code includes
+    ==========================================================================
+    */
+    public gks.util.BoundingBox getExtent(gks.util.BoundingBox scratchBox) {
+        return gks.map.MapControl.getExtent(x, y, scratchBox);
+    }
+
+    public boolean isMappable() {
+        return gks.map.MapControl.isMappable(x, y, getMapKey());
+    }
+
+    /*
      ==========================================================================
      Getter and setters
      ==========================================================================
     */
-    public String getClassType() {
-        return classType;
+    public String getKey() {
+        return key;
     }
 
-    public String getReportKey() {
-        return reportKey;
+    public Double getX() {
+        return x;
+    }
+
+    public Double getY() {
+        return y;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getEquipmentIdentifier() {
+        return equipmentIdentifier;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getMapKey() {
+        return key;
     }
 
     /*
@@ -75,47 +110,33 @@ public class Site extends gks.field.list.FieldListItem {
     */
     public void parseFromStream(gks.util.dto.DataTransferInputStream stream)
         throws gks.util.dto.DataTransferException {
-        super.parseFromStream(stream);
+        this.key = stream.read();
 
-        this.classType = stream.read();
-        this.reportKey = stream.read();
+        if (gks.util.Utils.isEmpty(this.key)) {
+            throw new gks.util.dto.DataTransferException(
+                "Missing required field key");
+        }
+
+        this.x = stream.readDouble();
+        this.y = stream.readDouble();
+        this.type = stream.read();
+        this.equipmentIdentifier = stream.read();
+        this.location = stream.read();
     }
 
     public void serializeToStream(gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
-        super.serializeToStream(stream);
-
-        stream.write(this.classType);
-        stream.write(this.reportKey);
-    }
-
-    public void serializeModifiableToStream(
-        gks.util.dto.DataTransferOutputStream stream)
-        throws gks.util.dto.DataTransferException {
-        super.serializeModifiableToStream(stream);
-    }
-
-    /*
-    ==========================================================================
-    Externalizable implementation
-    ==========================================================================
-    */
-    public void readExternal(java.io.ObjectInput in)
-        throws java.io.IOException, ClassNotFoundException {
-        try {
-            parseFromStream(new gks.util.dto.BinaryTransferInputStream(in));
-        } catch (gks.util.dto.DataTransferException e) {
-            throw new java.io.IOException("Failure during readExternal()", e);
+        if (gks.util.Utils.isEmpty(this.key)) {
+            throw new gks.util.dto.DataTransferException(
+                "Missing required field key");
         }
-    }
 
-    public void writeExternal(java.io.ObjectOutput out)
-        throws java.io.IOException {
-        try {
-            serializeToStream(new gks.util.dto.BinaryTransferOutputStream(out));
-        } catch (gks.util.dto.DataTransferException e) {
-            throw new java.io.IOException("Failure during writeExternal()", e);
-        }
+        stream.write(this.key);
+        stream.write(this.x);
+        stream.write(this.y);
+        stream.write(this.type);
+        stream.write(this.equipmentIdentifier);
+        stream.write(this.location);
     }
 
     /**

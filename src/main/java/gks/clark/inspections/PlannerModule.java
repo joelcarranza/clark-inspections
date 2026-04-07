@@ -31,38 +31,31 @@
  */
 package gks.clark.inspections;
 
-import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.util.Properties;
-import java.util.concurrent.ExecutionException;
+import java.util.List;
 
 import javax.swing.JComponent;
 
+import gks.clark.inspections.model.Site;
 import gks.clark.inspections.model.SiteFilter;
+import gks.clark.inspections.model.SiteList;
+import gks.clark.inspections.model.SiteTableModel;
 import gks.control.BasicControl;
-import gks.field.control.ControlException;
-import gks.field.list.FieldListControl;
-import gks.field.list.FieldListFilter;
-import gks.field.list.ui.FieldListModule;
-import gks.field.storage.CreateCachesTask;
-import gks.field.storage.PersistentCacheManager;
 import gks.form.chooser.Chooser;
+import gks.form.editor.Editor;
 import gks.ui.GuiUtils;
 import gks.ui.SimpleDialog;
 import gks.ui.SwingProxy;
 import gks.util.NavigateInterface;
-import gks.util.ResourceLoader;
-import gks.util.lang.ExceptionUtils;
+import gks.util.TabularModule;
 
 
-public class PlannerModule extends FieldListModule implements PropertyChangeListener {
+public class PlannerModule extends TabularModule implements PropertyChangeListener {
 	
 	public static final String WIN_FILTER = "winFilter";
-	private static final String WIN_NEW_LIST_DIALOG = "winList";
 
 	private InspectionsControl control;
 	private AsyncInspectionsControl asyncControl;
@@ -70,22 +63,14 @@ public class PlannerModule extends FieldListModule implements PropertyChangeList
 	public PlannerModule(NavigateInterface application) {
 		super(application);
 	}
-	
-	@Override
-	protected FieldListControl createControl() throws ControlException {
-		Properties controlProperties = ResourceLoader.getProperties("gks/clark/inspections/control.properties");		
-		control = new InspectionsControl();
-		control.setView(this);
-		control.configure(controlProperties);
-		return control;
-	}		
+		
 	
 	@Override
 	public void start() throws Exception {
     	super.start();
 		configuration().inject(this);
 
-		control = (InspectionsControl) fieldListControl();
+		control = new InspectionsControl();
 
 		asyncControl = control.proxy();
 		
@@ -93,74 +78,45 @@ public class PlannerModule extends FieldListModule implements PropertyChangeList
 
     	buildView();
     	
-    	setViewBusy(true);
-		setStatusMessage("Initializing...");
-        
-        new CreateCachesTask(this) {
-        	
-
-			@Override
-        	public void persistentCacheManagerCreated() {
-        		setViewBusy(false);
-				initialize(getCacheManager(), getCacheRoot());
-        	}
-        	
-        	@Override
-        	public void persistentCacheManagerCreationFailed(Exception e) {
-        		setViewBusy(false);
-        		setStatusMessage("Startup failed");
-				die(e);
-        	}
-        }.execute();
+    	tableView().setTableColumnSet(Site.class.getName());
     }
-	
 
-	protected void initialize(final PersistentCacheManager cacheManager, final File cacheRoot) {
-		setViewBusy(true);
-		new javax.swing.SwingWorker<Void, Void>() {
-
-			@Override
-			protected Void doInBackground() throws Exception {
-				control.initialize(cacheManager, cacheRoot);
-				return null;
-			}
-			
-			public void done() {
-				setViewBusy(false);
-				
-				try {
-					get();
-					setStatusMessage("");
-				} catch (InterruptedException ignored) {
-				} catch (ExecutionException e) {
-					die(ExceptionUtils.unwrapToException(e));
-				}
-			}
-		}.execute();		
-	}
-	 
 	
 	public void actionShowFilter(ActionEvent e) {
 		windowManager().show(WIN_FILTER);
 	}
 	
-	public Window actionNewList() {
-		return windowManager().show(WIN_NEW_LIST_DIALOG);
+	public void actionNewList() {
+		SiteList siteList = new SiteList();
+		if(Editor.edit(this, siteList, "New List")) {
+			List<Site> sites = tableView().getData(Site.class);
+			control.proxy().saveList(siteList, sites.toArray(new Site[0])).onComplete(this, "onListSaved").start();
+		}
 	}
 
 	public void actionOpen(ActionEvent e) {
 		
 	}
 
+	public void onSitesQueried(Site site[], SiteFilter siteFilter) {
+		SiteTableModel tableModel = new SiteTableModel();
+		tableModel.setValues(site);
+		tableView().setTableColumnSet(tableModel, Site.class.getName());
+	}
+	
+	
+	public void onListSaved() {
+		
+	}
 	
 	public Window createWindow(String name) {
 		if(name.equals(WIN_FILTER)) {
 
-			Chooser<FieldListFilter> chooser = new Chooser<FieldListFilter>(this)
+			Chooser<SiteFilter> chooser = new Chooser<SiteFilter>(this)
 			{
 				@Override
-				public void ok(FieldListFilter filter) {					
-					asyncControl.setFilter(filter);
+				public void ok(SiteFilter filter) {					
+					control.proxy().querySite(filter).onComplete(PlannerModule.this, "onSitesQueried", new Object[] {filter}).execute();
 				}
 
 				@Override
@@ -190,18 +146,13 @@ public class PlannerModule extends FieldListModule implements PropertyChangeList
 			};
 			GuiUtils.setImplementation(chooser,PlannerModule.class,this);
 			chooser.addChoice(new SiteFilter(),
-					"gks/clark/inspections/SiteFilter.xml","Sites by Circuit");
+					"gks/clark/inspections/model/SiteFilter.xml","Sites by Circuit");
 
 //			chooser.setPreferredSizeFromChoiceIndex(1);
 			SimpleDialog dlg = chooser.buildAsDialog(this);
 			dlg.setTitle("Filter");
 			dlg.setDefaultCloseOperation(SimpleDialog.HIDE_ON_CLOSE);
 			return dlg;
-		}
-		else if(name.equals(WIN_NEW_LIST_DIALOG ))
-		{
-	    	Frame f = GuiUtils.findAncestor(Frame.class, this);
-            return new WorkOrderListDialog(f, this);
 		}
 		else {
 			throw new RuntimeException(name);

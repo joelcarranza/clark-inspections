@@ -2,73 +2,45 @@
 <project>
 
 	<bean class="gks.clark.inspections.model.Site">
-		<extend>gks.field.list.FieldListItem</extend>
+		<implement>gks.util.dto.DataTransferObject</implement>
+		<implement>gks.util.Mappable</implement>
+		
 		<generateTableModel class="gks.clark.inspections.model.SiteTableModel" />
+		<property name="key" set="false" required="true"/>
+		<property name="x" class="Double" set="false"/>
+		<property name="y" class="Double" set="false"/>
+		<property name="type" set="false"/>
+		<property name="equipmentIdentifier" set="false"/>
+		<property name="location" set="false"/>
 
-		<property name="classType" set="false"/>
-		<property name="reportKey" set="false"/>
+		<derivedProperty name="mapKey">
+			<getter>
+				return key;
+			</getter>
+		</derivedProperty>
+		<include>
+		public gks.util.BoundingBox getExtent(gks.util.BoundingBox scratchBox) {
+			return gks.map.MapControl.getExtent(x,y, scratchBox);
+		}
+	
+		public boolean isMappable() {
+			return gks.map.MapControl.isMappable(x,y, getMapKey());
+		}
+		</include>
 	</bean>
 	
 	
 	<bean class="gks.clark.inspections.model.SiteFilter">
-		<extend>gks.field.list.FieldListFilter</extend>
+		<implement>gks.util.dto.DataTransferObject</implement>
 	<property name="circuit" />
 
-    <derivedProperty name="itemType" class="Class">
-		<getter>			
-			return gks.clark.inspections.model.Site.class;
-		</getter>
-		
-	</derivedProperty>
-	
-	<derivedProperty name="filterName" >
-		<getter>
-			StringBuffer buffer = new StringBuffer();
-			if(!gks.util.Utils.isEmpty(getCircuit())) {
-				buffer.append(getCircuit());
-			}
-			return buffer.toString();
-		</getter>
-		
-	</derivedProperty>
-	<include>
-	 public String urlQueryString() {
-        gks.util.QueryBuilder buffer = new gks.util.QueryBuilder();
-        buffer.append("CIRCUIT", getCircuit());
-        return buffer.toString();
-    }
-    
-    public String displayString() {
-        StringBuffer buffer = new StringBuffer();
-        int count = 0;
-
  
-
-        if (getCircuit() != null) {
-            if (count > 0) {
-                buffer.append('\n');
-            }
-
-            buffer.append("Circuit");
-            buffer.append(": ");
-
-            // String
-            buffer.append(getCircuit());
-            count++;
-        }
-
-     
-
-        return buffer.toString();
-    }
-	</include>
 	</bean>
 	
 	
 	<bean class="gks.clark.inspections.model.SiteList">
-		<extend>gks.field.list.FieldList</extend>
+		<implement>gks.util.dto.DataTransferObject</implement>
 
-		<generateTableModel class="gks.clark.inspections.model.SiteListTableModel" />
 		<property name="scheduleDate" class="Date" />
 		<property name="name" class="String" />
 		<property name="totalNr" class="int" set="false"/>		
@@ -76,16 +48,6 @@
 		<property name="completeDate" class="Date" set="false"/>
 		<property name="planner" class="String" set="false"/>
 		
-		<derivedProperty name="displayName">
-			<getter> return gks.util.Utils.nvl(getName(),((gks.clark.inspections.model.SiteFilter)getFilter()).getFilterName());</getter>
-		</derivedProperty>
-		
-		<derivedProperty name="filterType" class="Class">
-		<getter>			
-			return gks.clark.inspections.model.SiteFilter.class;
-		</getter>
-		 
-		</derivedProperty>
 	
 	</bean>
 </project>

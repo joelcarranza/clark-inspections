@@ -1,0 +1,20 @@
+<form>
+<script>
+function validate(results) {
+}
+
+function beforeUpdate(values) {
+}
+
+function beforeCommit(values) {
+}
+
+</script>
+<body onValidate="validate" beforeUpdate="beforeUpdate" beforeCommit="beforeCommit">
+		<table cols="p f " hgap="3"  vgap="3">
+			<tr>
+				<td>Name</td><td><text id="name"/></td>
+			</tr>
+		</table>
+</body>
+</form>
