@@ -57,6 +57,9 @@ import gks.ui.SwingProxy;
 import gks.util.NavigateInterface;
 import gks.util.TabularModule;
 
+/**
+ * Modules for inspections piece
+ */
 public class PlannerModule extends TabularModule implements PropertyChangeListener {
 
 	private static final String WIN_DETAIL = "detail";
