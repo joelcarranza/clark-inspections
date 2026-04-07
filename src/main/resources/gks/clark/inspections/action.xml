@@ -21,6 +21,11 @@
     <itemsSelected>false</itemsSelected>
     <selectedItemsMappable>false</selectedItemsMappable>
   </condition>
+  <action key="newList">
+    <tooltip>Create new assignment list</tooltip>
+    <method>actionNewList</method>
+    <icon>(none)</icon>
+  </action>
   <action key="filter">
     <name>Edit filter...</name>
     <tooltip>Modify the assignment list filter</tooltip>
@@ -37,6 +42,6 @@
     <main>filter</main>
   </toolbar>
   <menubar>
-    <Tools>filter</Tools>
+    <Tools>filter newList</Tools>
   </menubar>
 </config>

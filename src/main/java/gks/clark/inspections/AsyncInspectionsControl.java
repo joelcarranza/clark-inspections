@@ -33,13 +33,17 @@
  */
 package gks.clark.inspections;
 
+import gks.control.ControlTask;
+import gks.field.list.FieldList;
 import gks.field.list.FieldListFilter;
 
 /**
  * @see gks.fde.control.AsyncProxy
  */
-public interface AsyncInspectionsControl {
+public interface AsyncInspectionsControl  {
 	
 	public void setFilter(FieldListFilter f);
+	
+	public ControlTask saveList(FieldList siteList);
 
 }

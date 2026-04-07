@@ -63,4 +63,29 @@
     }
 	</include>
 	</bean>
+	
+	
+	<bean class="gks.clark.inspections.model.SiteList">
+		<extend>gks.field.list.FieldList</extend>
+
+		<generateTableModel class="gks.clark.inspections.model.SiteListTableModel" />
+		<property name="scheduleDate" class="Date" />
+		<property name="name" class="String" />
+		<property name="totalNr" class="int" set="false"/>		
+		<property name="completeNr" class="int" set="false"/>
+		<property name="completeDate" class="Date" set="false"/>
+		<property name="planner" class="String" set="false"/>
+		
+		<derivedProperty name="displayName">
+			<getter> return gks.util.Utils.nvl(getName(),((gks.clark.inspections.model.SiteFilter)getFilter()).getFilterName());</getter>
+		</derivedProperty>
+		
+		<derivedProperty name="filterType" class="Class">
+		<getter>			
+			return gks.clark.inspections.model.SiteFilter.class;
+		</getter>
+		 
+		</derivedProperty>
+	
+	</bean>
 </project>

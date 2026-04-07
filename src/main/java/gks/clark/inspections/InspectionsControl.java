@@ -34,8 +34,8 @@
 package gks.clark.inspections;
 
 import java.io.File;
-import java.util.Properties;
 
+import gks.clark.inspections.model.SiteList;
 import gks.field.control.ControlException;
 import gks.field.list.FieldListControl;
 import gks.field.storage.PersistentCacheManager;
@@ -56,6 +56,8 @@ public class InspectionsControl extends FieldListControl {
 	
 	File fileRoot = null;
 
+	private AsyncInspectionsControl proxy;
+
 	public static final String PROPERTY_SIGNED_IN_TO_POWER_ON = "signedInToPowerOn";
 
 	
@@ -72,7 +74,11 @@ public class InspectionsControl extends FieldListControl {
 	}
 
 
-
-
+	  public AsyncInspectionsControl proxy() {
+	    	if(proxy == null) {
+	    		proxy = createProxy(AsyncInspectionsControl.class);
+	    	}
+	    	return proxy;
+	    }
 
 }

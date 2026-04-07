@@ -31,6 +31,7 @@
  */
 package gks.clark.inspections;
 
+import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
@@ -44,10 +45,8 @@ import javax.swing.JComponent;
 import gks.clark.inspections.model.SiteFilter;
 import gks.control.BasicControl;
 import gks.field.control.ControlException;
-import gks.field.list.FieldList;
 import gks.field.list.FieldListControl;
 import gks.field.list.FieldListFilter;
-import gks.field.list.FieldListItem;
 import gks.field.list.ui.FieldListModule;
 import gks.field.storage.CreateCachesTask;
 import gks.field.storage.PersistentCacheManager;
@@ -63,6 +62,8 @@ import gks.util.lang.ExceptionUtils;
 public class PlannerModule extends FieldListModule implements PropertyChangeListener {
 	
 	public static final String WIN_FILTER = "winFilter";
+	private static final String WIN_NEW_LIST_DIALOG = "winList";
+
 	private InspectionsControl control;
 	private AsyncInspectionsControl asyncControl;
 
@@ -86,7 +87,7 @@ public class PlannerModule extends FieldListModule implements PropertyChangeList
 
 		control = (InspectionsControl) fieldListControl();
 
-		asyncControl = (AsyncInspectionsControl) control.createProxy(AsyncInspectionsControl.class);
+		asyncControl = control.proxy();
 		
 		control.addPropertyChangeListener(SwingProxy.createPropertyChangeListener(this));
 
@@ -142,6 +143,10 @@ public class PlannerModule extends FieldListModule implements PropertyChangeList
 	public void actionShowFilter(ActionEvent e) {
 		windowManager().show(WIN_FILTER);
 	}
+	
+	public Window actionNewList() {
+		return windowManager().show(WIN_NEW_LIST_DIALOG);
+	}
 
 	public void actionOpen(ActionEvent e) {
 		
@@ -193,6 +198,11 @@ public class PlannerModule extends FieldListModule implements PropertyChangeList
 			dlg.setDefaultCloseOperation(SimpleDialog.HIDE_ON_CLOSE);
 			return dlg;
 		}
+		else if(name.equals(WIN_NEW_LIST_DIALOG ))
+		{
+	    	Frame f = GuiUtils.findAncestor(Frame.class, this);
+            return new WorkOrderListDialog(f, this);
+		}
 		else {
 			throw new RuntimeException(name);
 		}
@@ -212,6 +222,9 @@ public class PlannerModule extends FieldListModule implements PropertyChangeList
 		else if (name == BasicControl.PROPERTY_PROGRESS) {
  			setProgress(((Integer) value).intValue());
 		}
+	}
+	public InspectionsControl getControl() {
+		return control;
 	}
 
 	
