@@ -106,7 +106,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		String listKey = "5"; // XXX: test
 
 		control.proxy().queryInspection(listKey)
-				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { listKey }).execute();
+				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { listKey }).start();
 
 	}
 
@@ -136,7 +136,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 	public void onListSaved(String listKey) {
 		control.proxy().queryInspection(listKey)
-				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { listKey }).execute();
+				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { listKey }).start();
 	}
 
 	public Window createWindow(String name) {
@@ -146,7 +146,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 				@Override
 				public void ok(SiteFilter filter) {
 					control.proxy().querySite(filter)
-							.onComplete(PlannerModule.this, "onSitesQueried", new Object[] { filter }).execute();
+							.onComplete(PlannerModule.this, "onSitesQueried", new Object[] { filter }).start();
 				}
 
 				@Override
