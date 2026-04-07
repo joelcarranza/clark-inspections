@@ -2,7 +2,7 @@
 <project>
 
 	<bean class="gks.clark.inspections.model.Site">
-		<extend>gks.field.FieldItem</extend>
+		<extend>gks.field.list.FieldListItem</extend>
 		<generateTableModel class="gks.clark.inspections.model.SiteTableModel" />
 
 		<property name="classType" set="false"/>

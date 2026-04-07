@@ -43,7 +43,12 @@ import javax.swing.JComponent;
 
 import gks.clark.inspections.model.SiteFilter;
 import gks.control.BasicControl;
+import gks.field.control.ControlException;
+import gks.field.list.FieldList;
+import gks.field.list.FieldListControl;
 import gks.field.list.FieldListFilter;
+import gks.field.list.FieldListItem;
+import gks.field.list.ui.FieldListModule;
 import gks.field.storage.CreateCachesTask;
 import gks.field.storage.PersistentCacheManager;
 import gks.form.chooser.Chooser;
@@ -52,11 +57,10 @@ import gks.ui.SimpleDialog;
 import gks.ui.SwingProxy;
 import gks.util.NavigateInterface;
 import gks.util.ResourceLoader;
-import gks.util.TabularModule;
 import gks.util.lang.ExceptionUtils;
 
 
-public class PlannerModule extends TabularModule implements PropertyChangeListener {
+public class PlannerModule extends FieldListModule implements PropertyChangeListener {
 	
 	public static final String WIN_FILTER = "winFilter";
 	private InspectionsControl control;
@@ -67,19 +71,23 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	}
 	
 	@Override
-	public void start() throws Exception {
-    	super.start();
-		configuration().inject(this);
-
-		//setTitle(moduleTitle);
-
+	protected FieldListControl createControl() throws ControlException {
 		Properties controlProperties = ResourceLoader.getProperties("gks/clark/inspections/control.properties");		
 		control = new InspectionsControl();
 		control.setView(this);
 		control.configure(controlProperties);
-		
-		asyncControl = (AsyncInspectionsControl) control.createProxy(AsyncInspectionsControl.class);
+		return control;
+	}		
+	
+	@Override
+	public void start() throws Exception {
+    	super.start();
+		configuration().inject(this);
 
+		control = (InspectionsControl) fieldListControl();
+
+		asyncControl = (AsyncInspectionsControl) control.createProxy(AsyncInspectionsControl.class);
+		
 		control.addPropertyChangeListener(SwingProxy.createPropertyChangeListener(this));
 
     	buildView();
@@ -105,6 +113,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
         }.execute();
     }
 	
+
 	protected void initialize(final PersistentCacheManager cacheManager, final File cacheRoot) {
 		setViewBusy(true);
 		new javax.swing.SwingWorker<Void, Void>() {
@@ -203,5 +212,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		else if (name == BasicControl.PROPERTY_PROGRESS) {
  			setProgress(((Integer) value).intValue());
 		}
-	}		
+	}
+
+	
 }

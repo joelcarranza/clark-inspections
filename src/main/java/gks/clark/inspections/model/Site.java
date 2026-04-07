@@ -36,7 +36,7 @@ package gks.clark.inspections.model;
  AUTO GENERATED FILE! - Do not edit, as your changes will be overwritten
  ==========================================================================
 */
-public class Site extends gks.field.FieldItem {
+public class Site extends gks.field.list.FieldListItem {
     private static final long serialVersionUID = 45419862103L;
 
     /*

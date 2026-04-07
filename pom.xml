@@ -21,7 +21,7 @@
 		<dependency>
 			<groupId>com.gatekeeper.navigate</groupId>
 			<artifactId>core</artifactId>
-			<version>6.2.0</version>
+			<version>6.3.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.gatekeeper.navigate</groupId>
@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>com.gatekeeper.navigate</groupId>
 			<artifactId>field</artifactId>
-			<version>3.0.0</version>
+			<version>3.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.gatekeeper.navigate</groupId>

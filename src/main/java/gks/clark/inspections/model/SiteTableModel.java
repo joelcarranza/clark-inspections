@@ -41,25 +41,29 @@ public class SiteTableModel extends gks.ui.table.ArrayTableModel {
     public static final int YMAX = 0;
     public static final int DATA = 1;
     public static final int XMAX = 2;
-    public static final int MAP_KEY = 3;
-    public static final int EDITION = 4;
-    public static final int YMIN = 5;
-    public static final int LOCKVERSION = 6;
-    public static final int VALID = 7;
-    public static final int XMIN = 8;
-    public static final int MODIFIABLE_DATA = 9;
-    public static final int ID = 10;
-    public static final int PERSISTENT = 11;
-    public static final int CLASS = 12;
-    public static final int MAPPABLE = 13;
-    public static final int KEY = 14;
-    public static final int CHANGED = 15;
-    public static final int CLASS_TYPE = 16;
-    public static final int REPORT_KEY = 17;
+    public static final int EDITABLE = 3;
+    public static final int MAP_KEY = 4;
+    public static final int EDITION = 5;
+    public static final int COMPLETED = 6;
+    public static final int YMIN = 7;
+    public static final int LOCKVERSION = 8;
+    public static final int VALID = 9;
+    public static final int XMIN = 10;
+    public static final int DISPLAY_STRING = 11;
+    public static final int MODIFIABLE_DATA = 12;
+    public static final int ID = 13;
+    public static final int REPORT_KEY = 14;
+    public static final int PERSISTENT = 15;
+    public static final int CLASS = 16;
+    public static final int MAPPABLE = 17;
+    public static final int KEY = 18;
+    public static final int CHANGED = 19;
+    public static final int CLASS_TYPE = 20;
     private static final String[] COLUMN_NAMES = {
-            "YMax", "data", "XMax", "mapKey", "edition", "YMin", "lockversion",
-            "valid", "XMin", "modifiableData", "ID", "persistent", "class",
-            "mappable", "key", "changed", "classType", "reportKey",
+            "YMax", "data", "XMax", "editable", "mapKey", "edition", "completed",
+            "YMin", "lockversion", "valid", "XMin", "displayString",
+            "modifiableData", "ID", "reportKey", "persistent", "class",
+            "mappable", "key", "changed", "classType",
         };
 
     public String getColumnName(int column) {
@@ -83,6 +87,8 @@ public class SiteTableModel extends gks.ui.table.ArrayTableModel {
         case MODIFIABLE_DATA:
             return java.util.List.class;
 
+        case EDITABLE:
+        case COMPLETED:
         case VALID:
         case PERSISTENT:
         case MAPPABLE:
@@ -120,11 +126,17 @@ public class SiteTableModel extends gks.ui.table.ArrayTableModel {
         case XMAX:
             return new Double(v.getXMax());
 
+        case EDITABLE:
+            return Boolean.valueOf(v.isEditable());
+
         case MAP_KEY:
             return v.getMapKey();
 
         case EDITION:
             return new Integer(v.getEdition());
+
+        case COMPLETED:
+            return Boolean.valueOf(v.isCompleted());
 
         case YMIN:
             return new Double(v.getYMin());
@@ -138,11 +150,17 @@ public class SiteTableModel extends gks.ui.table.ArrayTableModel {
         case XMIN:
             return new Double(v.getXMin());
 
+        case DISPLAY_STRING:
+            return v.getDisplayString();
+
         case MODIFIABLE_DATA:
             return java.util.Arrays.asList(v.getModifiableData());
 
         case ID:
             return new Long(v.getID());
+
+        case REPORT_KEY:
+            return v.getReportKey();
 
         case PERSISTENT:
             return Boolean.valueOf(v.isPersistent());
@@ -162,16 +180,13 @@ public class SiteTableModel extends gks.ui.table.ArrayTableModel {
         case CLASS_TYPE:
             return v.getClassType();
 
-        case REPORT_KEY:
-            return v.getReportKey();
-
         default:
             throw new IllegalArgumentException();
         }
     }
 
     public int getColumnCount() {
-        return 18;
+        return 21;
     }
 
     protected Class<?> getValueClass() {

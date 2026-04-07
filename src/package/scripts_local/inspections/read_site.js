@@ -31,10 +31,43 @@
  
 var JavaLink = require('JavaLink');
 var Config = require('Config');
+var Sql = require('Sql');
 
 JavaLink.useDefaultDataSource();
 
+JavaLink.queryByCriteria = function() {
+	this.outputQueryResults('SELECT ID, 0 as LOCKVERSION FROM INSPECTION_SITE WHERE FEEDERID=?', this.param['CIRCUIT']);
+}
+
+JavaLink.queryByKey = function() {
+	let pk = this.param.PK.split(',');
+		this.outputQueryResults(`SELECT 
+			ID, 
+			0 as LOCKVERSION,
+			MAP_KEY,
+			X,
+			Y,
+			X,
+			Y,
+			type,
+			MAP_KEY as report_key
+		FROM INSPECTION_SITE WHERE ${Sql.whereIn('ID', pk)}`);
+}
+
+
 JavaLink.process = function() {
+	if(this.param.ND) {
+		this.queryByCriteria();
+	}
+	else if(this.param.PK) {
+		this.queryByKey();
+	}
+	else {
+		this.quit('Invalid query parameters');
+	}
+
+
+
 };
 
 JavaLink.run();
