@@ -119,6 +119,10 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         return comment;
     }
 
+    public boolean isComplete() {
+        return completionStatus != null;
+    }
+
     public String getMapKey() {
         return key;
     }

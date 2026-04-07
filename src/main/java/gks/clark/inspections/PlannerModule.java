@@ -55,22 +55,16 @@ import gks.ui.GuiUtils;
 import gks.ui.SimpleDialog;
 import gks.ui.SwingProxy;
 import gks.util.NavigateInterface;
-import gks.util.ResourceLoader;
 import gks.util.TabularModule;
 
 
 public class PlannerModule extends TabularModule implements PropertyChangeListener {
 	
-	/**
-	 * 
-	 */
+
 	private static final String WIN_DETAIL = "detail";
+	private static final String WIN_FILTER = "winFilter";
 
-	public static final String WIN_FILTER = "winFilter";
-
-	InspectionsControl control;
-	private AsyncInspectionsControl asyncControl;
-
+	private InspectionsControl control;
 	private String inspectionListKey;
 
 	public PlannerModule(NavigateInterface application) {
@@ -84,8 +78,6 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		configuration().inject(this);
 
 		control = new InspectionsControl();
-
-		asyncControl = control.proxy();
 		
 		control.addPropertyChangeListener(SwingProxy.createPropertyChangeListener(this));
 
@@ -176,10 +168,6 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 					return dlg;
 				}
 
-				@Override
-				protected void applyActionPerformed(SimpleDialog dlg) {
-					super.applyActionPerformed(dlg);
-				}
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -231,6 +219,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
  			setProgress(((Integer) value).intValue());
 		}
 	}
+	
 	public InspectionsControl getControl() {
 		return control;
 	}

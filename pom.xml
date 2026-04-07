@@ -45,6 +45,26 @@
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>com.gatekeeper</groupId>
+				<artifactId>maven-javascript-validator</artifactId>
+				<version>3.3.2</version>
+				<executions>
+					<execution>
+						<id>validate-javascript</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>validate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<e4x>false</e4x>
+					<sourceDirs>
+						<sourceDir>src/package/scripts_local/inspections</sourceDir>
+					</sourceDirs>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>

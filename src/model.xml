@@ -73,7 +73,11 @@
 
 		<property name="completionStatus" class="gks.clark.inspections.model.CompletionStatus" />
 		<property name="comment" />
-
+		<derivedProperty name="complete" class="boolean">
+			<getter>
+				return completionStatus != null;
+			</getter>
+		</derivedProperty>
 
 		<derivedProperty name="mapKey">
 			<getter>

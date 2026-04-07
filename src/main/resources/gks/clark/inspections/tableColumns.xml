@@ -22,7 +22,12 @@
   </tableColumn>
   
   
-  
+   <tableColumn modelColumn="complete">
+    <header>C</header>
+    <px>16</px>
+    <valueRenderer>gks.clark.inspections.CompletionStatusCodeRenderer</valueRenderer>
+    <tableSet>gks.clark.inspections.model.Inspection</tableSet>
+  </tableColumn>
   <tableColumn modelColumn="key">
     <header>Key</header>
     <cu>10</cu>

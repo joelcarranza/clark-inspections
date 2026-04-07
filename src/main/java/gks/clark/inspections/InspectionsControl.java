@@ -33,7 +33,6 @@
  */
 package gks.clark.inspections;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,13 +42,15 @@ import gks.clark.inspections.model.SiteFilter;
 import gks.clark.inspections.model.SiteList;
 import gks.control.BasicControl;
 import gks.util.QueryBuilder;
-import gks.util.ReflectionUtils;
 import gks.util.ServerLink;
 import gks.util.Utils;
 import gks.util.dto.DataTransferException;
 import gks.util.dto.ServerLinkInputStream;
 import gks.util.dto.ServerLinkOutputStream;
 
+/**
+ * Interfaces to backend API scripts
+ */
 public class InspectionsControl extends BasicControl {
 	private AsyncInspectionsControl proxy;
 
@@ -59,14 +60,15 @@ public class InspectionsControl extends BasicControl {
 		return scriptQuery("/scripts/inspections/read_site", q, Site.class);
 	}
 
-	
 	public Inspection[] queryInspection(String listKey) throws DataTransferException {
 		QueryBuilder q = new QueryBuilder();
 		q.append("LIST", listKey);
 		return scriptQuery("/scripts/inspections/read_inspection", q, Inspection.class);
 	}
 
-	
+	/**
+	 * Create a list of inspections based on sites and various user parameters
+	 */
 	public String createList(SiteList siteList) throws DataTransferException {
 		 List<String> data = new ArrayList<String>();
 		 siteList.serializeModifiableToStream(new ServerLinkOutputStream(data));

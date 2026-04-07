@@ -27,40 +27,48 @@
  *     URL:    http://www.gatekeeper.com
  */
  
- /**
- * 
- */
 package gks.clark.inspections;
 
-import java.awt.event.ActionEvent;
-import java.util.Collections;
+import java.awt.Color;
 
-import javax.swing.SwingWorker;
+import javax.swing.Icon;
 
-import gks.clark.inspections.model.Inspection;
-import gks.form.details.DetailsEditor;
+import gks.ui.CheckBoxIcon;
+import gks.ui.ValueRenderer;
 
-/**
- * Editor window for {@link Inspection} object
- */
-public class InspectionDetailsEditor extends DetailsEditor<Inspection> {
-	private final PlannerModule module;
+public class CompletionStatusCodeRenderer implements ValueRenderer {
+	Icon complete;
+	Icon incomplete;
 
-	public InspectionDetailsEditor(PlannerModule mobileWorkOrdersModule) {
-		module = mobileWorkOrdersModule;
-		setActionConfigPath("gks/clark/inspections/detailAction.xml");
+	public CompletionStatusCodeRenderer() {
+		complete = new CheckBoxIcon(true);
+		incomplete = new CheckBoxIcon(false);
+		
 	}
 	
-	public void actionZoom(ActionEvent e) {
-		Inspection call = (Inspection)getSelectedValue();
-		module.mapCommand().
-		layer(module.getMapLayer()).
-		view(Collections.singleton(call),module.getMinZoomWidth()).
-		run();
+	public Color getBackground(Object value) {
+		return null;
 	}
 
-	@Override
-	protected SwingWorker<?, ?> createSaveTask(Inspection value) {
-		return module.getControl().proxy().save(value);
+	public String getDisplayName(Object value) {
+		return null;
 	}
+
+	public Color getForeground(Object value) {
+		return null;
+	}
+
+	public Icon getIcon(Object value) {
+		if(((Boolean)value).booleanValue()) {
+			return complete;
+		}
+		else {
+			return incomplete;
+		}
+	}
+
+	public String getTooltipText(Object value) {
+		return null;
+	}
+
 }

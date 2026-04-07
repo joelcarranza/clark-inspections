@@ -40,17 +40,28 @@ import gks.clark.inspections.model.SiteList;
 import gks.control.ControlTask;
 
 /**
- * @see gks.fde.control.AsyncProxy
+ * Async proxy for {@link InspectionsControl}
  */
 public interface AsyncInspectionsControl  {
 	
+	/**
+	 * @see InspectionsControl#querySite(SiteFilter)
+	 */
 	public ControlTask querySite(SiteFilter f);
-	
+
+	/**
+	 * @see InspectionsControl#queryInspection(String)
+	 */
 	public ControlTask queryInspection(String listKey);
 	
-	
+	/**
+	 * @see InspectionsControl#createList(SiteList)
+	 */
 	public ControlTask createList(SiteList siteList);
-	
+
+	/**
+	 * @see InspectionsControl#save(Inspection)
+	 */
 	public ControlTask save(Inspection inspection);
 
 }
