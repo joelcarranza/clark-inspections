@@ -39,6 +39,8 @@ import java.util.List;
 
 import javax.swing.JComponent;
 
+import gks.clark.inspections.model.Inspection;
+import gks.clark.inspections.model.InspectionTableModel;
 import gks.clark.inspections.model.Site;
 import gks.clark.inspections.model.SiteFilter;
 import gks.clark.inspections.model.SiteList;
@@ -59,6 +61,8 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 	private InspectionsControl control;
 	private AsyncInspectionsControl asyncControl;
+
+	private String inspectionListKey;
 
 	public PlannerModule(NavigateInterface application) {
 		super(application);
@@ -86,27 +90,59 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		windowManager().show(WIN_FILTER);
 	}
 	
-	public void actionNewList() {
+	public void actionNewList(ActionEvent e) {
 		SiteList siteList = new SiteList();
+		List<Site> sites = tableView().getData(Site.class);
+		siteList.setSites(sites.toArray(new Site[0]));
 		if(Editor.edit(this, siteList, "New List")) {
-			List<Site> sites = tableView().getData(Site.class);
-			control.proxy().saveList(siteList, sites.toArray(new Site[0])).onComplete(this, "onListSaved").start();
+			control.proxy().createList(siteList).onComplete(this, "onListSaved").start();
 		}
 	}
 
 	public void actionOpen(ActionEvent e) {
 		
 	}
+	
+	public void actionOpenList(ActionEvent e) {
+		String listKey = "5"; // XXX: test
+		
+		control.proxy().
+		queryInspection(listKey).
+		onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] {listKey}).
+		execute();
+		
+	}
 
 	public void onSitesQueried(Site site[], SiteFilter siteFilter) {
+		this.inspectionListKey = null;
+		
 		SiteTableModel tableModel = new SiteTableModel();
 		tableModel.setValues(site);
 		tableView().setTableColumnSet(tableModel, Site.class.getName());
+		
+		actionManager().setConditional("site", site.length > 0);
+		actionManager().setConditional("inspection", false);
+		actionManager().setConditional("list", false);
+	}
+	
+	public void onInspectionsQueried(Inspection insp[], String listKey) {				
+		this.inspectionListKey = listKey;
+		
+		InspectionTableModel tableModel = new InspectionTableModel();
+		tableModel.setValues(insp);
+		tableView().setTableColumnSet(tableModel, Inspection.class.getName());
+
+		actionManager().setConditional("list", true);
+		actionManager().setConditional("inspection", insp.length > 0);
+		actionManager().setConditional("site", false);
 	}
 	
 	
-	public void onListSaved() {
-		
+	public void onListSaved(String listKey) {
+		control.proxy().
+			queryInspection(listKey).
+			onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] {listKey}).
+			execute();
 	}
 	
 	public Window createWindow(String name) {
@@ -116,7 +152,10 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			{
 				@Override
 				public void ok(SiteFilter filter) {					
-					control.proxy().querySite(filter).onComplete(PlannerModule.this, "onSitesQueried", new Object[] {filter}).execute();
+					control.proxy().
+						querySite(filter).
+						onComplete(PlannerModule.this, "onSitesQueried", new Object[] {filter}).
+						execute();
 				}
 
 				@Override

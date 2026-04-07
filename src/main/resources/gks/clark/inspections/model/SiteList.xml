@@ -13,7 +13,7 @@ function beforeCommit(values) {
 <body onValidate="validate" beforeUpdate="beforeUpdate" beforeCommit="beforeCommit">
 		<table cols="p f " hgap="3"  vgap="3">
 			<tr>
-				<td>Name</td><td><text id="name"/></td>
+				<td>Work Order</td><td><text id="workOrder"/></td>
 			</tr>
 		</table>
 </body>

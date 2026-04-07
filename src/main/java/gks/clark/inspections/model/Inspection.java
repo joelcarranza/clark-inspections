@@ -36,7 +36,7 @@ package gks.clark.inspections.model;
  AUTO GENERATED FILE! - Do not edit, as your changes will be overwritten
  ==========================================================================
 */
-public class Site implements gks.util.dto.ServerTransferObject,
+public class Inspection implements gks.util.dto.ServerTransferObject,
     gks.util.Mappable {
     /*
      ==========================================================================
@@ -55,7 +55,7 @@ public class Site implements gks.util.dto.ServerTransferObject,
      Constructors
      ==========================================================================
     */
-    public Site() {
+    public Inspection() {
     }
 
     /*
@@ -112,6 +112,12 @@ public class Site implements gks.util.dto.ServerTransferObject,
     public void parseFromStream(gks.util.dto.DataTransferInputStream stream)
         throws gks.util.dto.DataTransferException {
         this.key = stream.read();
+
+        if (gks.util.Utils.isEmpty(this.key)) {
+            throw new gks.util.dto.DataTransferException(
+                "Missing required field key");
+        }
+
         this.x = stream.readDouble();
         this.y = stream.readDouble();
         this.type = stream.read();
@@ -121,6 +127,11 @@ public class Site implements gks.util.dto.ServerTransferObject,
 
     public void serializeToStream(gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
+        if (gks.util.Utils.isEmpty(this.key)) {
+            throw new gks.util.dto.DataTransferException(
+                "Missing required field key");
+        }
+
         stream.write(this.key);
         stream.write(this.x);
         stream.write(this.y);
@@ -132,16 +143,15 @@ public class Site implements gks.util.dto.ServerTransferObject,
     public void serializeModifiableToStream(
         gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
-        stream.write(this.key);
     }
 
     /**
              * Factory method for creating an ArrayTableModel which will
-             * serve this class. Table created is of class gks.clark.inspections.model.SiteTableModel
+             * serve this class. Table created is of class gks.clark.inspections.model.InspectionTableModel
              *
-             * @see gks.clark.inspections.model.SiteTableModel
+             * @see gks.clark.inspections.model.InspectionTableModel
              */
     public static gks.ui.table.ArrayTableModel createTableModel() {
-        return new gks.clark.inspections.model.SiteTableModel();
+        return new gks.clark.inspections.model.InspectionTableModel();
     }
 }

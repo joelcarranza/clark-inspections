@@ -34,13 +34,21 @@
 package gks.clark.inspections;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
+import gks.clark.inspections.model.Inspection;
 import gks.clark.inspections.model.Site;
 import gks.clark.inspections.model.SiteFilter;
 import gks.clark.inspections.model.SiteList;
 import gks.control.BasicControl;
 import gks.util.QueryBuilder;
+import gks.util.ReflectionUtils;
+import gks.util.ServerLink;
+import gks.util.Utils;
 import gks.util.dto.DataTransferException;
+import gks.util.dto.ServerLinkInputStream;
+import gks.util.dto.ServerLinkOutputStream;
 
 public class InspectionsControl extends BasicControl {
 	private AsyncInspectionsControl proxy;
@@ -52,8 +60,33 @@ public class InspectionsControl extends BasicControl {
 	}
 
 	
-	public void saveList(SiteList siteList, Site site[]) {
+	public Inspection[] queryInspection(String listKey) throws DataTransferException {
+		QueryBuilder q = new QueryBuilder();
+		q.append("LIST", listKey);
+		return scriptQuery("/scripts/inspections/read_inspection", q, Inspection.class);
+	}
+
+	
+	public String createList(SiteList siteList) throws DataTransferException {
+		 List<String> data = new ArrayList<String>();
+		 siteList.serializeModifiableToStream(new ServerLinkOutputStream(data));
 		
+		QueryBuilder q = new QueryBuilder();
+		q.append("data",Utils.join(ServerLink.WORDSEP, data));
+
+		
+		ServerLink link = new ServerLink(getHostname(),"/scripts/inspections/create_inspections", q.urlQueryString());
+		try {
+			ServerLinkInputStream in = link.open();
+			while(in.next()) {
+				return in.read();
+			}
+		}
+		finally {
+			link.release();
+		}
+		
+		throw new DataTransferException("No data returned");
 	}
 	
 	public AsyncInspectionsControl proxy() {

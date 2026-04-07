@@ -1,15 +1,11 @@
 /*
- * AsyncInspectionApplicationControl - Mar 30, 2005
- * 
- *
-
  * NOTICES
  * -------
- *
- * Copyright 2000 by Gatekeeper Systems All Rights Reserved.
- *
+ * 
+ * Copyright 2026 by Gatekeeper Systems All Rights Reserved.
+ * 
  * Unpublished Work -- Protected under the copyright laws of the United States.
- *
+ * 
  * Restricted Rights Legend: Use, duplication or disclosure of the software
  * contained hereon is governed by the terms of a license agreement.  In
  * the absence of an agreement, use, duplication or disclosure by the United
@@ -17,37 +13,43 @@
  * (c)(1) of the Commercial Computer Software -- Restricted Rights clause
  * at FAR 52.227-9 or subparagraph (c)(1)(ii) of the Rights in Technical
  * Data and Computer Software clause at DFARS 252.227-7013, as applicable.
- *
+ * 
  * Contractor/Manufacturer:
- *
+ * 
  *     Gatekeeper Systems
- *     99 East C Street Ste. 209
- *     Upland, Ca. 91786
- *
- *     Tel: (626) 449-8135
+ *     1010 E. Union St.
+ *     Pasadena, CA 91106
+ * 
+ *     Tel: (626) 449-3070 or (800) 424-3070
  *     Fax: (626) 440-1742
- *
+ * 
  *     E-Mail: info@gatekeeper.com
  *     URL:    http://www.gatekeeper.com/
  *
  */
-package gks.clark.inspections;
 
-import gks.clark.inspections.model.Site;
-import gks.clark.inspections.model.SiteFilter;
-import gks.clark.inspections.model.SiteList;
-import gks.control.ControlTask;
+ 
+var JavaLink = require('JavaLink');
+var Config = require('Config');
+var Sql = require('Sql');
 
-/**
- * @see gks.fde.control.AsyncProxy
- */
-public interface AsyncInspectionsControl  {
-	
-	public ControlTask querySite(SiteFilter f);
-	
-	public ControlTask queryInspection(String listKey);
-	
-	
-	public ControlTask createList(SiteList siteList);
+JavaLink.useDefaultDataSource();
 
-}
+JavaLink.process = function() {
+	var listKey = this.param['LIST'];
+
+	this.outputQueryResults(`
+		SELECT 
+			i.ID, 
+			i.X,
+			i.Y,
+			s.type,
+			s.equipment_id,
+			s.location
+		FROM WM_INSPECTION i
+		LEFT JOIN INSPECTION_SITE s ON i.asset_id = s.id
+		WHERE i.list_id =  ? 
+	`,listKey)
+};
+
+JavaLink.run();

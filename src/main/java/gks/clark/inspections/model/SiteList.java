@@ -36,18 +36,14 @@ package gks.clark.inspections.model;
  AUTO GENERATED FILE! - Do not edit, as your changes will be overwritten
  ==========================================================================
 */
-public class SiteList implements gks.util.dto.DataTransferObject {
+public class SiteList implements gks.util.dto.ServerTransferObject {
     /*
      ==========================================================================
      Fields
      ==========================================================================
     */
-    java.util.Date scheduleDate;
-    String name;
-    int totalNr;
-    int completeNr;
-    java.util.Date completeDate;
-    String planner;
+    String workOrder;
+    gks.clark.inspections.model.Site[] sites;
 
     /*
      ==========================================================================
@@ -62,36 +58,24 @@ public class SiteList implements gks.util.dto.DataTransferObject {
      Getter and setters
      ==========================================================================
     */
-    public void setScheduleDate(java.util.Date scheduleDate) {
-        this.scheduleDate = scheduleDate;
+    public void setWorkOrder(String workOrder) {
+        this.workOrder = workOrder;
     }
 
-    public java.util.Date getScheduleDate() {
-        return scheduleDate;
+    public String getWorkOrder() {
+        return workOrder;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSites(gks.clark.inspections.model.Site[] sites) {
+        this.sites = sites;
     }
 
-    public String getName() {
-        return name;
+    public gks.clark.inspections.model.Site[] getSites() {
+        return sites;
     }
 
-    public int getTotalNr() {
-        return totalNr;
-    }
-
-    public int getCompleteNr() {
-        return completeNr;
-    }
-
-    public java.util.Date getCompleteDate() {
-        return completeDate;
-    }
-
-    public String getPlanner() {
-        return planner;
+    public String getKey() {
+        return "";
     }
 
     /*
@@ -101,21 +85,51 @@ public class SiteList implements gks.util.dto.DataTransferObject {
     */
     public void parseFromStream(gks.util.dto.DataTransferInputStream stream)
         throws gks.util.dto.DataTransferException {
-        this.scheduleDate = stream.readDate();
-        this.name = stream.read();
-        this.totalNr = stream.readi();
-        this.completeNr = stream.readi();
-        this.completeDate = stream.readDate();
-        this.planner = stream.read();
+        this.workOrder = stream.read();
+
+        Integer __sites_countObj = stream.readInteger();
+
+        if (__sites_countObj != null) {
+            int __sites_count = __sites_countObj.intValue();
+            this.sites = new gks.clark.inspections.model.Site[__sites_count];
+
+            for (int k = 0; k < __sites_count; ++k) {
+                this.sites[k] = new gks.clark.inspections.model.Site();
+                this.sites[k].parseFromStream(stream);
+            }
+        } else {
+            this.sites = null;
+        }
     }
 
     public void serializeToStream(gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
-        stream.write(this.scheduleDate);
-        stream.write(this.name);
-        stream.write(this.totalNr);
-        stream.write(this.completeNr);
-        stream.write(this.completeDate);
-        stream.write(this.planner);
+        stream.write(this.workOrder);
+
+        if (this.sites != null) {
+            stream.write(this.sites.length);
+
+            for (int k = 0; k < this.sites.length; ++k) {
+                this.sites[k].serializeToStream(stream);
+            }
+        } else {
+            stream.writeNull();
+        }
+    }
+
+    public void serializeModifiableToStream(
+        gks.util.dto.DataTransferOutputStream stream)
+        throws gks.util.dto.DataTransferException {
+        stream.write(this.workOrder);
+
+        if (this.sites != null) {
+            stream.write(this.sites.length);
+
+            for (int k = 0; k < this.sites.length; ++k) {
+                this.sites[k].serializeModifiableToStream(stream);
+            }
+        } else {
+            stream.writeNull();
+        }
     }
 }

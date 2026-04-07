@@ -2,10 +2,39 @@
 <project>
 
 	<bean class="gks.clark.inspections.model.Site">
-		<implement>gks.util.dto.DataTransferObject</implement>
+		<implement>gks.util.dto.ServerTransferObject</implement>
 		<implement>gks.util.Mappable</implement>
 		
 		<generateTableModel class="gks.clark.inspections.model.SiteTableModel" />
+		<property name="key" set="false" key="true"/>
+		<property name="x" class="Double" set="false"/>
+		<property name="y" class="Double" set="false"/>
+		<property name="type" set="false"/>
+		<property name="equipmentIdentifier" set="false"/>
+		<property name="location" set="false"/>
+
+		<derivedProperty name="mapKey">
+			<getter>
+				return key;
+			</getter>
+		</derivedProperty>
+		<include>
+		public gks.util.BoundingBox getExtent(gks.util.BoundingBox scratchBox) {
+			return gks.map.MapControl.getExtent(x,y, scratchBox);
+		}
+	
+		public boolean isMappable() {
+			return gks.map.MapControl.isMappable(x,y, getMapKey());
+		}
+		</include>
+	</bean>
+	
+	
+	<bean class="gks.clark.inspections.model.Inspection">
+		<implement>gks.util.dto.ServerTransferObject</implement>
+		<implement>gks.util.Mappable</implement>
+		
+		<generateTableModel class="gks.clark.inspections.model.InspectionTableModel" />
 		<property name="key" set="false" required="true"/>
 		<property name="x" class="Double" set="false"/>
 		<property name="y" class="Double" set="false"/>
@@ -39,15 +68,18 @@
 	
 	
 	<bean class="gks.clark.inspections.model.SiteList">
+		<implement>gks.util.dto.ServerTransferObject</implement>
+		<!--
 		<implement>gks.util.dto.DataTransferObject</implement>
+		-->
 
-		<property name="scheduleDate" class="Date" />
-		<property name="name" class="String" />
-		<property name="totalNr" class="int" set="false"/>		
-		<property name="completeNr" class="int" set="false"/>
-		<property name="completeDate" class="Date" set="false"/>
-		<property name="planner" class="String" set="false"/>
+		<property name="workOrder" class="String" />
+		<property name="sites" class="gks.clark.inspections.model.Site[]" />
 		
-	
+		<derivedProperty name="key">
+			<getter>
+				return "";
+			</getter>
+		</derivedProperty>
 	</bean>
 </project>
