@@ -30,21 +30,21 @@
   </tableColumn>
   <tableColumn modelColumn="key">
     <header>Key</header>
+    <cu>5</cu>
+    <tableSet>gks.clark.inspections.model.Inspection</tableSet>
+  </tableColumn>
+   <tableColumn modelColumn="program">
+    <header>Program</header>
+    <cu>5</cu>
+    <tableSet>gks.clark.inspections.model.Inspection</tableSet>
+  </tableColumn>
+   <tableColumn modelColumn="completionStatus">
+    <header>Result</header>
     <cu>10</cu>
     <tableSet>gks.clark.inspections.model.Inspection</tableSet>
   </tableColumn>
-   <tableColumn modelColumn="type">
-    <header>Type</header>
-    <cu>10</cu>
-    <tableSet>gks.clark.inspections.model.Inspection</tableSet>
-  </tableColumn>
-   <tableColumn modelColumn="equipmentIdentifier">
-    <header>Equipment</header>
-    <cu>10</cu>
-    <tableSet>gks.clark.inspections.model.Inspection</tableSet>
-  </tableColumn>
-   <tableColumn modelColumn="location">
-    <header>Location</header>
+   <tableColumn modelColumn="comment">
+    <header>Comment</header>
     <cu>10</cu>
     <tableSet>gks.clark.inspections.model.Inspection</tableSet>
   </tableColumn>
