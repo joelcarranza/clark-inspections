@@ -50,6 +50,40 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
     String type;
     String equipmentIdentifier;
     String location;
+    String orderKey;
+    String orderSubKey;
+    String orderNumber;
+    String orderType;
+    String orderSubType;
+    String scheduledTs;
+    String entryTs;
+    String hazard;
+    String hazardText;
+    String lifeSupport;
+    String customerName;
+    String specialNeeds;
+    String resPhone;
+    String busPhone;
+    String callFirst;
+    String serviceAccount;
+    String serviceAddress;
+    String serviceCity;
+    String serviceZip;
+    String cycle;
+    String route;
+    String substation;
+    String feeder;
+    String geocode;
+    String lightTypeDesk;
+    String request;
+    String reason;
+    String orderDesc;
+    String workLocation;
+    String workLocationDescription;
+    String creationUser;
+    String completionDate;
+    String priority;
+    String materialsRequired;
     gks.clark.inspections.model.CompletionStatus completionStatus;
     String comment;
 
@@ -107,6 +141,142 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         return location;
     }
 
+    public String getOrderKey() {
+        return orderKey;
+    }
+
+    public String getOrderSubKey() {
+        return orderSubKey;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public String getOrderSubType() {
+        return orderSubType;
+    }
+
+    public String getScheduledTs() {
+        return scheduledTs;
+    }
+
+    public String getEntryTs() {
+        return entryTs;
+    }
+
+    public String getHazard() {
+        return hazard;
+    }
+
+    public String getHazardText() {
+        return hazardText;
+    }
+
+    public String getLifeSupport() {
+        return lifeSupport;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public String getSpecialNeeds() {
+        return specialNeeds;
+    }
+
+    public String getResPhone() {
+        return resPhone;
+    }
+
+    public String getBusPhone() {
+        return busPhone;
+    }
+
+    public String getCallFirst() {
+        return callFirst;
+    }
+
+    public String getServiceAccount() {
+        return serviceAccount;
+    }
+
+    public String getServiceAddress() {
+        return serviceAddress;
+    }
+
+    public String getServiceCity() {
+        return serviceCity;
+    }
+
+    public String getServiceZip() {
+        return serviceZip;
+    }
+
+    public String getCycle() {
+        return cycle;
+    }
+
+    public String getRoute() {
+        return route;
+    }
+
+    public String getSubstation() {
+        return substation;
+    }
+
+    public String getFeeder() {
+        return feeder;
+    }
+
+    public String getGeocode() {
+        return geocode;
+    }
+
+    public String getLightTypeDesk() {
+        return lightTypeDesk;
+    }
+
+    public String getRequest() {
+        return request;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public String getOrderDesc() {
+        return orderDesc;
+    }
+
+    public String getWorkLocation() {
+        return workLocation;
+    }
+
+    public String getWorkLocationDescription() {
+        return workLocationDescription;
+    }
+
+    public String getCreationUser() {
+        return creationUser;
+    }
+
+    public String getCompletionDate() {
+        return completionDate;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public String getMaterialsRequired() {
+        return materialsRequired;
+    }
+
     public void setCompletionStatus(
         gks.clark.inspections.model.CompletionStatus completionStatus) {
         this.completionStatus = completionStatus;
@@ -132,6 +302,29 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         return key;
     }
 
+    public String getServiceAddressComplete() {
+        boolean hasAddress = gks.util.Utils.isNotEmpty(serviceAddress);
+        boolean hasCity = gks.util.Utils.isNotEmpty(serviceCity);
+        boolean hasZip = gks.util.Utils.isNotEmpty(serviceZip);
+        java.util.ArrayList<String> lines = new java.util.ArrayList<String>(2);
+
+        // line 1
+        if (hasAddress) {
+            lines.add(serviceAddress);
+        }
+
+        // line 2
+        if (hasCity && hasZip) {
+            lines.add(serviceCity + ", " + serviceZip);
+        } else if (hasCity) {
+            lines.add(serviceCity);
+        } else if (hasZip) {
+            lines.add(serviceZip);
+        }
+
+        return gks.util.Utils.join("\n", lines);
+    }
+
     /*
     ==========================================================================
     Server Serializable object methods
@@ -146,6 +339,40 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         this.type = stream.read();
         this.equipmentIdentifier = stream.read();
         this.location = stream.read();
+        this.orderKey = stream.read();
+        this.orderSubKey = stream.read();
+        this.orderNumber = stream.read();
+        this.orderType = stream.read();
+        this.orderSubType = stream.read();
+        this.scheduledTs = stream.read();
+        this.entryTs = stream.read();
+        this.hazard = stream.read();
+        this.hazardText = stream.read();
+        this.lifeSupport = stream.read();
+        this.customerName = stream.read();
+        this.specialNeeds = stream.read();
+        this.resPhone = stream.read();
+        this.busPhone = stream.read();
+        this.callFirst = stream.read();
+        this.serviceAccount = stream.read();
+        this.serviceAddress = stream.read();
+        this.serviceCity = stream.read();
+        this.serviceZip = stream.read();
+        this.cycle = stream.read();
+        this.route = stream.read();
+        this.substation = stream.read();
+        this.feeder = stream.read();
+        this.geocode = stream.read();
+        this.lightTypeDesk = stream.read();
+        this.request = stream.read();
+        this.reason = stream.read();
+        this.orderDesc = stream.read();
+        this.workLocation = stream.read();
+        this.workLocationDescription = stream.read();
+        this.creationUser = stream.read();
+        this.completionDate = stream.read();
+        this.priority = stream.read();
+        this.materialsRequired = stream.read();
         this.completionStatus = stream.readCode(gks.clark.inspections.model.CompletionStatus.class);
         this.comment = stream.read();
     }
@@ -159,6 +386,40 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         stream.write(this.type);
         stream.write(this.equipmentIdentifier);
         stream.write(this.location);
+        stream.write(this.orderKey);
+        stream.write(this.orderSubKey);
+        stream.write(this.orderNumber);
+        stream.write(this.orderType);
+        stream.write(this.orderSubType);
+        stream.write(this.scheduledTs);
+        stream.write(this.entryTs);
+        stream.write(this.hazard);
+        stream.write(this.hazardText);
+        stream.write(this.lifeSupport);
+        stream.write(this.customerName);
+        stream.write(this.specialNeeds);
+        stream.write(this.resPhone);
+        stream.write(this.busPhone);
+        stream.write(this.callFirst);
+        stream.write(this.serviceAccount);
+        stream.write(this.serviceAddress);
+        stream.write(this.serviceCity);
+        stream.write(this.serviceZip);
+        stream.write(this.cycle);
+        stream.write(this.route);
+        stream.write(this.substation);
+        stream.write(this.feeder);
+        stream.write(this.geocode);
+        stream.write(this.lightTypeDesk);
+        stream.write(this.request);
+        stream.write(this.reason);
+        stream.write(this.orderDesc);
+        stream.write(this.workLocation);
+        stream.write(this.workLocationDescription);
+        stream.write(this.creationUser);
+        stream.write(this.completionDate);
+        stream.write(this.priority);
+        stream.write(this.materialsRequired);
         stream.write(this.completionStatus);
         stream.write(this.comment);
     }

@@ -43,11 +43,14 @@ public class Site implements gks.util.dto.ServerTransferObject,
      Fields
      ==========================================================================
     */
-    String key;
-    Double x;
-    Double y;
-    String type;
-    String equipmentIdentifier;
+    String assetType;
+    String assetID;
+    Double minX;
+    Double minY;
+    Double maxX;
+    Double maxY;
+    String typeDescription;
+    String equipment;
     String location;
 
     /*
@@ -64,11 +67,11 @@ public class Site implements gks.util.dto.ServerTransferObject,
     ==========================================================================
     */
     public gks.util.BoundingBox getExtent(gks.util.BoundingBox scratchBox) {
-        return gks.map.MapControl.getExtent(x, y, scratchBox);
+        return gks.map.MapControl.getExtent(minX, minY, maxX, maxY, scratchBox);
     }
 
     public boolean isMappable() {
-        return gks.map.MapControl.isMappable(x, y, getMapKey());
+        return gks.map.MapControl.isMappable(minX, minY, maxX, maxY, getMapKey());
     }
 
     /*
@@ -76,24 +79,36 @@ public class Site implements gks.util.dto.ServerTransferObject,
      Getter and setters
      ==========================================================================
     */
-    public String getKey() {
-        return key;
+    public String getAssetType() {
+        return assetType;
     }
 
-    public Double getX() {
-        return x;
+    public String getAssetID() {
+        return assetID;
     }
 
-    public Double getY() {
-        return y;
+    public Double getMinX() {
+        return minX;
     }
 
-    public String getType() {
-        return type;
+    public Double getMinY() {
+        return minY;
     }
 
-    public String getEquipmentIdentifier() {
-        return equipmentIdentifier;
+    public Double getMaxX() {
+        return maxX;
+    }
+
+    public Double getMaxY() {
+        return maxY;
+    }
+
+    public String getTypeDescription() {
+        return typeDescription;
+    }
+
+    public String getEquipment() {
+        return equipment;
     }
 
     public String getLocation() {
@@ -101,7 +116,11 @@ public class Site implements gks.util.dto.ServerTransferObject,
     }
 
     public String getMapKey() {
-        return key;
+        return assetType + ":" + assetID;
+    }
+
+    public String getKey() {
+        return assetType + ":" + assetID;
     }
 
     /*
@@ -111,28 +130,35 @@ public class Site implements gks.util.dto.ServerTransferObject,
     */
     public void parseFromStream(gks.util.dto.DataTransferInputStream stream)
         throws gks.util.dto.DataTransferException {
-        this.key = stream.read();
-        this.x = stream.readDouble();
-        this.y = stream.readDouble();
-        this.type = stream.read();
-        this.equipmentIdentifier = stream.read();
+        this.assetType = stream.read();
+        this.assetID = stream.read();
+        this.minX = stream.readDouble();
+        this.minY = stream.readDouble();
+        this.maxX = stream.readDouble();
+        this.maxY = stream.readDouble();
+        this.typeDescription = stream.read();
+        this.equipment = stream.read();
         this.location = stream.read();
     }
 
     public void serializeToStream(gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
-        stream.write(this.key);
-        stream.write(this.x);
-        stream.write(this.y);
-        stream.write(this.type);
-        stream.write(this.equipmentIdentifier);
+        stream.write(this.assetType);
+        stream.write(this.assetID);
+        stream.write(this.minX);
+        stream.write(this.minY);
+        stream.write(this.maxX);
+        stream.write(this.maxY);
+        stream.write(this.typeDescription);
+        stream.write(this.equipment);
         stream.write(this.location);
     }
 
     public void serializeModifiableToStream(
         gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
-        stream.write(this.key);
+        stream.write(this.assetType);
+        stream.write(this.assetID);
     }
 
     /**

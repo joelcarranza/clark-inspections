@@ -39,11 +39,14 @@ JavaLink.useDefaultDataSource();
 
 JavaLink.process = function() {
 	this.outputQueryResults(`SELECT 
-			ID, 
-			X,
-			Y,
-			type,
-			equipment_id,
+			ASSET_TYPE, 
+			ASSET_ID, 
+			MIN_X,
+			MIN_Y,
+			MAX_X,
+			MAX_Y,
+			type_description,
+			equipment,
 			location
 		FROM INSPECTION_SITE WHERE FEEDERID=?`, this.param['CIRCUIT']);
 };

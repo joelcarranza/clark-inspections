@@ -44,24 +44,30 @@ JavaLink.process = function() {
         'CREW',
         {
             name: 'SITES', fields: [
+                'TYPE',
                 'ID',
             ]
         },
       ]);
 
+
+	 var order_key = this.db.queryValue('SELECT order_key FROM WM_ORDER where order_key = ?', data.WORK_ORDER);
+	 Lang.assert(order_key, "Invalid work order #: " + data.WORK_ORDER);
+
 	 Logger.dump(data, 'info');
 	 var woListKey = this.db.insertRowReturnKey('WM_LIST', {
 	 	WORK_ORDER: data.WORK_ORDER,
+	 	ORDER_KEY: order_key,
 	 	PROGRAM: data.PROGRAM
 	 });
 	 Lang.assert(woListKey, "No ID for WM_LIST returned");
 
 	 var sth = this.db.prepare(`
-	 insert into wm_inspection (LIST_ID, ASSET_ID, X,Y)
-	  select ${woListKey} as LIST_ID, ID as ASSET_ID,X,Y 
-	 	from INSPECTION_SITE where ID = ?`);
+	 insert into wm_inspection (LIST_ID, ASSET_TYPE, ASSET_ID, X,Y)
+	  select ${woListKey} as LIST_ID, ASSET_TYPE, ASSET_ID,(MIN_X + MAX_X / 2) as X, (MIN_Y + MAX_Y) / 2 as Y 
+	 	from INSPECTION_SITE where ASSET_TYPE= ? and ASSET_ID = ?`);
 	 data.SITES.forEach((site) => {
-	 	sth.execute(site.ID);
+	 	sth.execute(site.TYPE, site.ID);
 	 });
 	 sth.close();
 

@@ -45,13 +45,57 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     public static final int TYPE = 4;
     public static final int EQUIPMENT_IDENTIFIER = 5;
     public static final int LOCATION = 6;
-    public static final int COMPLETION_STATUS = 7;
-    public static final int COMMENT = 8;
-    public static final int COMPLETE = 9;
-    public static final int MAP_KEY = 10;
+    public static final int ORDER_KEY = 7;
+    public static final int ORDER_SUB_KEY = 8;
+    public static final int ORDER_NUMBER = 9;
+    public static final int ORDER_TYPE = 10;
+    public static final int ORDER_SUB_TYPE = 11;
+    public static final int SCHEDULED_TS = 12;
+    public static final int ENTRY_TS = 13;
+    public static final int HAZARD = 14;
+    public static final int HAZARD_TEXT = 15;
+    public static final int LIFE_SUPPORT = 16;
+    public static final int CUSTOMER_NAME = 17;
+    public static final int SPECIAL_NEEDS = 18;
+    public static final int RES_PHONE = 19;
+    public static final int BUS_PHONE = 20;
+    public static final int CALL_FIRST = 21;
+    public static final int SERVICE_ACCOUNT = 22;
+    public static final int SERVICE_ADDRESS = 23;
+    public static final int SERVICE_CITY = 24;
+    public static final int SERVICE_ZIP = 25;
+    public static final int CYCLE = 26;
+    public static final int ROUTE = 27;
+    public static final int SUBSTATION = 28;
+    public static final int FEEDER = 29;
+    public static final int GEOCODE = 30;
+    public static final int LIGHT_TYPE_DESK = 31;
+    public static final int REQUEST = 32;
+    public static final int REASON = 33;
+    public static final int ORDER_DESC = 34;
+    public static final int WORK_LOCATION = 35;
+    public static final int WORK_LOCATION_DESCRIPTION = 36;
+    public static final int CREATION_USER = 37;
+    public static final int COMPLETION_DATE = 38;
+    public static final int PRIORITY = 39;
+    public static final int MATERIALS_REQUIRED = 40;
+    public static final int COMPLETION_STATUS = 41;
+    public static final int COMMENT = 42;
+    public static final int COMPLETE = 43;
+    public static final int MAP_KEY = 44;
+    public static final int SERVICE_ADDRESS_COMPLETE = 45;
     private static final String[] COLUMN_NAMES = {
             "key", "x", "y", "program", "type", "equipmentIdentifier",
-            "location", "completionStatus", "comment", "complete", "mapKey",
+            "location", "orderKey", "orderSubKey", "orderNumber", "orderType",
+            "orderSubType", "scheduledTs", "entryTs", "hazard", "hazardText",
+            "lifeSupport", "customerName", "specialNeeds", "resPhone",
+            "busPhone", "callFirst", "serviceAccount", "serviceAddress",
+            "serviceCity", "serviceZip", "cycle", "route", "substation",
+            "feeder", "geocode", "lightTypeDesk", "request", "reason",
+            "orderDesc", "workLocation", "workLocationDescription",
+            "creationUser", "completionDate", "priority", "materialsRequired",
+            "completionStatus", "comment", "complete", "mapKey",
+            "serviceAddressComplete",
         };
 
     public String getColumnName(int column) {
@@ -111,6 +155,108 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
         case LOCATION:
             return v.getLocation();
 
+        case ORDER_KEY:
+            return v.getOrderKey();
+
+        case ORDER_SUB_KEY:
+            return v.getOrderSubKey();
+
+        case ORDER_NUMBER:
+            return v.getOrderNumber();
+
+        case ORDER_TYPE:
+            return v.getOrderType();
+
+        case ORDER_SUB_TYPE:
+            return v.getOrderSubType();
+
+        case SCHEDULED_TS:
+            return v.getScheduledTs();
+
+        case ENTRY_TS:
+            return v.getEntryTs();
+
+        case HAZARD:
+            return v.getHazard();
+
+        case HAZARD_TEXT:
+            return v.getHazardText();
+
+        case LIFE_SUPPORT:
+            return v.getLifeSupport();
+
+        case CUSTOMER_NAME:
+            return v.getCustomerName();
+
+        case SPECIAL_NEEDS:
+            return v.getSpecialNeeds();
+
+        case RES_PHONE:
+            return v.getResPhone();
+
+        case BUS_PHONE:
+            return v.getBusPhone();
+
+        case CALL_FIRST:
+            return v.getCallFirst();
+
+        case SERVICE_ACCOUNT:
+            return v.getServiceAccount();
+
+        case SERVICE_ADDRESS:
+            return v.getServiceAddress();
+
+        case SERVICE_CITY:
+            return v.getServiceCity();
+
+        case SERVICE_ZIP:
+            return v.getServiceZip();
+
+        case CYCLE:
+            return v.getCycle();
+
+        case ROUTE:
+            return v.getRoute();
+
+        case SUBSTATION:
+            return v.getSubstation();
+
+        case FEEDER:
+            return v.getFeeder();
+
+        case GEOCODE:
+            return v.getGeocode();
+
+        case LIGHT_TYPE_DESK:
+            return v.getLightTypeDesk();
+
+        case REQUEST:
+            return v.getRequest();
+
+        case REASON:
+            return v.getReason();
+
+        case ORDER_DESC:
+            return v.getOrderDesc();
+
+        case WORK_LOCATION:
+            return v.getWorkLocation();
+
+        case WORK_LOCATION_DESCRIPTION:
+            return v.getWorkLocationDescription();
+
+        case CREATION_USER:
+            return v.getCreationUser();
+
+        case COMPLETION_DATE:
+            return v.getCompletionDate();
+
+        case PRIORITY:
+            return v.getPriority();
+
+        case MATERIALS_REQUIRED:
+            return v.getMaterialsRequired();
+
         case COMPLETION_STATUS:
             return v.getCompletionStatus();
 
@@ -123,13 +269,16 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
         case MAP_KEY:
             return v.getMapKey();
 
+        case SERVICE_ADDRESS_COMPLETE:
+            return v.getServiceAddressComplete();
+
         default:
             throw new IllegalArgumentException();
         }
     }
 
     public int getColumnCount() {
-        return 11;
+        return 46;
     }
 
     protected Class<?> getValueClass() {

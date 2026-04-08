@@ -5,12 +5,12 @@
     <cu>10</cu>
     <tableSet>gks.clark.inspections.model.Site</tableSet>
   </tableColumn>
-   <tableColumn modelColumn="type">
+   <tableColumn modelColumn="typeDescription">
     <header>Type</header>
     <cu>10</cu>
     <tableSet>gks.clark.inspections.model.Site</tableSet>
   </tableColumn>
-   <tableColumn modelColumn="equipmentIdentifier">
+   <tableColumn modelColumn="equipment">
     <header>Equipment</header>
     <cu>10</cu>
     <tableSet>gks.clark.inspections.model.Site</tableSet>

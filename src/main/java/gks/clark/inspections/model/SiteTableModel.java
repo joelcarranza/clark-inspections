@@ -38,15 +38,20 @@ package gks.clark.inspections.model;
  */
 public class SiteTableModel extends gks.ui.table.ArrayTableModel {
     private static final long serialVersionUID = 1L;
-    public static final int KEY = 0;
-    public static final int X = 1;
-    public static final int Y = 2;
-    public static final int TYPE = 3;
-    public static final int EQUIPMENT_IDENTIFIER = 4;
-    public static final int LOCATION = 5;
-    public static final int MAP_KEY = 6;
+    public static final int ASSET_TYPE = 0;
+    public static final int ASSET_ID = 1;
+    public static final int MIN_X = 2;
+    public static final int MIN_Y = 3;
+    public static final int MAX_X = 4;
+    public static final int MAX_Y = 5;
+    public static final int TYPE_DESCRIPTION = 6;
+    public static final int EQUIPMENT = 7;
+    public static final int LOCATION = 8;
+    public static final int MAP_KEY = 9;
+    public static final int KEY = 10;
     private static final String[] COLUMN_NAMES = {
-            "key", "x", "y", "type", "equipmentIdentifier", "location", "mapKey",
+            "assetType", "assetID", "minX", "minY", "maxX", "maxY",
+            "typeDescription", "equipment", "location", "mapKey", "key",
         };
 
     public String getColumnName(int column) {
@@ -63,8 +68,10 @@ public class SiteTableModel extends gks.ui.table.ArrayTableModel {
         }
 
         switch (column) {
-        case X:
-        case Y:
+        case MIN_X:
+        case MIN_Y:
+        case MAX_X:
+        case MAX_Y:
             return Double.class;
 
         default:
@@ -76,20 +83,29 @@ public class SiteTableModel extends gks.ui.table.ArrayTableModel {
         gks.clark.inspections.model.Site v = (gks.clark.inspections.model.Site) value;
 
         switch (column) {
-        case KEY:
-            return v.getKey();
+        case ASSET_TYPE:
+            return v.getAssetType();
 
-        case X:
-            return v.getX();
+        case ASSET_ID:
+            return v.getAssetID();
 
-        case Y:
-            return v.getY();
+        case MIN_X:
+            return v.getMinX();
 
-        case TYPE:
-            return v.getType();
+        case MIN_Y:
+            return v.getMinY();
 
-        case EQUIPMENT_IDENTIFIER:
-            return v.getEquipmentIdentifier();
+        case MAX_X:
+            return v.getMaxX();
+
+        case MAX_Y:
+            return v.getMaxY();
+
+        case TYPE_DESCRIPTION:
+            return v.getTypeDescription();
+
+        case EQUIPMENT:
+            return v.getEquipment();
 
         case LOCATION:
             return v.getLocation();
@@ -97,13 +113,16 @@ public class SiteTableModel extends gks.ui.table.ArrayTableModel {
         case MAP_KEY:
             return v.getMapKey();
 
+        case KEY:
+            return v.getKey();
+
         default:
             throw new IllegalArgumentException();
         }
     }
 
     public int getColumnCount() {
-        return 7;
+        return 11;
     }
 
     protected Class<?> getValueClass() {
