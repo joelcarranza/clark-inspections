@@ -41,6 +41,7 @@ JavaLink.process = function() {
 	 var data = this.thawData([
 	 	'PROGRAM',
         'WORK_ORDER',
+        'CREW',
         {
             name: 'SITES', fields: [
                 'ID',

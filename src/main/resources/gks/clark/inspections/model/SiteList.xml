@@ -18,6 +18,9 @@ function beforeCommit(values) {
 			<tr>
 				<td>Work Order</td><td><text id="workOrder"/></td>
 			</tr>
+			<tr>
+				<td>Crew</td><td><combo id="crew" dataClass="gks.clark.inspections.model.Crew" /></td>
+			</tr>
 		</table>
 </body>
 </form>
