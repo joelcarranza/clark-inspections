@@ -9,25 +9,25 @@
     <inspection>false</inspection>
     <list>false</list>
   </condition>
+
+  <action key="filter">
+    <name>Choose Sites...</name>
+    <method>actionShowSiteFilter</method>
+  </action>
   <action key="newList">
-    <tooltip>Create new assignment list</tooltip>
+	<name>New List...</name>
     <method>actionNewList</method>
-    <icon>(none)</icon>
     <enabled>site</enabled>
   </action>
   <action key="openList">
+	<name>Open List...</name>
     <method>actionOpenList</method>
-    <icon>(none)</icon>
   </action>
-  <action key="filter">
-    <name>Edit filter...</name>
-    <tooltip>Modify the assignment list filter</tooltip>
-    <method>actionShowFilter</method>
-  </action>
+
+
   <action key="open">
     <name>Open....</name>
     <method>actionOpen</method>
-    <icon>reports</icon>
   </action>
   <action key="zoom">
     <name>Go to assessment</name>
@@ -40,7 +40,7 @@
     <method>actionZoomAll</method>
   </action>
   <toolbar>
-    <main>filter</main>
+    <main>open | zoom zoomAll</main>
   </toolbar>
   <menubar>
     <Tools>filter newList openList</Tools>

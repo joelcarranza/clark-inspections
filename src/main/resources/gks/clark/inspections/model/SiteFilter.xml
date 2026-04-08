@@ -27,7 +27,7 @@
 	}
 ]]></script>
 <body beforeCommit="beforeCommit" beforeUpdate="beforeUpdate" onValidate="validate">
-	<table hgap="4dlu" vgap="4dlu" cols="p f" border="10px ">				
+	<table hgap="4dlu" vgap="4dlu" cols="p f" border="10px">				
 		
 		<tr>
 			<td>Circuit</td>

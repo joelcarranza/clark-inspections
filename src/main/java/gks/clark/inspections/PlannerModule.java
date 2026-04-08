@@ -62,9 +62,15 @@ import gks.util.TabularModule;
  */
 public class PlannerModule extends TabularModule implements PropertyChangeListener {
 
-	private static final String WIN_DETAIL = "detail";
+	private static final String WIN_INSPECTION_DETAIL = "detail";
 	private static final String WIN_FILTER = "winFilter";
 
+	static enum ItemType {
+		SITE,
+		INSPECTION
+	}
+	
+	private ItemType visibleItemType;
 	private InspectionsControl control;
 	private String inspectionListKey;
 
@@ -86,7 +92,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		tableView().setTableColumnSet(Site.class.getName());
 	}
 
-	public void actionShowFilter(ActionEvent e) {
+	public void actionShowSiteFilter(ActionEvent e) {
 		windowManager().show(WIN_FILTER);
 	}
 
@@ -100,9 +106,11 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	}
 
 	public void actionOpen(ActionEvent e) {
-		Window window = windowManager().show(WIN_DETAIL);
-		DetailsEditor<Object> editor = DetailsEditor.forWindow(window);
-		editor.view(tableView().getSelection());
+		if(visibleItemType == ItemType.INSPECTION) {
+			Window window = windowManager().show(WIN_INSPECTION_DETAIL);
+			DetailsEditor<Object> editor = DetailsEditor.forWindow(window);
+			editor.view(tableView().getSelection());
+		}
 	}
 
 	public void actionOpenList(ActionEvent e) {
@@ -120,6 +128,8 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		tableModel.setValues(site);
 		tableView().setTableColumnSet(tableModel, Site.class.getName());
 
+		visibleItemType = ItemType.SITE;
+		
 		actionManager().setConditional("site", site.length > 0);
 		actionManager().setConditional("inspection", false);
 		actionManager().setConditional("list", false);
@@ -132,6 +142,8 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		tableModel.setValues(insp);
 		tableView().setTableColumnSet(tableModel, Inspection.class.getName());
 
+		visibleItemType = ItemType.INSPECTION;
+		
 		actionManager().setConditional("list", true);
 		actionManager().setConditional("inspection", insp.length > 0);
 		actionManager().setConditional("site", false);
@@ -171,14 +183,14 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 			};
 			GuiUtils.setImplementation(chooser, PlannerModule.class, this);
-			chooser.addChoice(new SiteFilter(), "gks/clark/inspections/model/SiteFilter.xml", "Sites by Circuit");
+			chooser.addChoice(new SiteFilter(), "gks/clark/inspections/model/SiteFilter.xml", "Sites by Criteria");
 
 //			chooser.setPreferredSizeFromChoiceIndex(1);
 			SimpleDialog dlg = chooser.buildAsDialog(this);
-			dlg.setTitle("Filter");
+			dlg.setTitle("Choose Sites...");
 			dlg.setDefaultCloseOperation(SimpleDialog.HIDE_ON_CLOSE);
 			return dlg;
-		} else if (name.equals(WIN_DETAIL)) {
+		} else if (name.equals(WIN_INSPECTION_DETAIL)) {
 			InspectionDetailsEditor view = new InspectionDetailsEditor(this);
 			JFrame f = view.buildAsFrame();
 			f.setTitle("Inspection");
