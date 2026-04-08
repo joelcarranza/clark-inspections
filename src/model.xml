@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <project>
+	<bean class="gks.clark.inspections.model.Program">
+		<extend>gks.util.SimpleCode</extend>
+	</bean>
+	
 	
 	<bean class="gks.clark.inspections.model.SiteFilter">
 		<implement>gks.util.dto.DataTransferObject</implement>
-	<property name="circuit" />
-
- 
+		<property name="circuit" />
 	</bean>
 	
 	
@@ -14,7 +16,7 @@
 		<!--
 		<implement>gks.util.dto.DataTransferObject</implement>
 		-->
-
+		<property name="program" class="gks.clark.inspections.model.Program" />
 		<property name="workOrder" class="String" />
 		<property name="sites" class="gks.clark.inspections.model.Site[]" />
 		
@@ -67,6 +69,7 @@
 		<property name="key" set="false" key="true"/>
 		<property name="x" class="Double" set="false"/>
 		<property name="y" class="Double" set="false"/>
+		<property name="program" class="gks.clark.inspections.model.Program" set="false"/>
 		<property name="type" set="false"/>
 		<property name="equipmentIdentifier" set="false"/>
 		<property name="location" set="false"/>

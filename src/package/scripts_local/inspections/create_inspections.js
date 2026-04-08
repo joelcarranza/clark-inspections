@@ -39,6 +39,7 @@ JavaLink.useDefaultDataSource();
 
 JavaLink.process = function() {
 	 var data = this.thawData([
+	 	'PROGRAM',
         'WORK_ORDER',
         {
             name: 'SITES', fields: [
@@ -49,7 +50,8 @@ JavaLink.process = function() {
 
 	 Logger.dump(data, 'info');
 	 var woListKey = this.db.insertRowReturnKey('WM_LIST', {
-	 	WORK_ORDER: data.WORK_ORDER
+	 	WORK_ORDER: data.WORK_ORDER,
+	 	PROGRAM: data.PROGRAM
 	 });
 	 Lang.assert(woListKey, "No ID for WM_LIST returned");
 

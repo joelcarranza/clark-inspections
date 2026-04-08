@@ -2,7 +2,7 @@
  * NOTICES
  * -------
  * 
- * Copyright 2026 by Gatekeeper Systems All Rights Reserved.
+ * Copyright 2018 by Gatekeeper Systems All Rights Reserved.
  * 
  * Unpublished Work -- Protected under the copyright laws of the United States.
  * 
@@ -17,10 +17,10 @@
  * Contractor/Manufacturer:
  * 
  *     Gatekeeper Systems
- *     1010 E. Union St.
- *     Pasadena, CA 91106
+ *     99 East C Street Ste. 209
+ *     Upland, Ca. 91786
  * 
- *     Tel: (626) 449-3070 or (800) 424-3070
+ *     Tel: (626) 449-8135
  *     Fax: (626) 440-1742
  * 
  *     E-Mail: info@gatekeeper.com
@@ -28,37 +28,24 @@
  *
  */
 
- 
-var JavaLink = require('JavaLink');
-var Config = require('Config');
-var Sql = require('Sql');
+var JSONPage = require('JSONPage');
 var Logger = require('Logger');
+var Sql = require('Sql');
 var Lang = require('Lang');
 
-JavaLink.useDefaultDataSource();
+JSONPage.useDefaultDataSource();
 
-JavaLink.process = function() {
-	 var data = this.thawData([
-        'ID',
-        'COMPLETION_STATUS',
-        'COMMENT'
-      ]);
-     var literals;
-     if(data['COMPLETION_STATUS']) {
-        literals = {
-            COMPLETION_DATE: 'GETDATE()',
-            COMPLETION_USER: Sql.quote(this.environment['REMOTE_USER']) 
-        }
-     }
-     else {
-        literals = {
-            COMPLETION_DATE: 'NULL',
-            COMPLETION_USER: 'NULL' 
-        }
-     }
+JSONPage.process = function() {
+	return {
+		'gks.clark.inspections.model.Program': [
+			['FIRE', 'Fire']
+		],
+		'gks.clark.inspections.model.CompletionStatus': [
+			['C', 'Completed', 0],
+			['U', 'Unable To Complete', 1],
+			['X', 'Exception', 2]
+		]
+	};
+}
 
-	 this.db.updateRow('WM_INSPECTION', data, 'ID', literals);
-
-};
-
-JavaLink.run();
+JSONPage.run();

@@ -13,6 +13,9 @@ function beforeCommit(values) {
 <body onValidate="validate" beforeUpdate="beforeUpdate" beforeCommit="beforeCommit">
 		<table cols="p f " hgap="3"  vgap="3">
 			<tr>
+				<td>Program</td><td><combo id="program" dataClass="gks.clark.inspections.model.Program" required="true"/></td>
+			</tr>
+			<tr>
 				<td>Work Order</td><td><text id="workOrder"/></td>
 			</tr>
 		</table>

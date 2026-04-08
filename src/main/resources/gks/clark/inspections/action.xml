@@ -29,10 +29,21 @@
     <method>actionOpen</method>
     <icon>reports</icon>
   </action>
+  <action key="zoom">
+    <name>Go to assessment</name>
+    <tooltip>Go to the assessment area on the map</tooltip>
+    <method>actionZoomSelection</method>
+  </action>
+    <action key="zoomAll">
+    <name>Go to all assessments</name>
+    <tooltip>Go to all assessments on the map</tooltip>
+    <method>actionZoomAll</method>
+  </action>
   <toolbar>
     <main>filter</main>
   </toolbar>
   <menubar>
     <Tools>filter newList openList</Tools>
+    <Map>zoom zoomAll</Map>
   </menubar>
 </config>

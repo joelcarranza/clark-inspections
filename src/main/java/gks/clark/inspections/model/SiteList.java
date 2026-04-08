@@ -42,6 +42,7 @@ public class SiteList implements gks.util.dto.ServerTransferObject {
      Fields
      ==========================================================================
     */
+    gks.clark.inspections.model.Program program;
     String workOrder;
     gks.clark.inspections.model.Site[] sites;
 
@@ -58,6 +59,14 @@ public class SiteList implements gks.util.dto.ServerTransferObject {
      Getter and setters
      ==========================================================================
     */
+    public void setProgram(gks.clark.inspections.model.Program program) {
+        this.program = program;
+    }
+
+    public gks.clark.inspections.model.Program getProgram() {
+        return program;
+    }
+
     public void setWorkOrder(String workOrder) {
         this.workOrder = workOrder;
     }
@@ -85,6 +94,7 @@ public class SiteList implements gks.util.dto.ServerTransferObject {
     */
     public void parseFromStream(gks.util.dto.DataTransferInputStream stream)
         throws gks.util.dto.DataTransferException {
+        this.program = stream.readCode(gks.clark.inspections.model.Program.class);
         this.workOrder = stream.read();
 
         Integer __sites_countObj = stream.readInteger();
@@ -104,6 +114,7 @@ public class SiteList implements gks.util.dto.ServerTransferObject {
 
     public void serializeToStream(gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
+        stream.write(this.program);
         stream.write(this.workOrder);
 
         if (this.sites != null) {
@@ -120,6 +131,7 @@ public class SiteList implements gks.util.dto.ServerTransferObject {
     public void serializeModifiableToStream(
         gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
+        stream.write(this.program);
         stream.write(this.workOrder);
 
         if (this.sites != null) {

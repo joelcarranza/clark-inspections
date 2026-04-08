@@ -12,12 +12,15 @@ function beforeCommit(values) {
 
 </script>
 <body onValidate="validate" beforeUpdate="beforeUpdate" beforeCommit="beforeCommit">
-		<table cols="p f " hgap="3"  vgap="3">
+		<table cols="p f " hgap="3"  vgap="3" border="10px">
 			<tr>
 				<td>ID</td><td><readOnly id="key"/></td>
 			</tr>
 			<tr>
-				<td>Comption</td><td><combo id="completionStatus" dataClass="gks.clark.inspections.model.CompletionStatus" /></td>
+				<td>Program</td><td><readOnly id="program"/></td>
+			</tr>
+			<tr>
+				<td>Completion</td><td><combo id="completionStatus" dataClass="gks.clark.inspections.model.CompletionStatus" /></td>
 			</tr>
 			<tr>
 				<td>Comment</td><td><textArea id="comment"/></td>

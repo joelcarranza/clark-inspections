@@ -41,16 +41,17 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     public static final int KEY = 0;
     public static final int X = 1;
     public static final int Y = 2;
-    public static final int TYPE = 3;
-    public static final int EQUIPMENT_IDENTIFIER = 4;
-    public static final int LOCATION = 5;
-    public static final int COMPLETION_STATUS = 6;
-    public static final int COMMENT = 7;
-    public static final int COMPLETE = 8;
-    public static final int MAP_KEY = 9;
+    public static final int PROGRAM = 3;
+    public static final int TYPE = 4;
+    public static final int EQUIPMENT_IDENTIFIER = 5;
+    public static final int LOCATION = 6;
+    public static final int COMPLETION_STATUS = 7;
+    public static final int COMMENT = 8;
+    public static final int COMPLETE = 9;
+    public static final int MAP_KEY = 10;
     private static final String[] COLUMN_NAMES = {
-            "key", "x", "y", "type", "equipmentIdentifier", "location",
-            "completionStatus", "comment", "complete", "mapKey",
+            "key", "x", "y", "program", "type", "equipmentIdentifier",
+            "location", "completionStatus", "comment", "complete", "mapKey",
         };
 
     public String getColumnName(int column) {
@@ -74,6 +75,9 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
         case Y:
             return Double.class;
 
+        case PROGRAM:
+            return gks.clark.inspections.model.Program.class;
+
         case COMPLETE:
             return Boolean.class;
 
@@ -94,6 +98,9 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
 
         case Y:
             return v.getY();
+
+        case PROGRAM:
+            return v.getProgram();
 
         case TYPE:
             return v.getType();
@@ -122,7 +129,7 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     }
 
     public int getColumnCount() {
-        return 10;
+        return 11;
     }
 
     protected Class<?> getValueClass() {

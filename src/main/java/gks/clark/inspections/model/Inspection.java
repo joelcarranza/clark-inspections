@@ -46,6 +46,7 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
     String key;
     Double x;
     Double y;
+    gks.clark.inspections.model.Program program;
     String type;
     String equipmentIdentifier;
     String location;
@@ -88,6 +89,10 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
 
     public Double getY() {
         return y;
+    }
+
+    public gks.clark.inspections.model.Program getProgram() {
+        return program;
     }
 
     public String getType() {
@@ -137,6 +142,7 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         this.key = stream.read();
         this.x = stream.readDouble();
         this.y = stream.readDouble();
+        this.program = stream.readCode(gks.clark.inspections.model.Program.class);
         this.type = stream.read();
         this.equipmentIdentifier = stream.read();
         this.location = stream.read();
@@ -149,6 +155,7 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         stream.write(this.key);
         stream.write(this.x);
         stream.write(this.y);
+        stream.write(this.program);
         stream.write(this.type);
         stream.write(this.equipmentIdentifier);
         stream.write(this.location);
