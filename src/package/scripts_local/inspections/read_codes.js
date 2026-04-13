@@ -37,14 +37,10 @@ JSONPage.useDefaultDataSource();
 
 JSONPage.process = function() {
 	return {
-		'gks.clark.inspections.model.Program': [
-			['FIRE', 'Fire']
-		],
-		'gks.clark.inspections.model.CompletionStatus': [
-			['C', 'Completed', 0],
-			['U', 'Unable To Complete', 1],
-			['X', 'Exception', 2]
-		]
+		'gks.clark.inspections.model.Program': 
+			this.db.queryAll('SELECT code,name FROM insp_program'),
+		'gks.clark.inspections.model.CompletionStatus': 
+			this.db.queryAll('SELECT code,name,display_order FROM insp_completion_status')		
 	};
 }
 
