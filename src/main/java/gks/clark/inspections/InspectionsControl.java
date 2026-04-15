@@ -36,9 +36,11 @@ package gks.clark.inspections;
 import java.util.ArrayList;
 import java.util.List;
 
+import gks.clark.inspections.model.CriteriaSiteFilter;
+import gks.clark.inspections.model.GlobalidSiteFilter;
 import gks.clark.inspections.model.Inspection;
+import gks.clark.inspections.model.ProximitySiteFilter;
 import gks.clark.inspections.model.Site;
-import gks.clark.inspections.model.SiteFilter;
 import gks.clark.inspections.model.SiteList;
 import gks.clark.inspections.model.WorkOrder;
 import gks.control.BasicControl;
@@ -56,8 +58,30 @@ public class InspectionsControl extends BasicControl {
 	private AsyncInspectionsControl proxy;
 
 	public Site[] querySite(SiteFilter filter) throws DataTransferException {
+		if(filter == null) {
+			throw new IllegalArgumentException();
+		}
 		QueryBuilder q = new QueryBuilder();
-		q.append("CIRCUIT", filter.getCircuit());
+		if(filter instanceof CriteriaSiteFilter) {
+			CriteriaSiteFilter cf = (CriteriaSiteFilter)filter;
+			q.append("MODE", "criteria");
+			q.append("CIRCUIT", cf.getCircuit());
+		}
+		else if(filter instanceof ProximitySiteFilter) {
+			ProximitySiteFilter pf = (ProximitySiteFilter)filter;
+			q.append("MODE", "proximity");
+			q.append("X", pf.getX());
+			q.append("Y", pf.getY());
+			q.append("DISTANCE", pf.getDistance());
+		}
+		else if(filter instanceof GlobalidSiteFilter) {
+			GlobalidSiteFilter gf = (GlobalidSiteFilter)filter;
+			q.append("MODE", "globalid");
+			q.append("GLOBALID", gf.getIdString());
+		}
+		else {
+			throw new UnsupportedOperationException(filter.getClass().getName());
+		}
 		return scriptQuery("/scripts/inspections/read_site", q, Site.class);
 	}
 

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!-- 
+	gks/crew/inspections/CriteriaSiteFilter.xml
+  -->
+
+<form>
+
+<script><![CDATA[
+	var gks = Packages.gks;
+	
+  function beforeUpdate(values) {
+ 	}
+ 	
+ 	function beforeCommit(values) {
+ 	}
+ 	
+	function validate(e) {
+		var m = form.getModel();
+		if(!m.getValue("circuit")) {
+			e.error("A circuit must be chosen");
+		}
+		return e;
+	}
+	
+	function test(v) {
+		return v ? true : false;
+	}
+]]></script>
+<body beforeCommit="beforeCommit" beforeUpdate="beforeUpdate" onValidate="validate">
+	<table hgap="4dlu" vgap="4dlu" cols="p f" border="10px">				
+		
+		<tr>
+			<td>Circuit</td>
+			<td><text id="circuit" /></td>
+		</tr>
+	</table>
+</body>
+</form>

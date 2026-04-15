@@ -50,7 +50,7 @@
   </tableColumn>
   
   <tableColumn modelColumn="key">
-    <header>Key</header>
+    <header>#</header>
     <cu>5</cu>
     <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
   </tableColumn>
@@ -59,4 +59,45 @@
     <cu>5</cu>
     <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
   </tableColumn>
+  <tableColumn modelColumn="serviceAddress">
+    <header>Address</header>
+    <cu>15</cu>
+    <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
+  </tableColumn>
+  <tableColumn modelColumn="serviceCity">
+    <header>City</header>
+    <cu>5</cu>
+    <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
+  </tableColumn>
+  <tableColumn modelColumn="customerName">
+    <header>Customer</header>
+    <cu>5</cu>
+    <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
+  </tableColumn>
+  <tableColumn modelColumn="feeder">
+    <header>Circ</header>
+    <cu>5</cu>
+    <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
+  </tableColumn>
+  <tableColumn modelColumn="cycle">
+    <header>Cycle</header>
+    <cu>5</cu>
+    <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
+  </tableColumn>
+  <tableColumn modelColumn="route">
+    <header>Route</header>
+    <cu>5</cu>
+    <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
+  </tableColumn>
+  <tableColumn modelColumn="geocode">
+    <header>Geocode</header>
+    <cu>5</cu>
+    <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
+  </tableColumn>
+  <tableColumn modelColumn="serviceZip">
+    <header>Zip</header>
+    <cu>5</cu>
+    <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
+  </tableColumn>
+
 </config>

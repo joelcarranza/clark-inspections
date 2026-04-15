@@ -27,9 +27,9 @@
     <method>actionOpenList</method>
   </action>
 
-  <action key="openWorkOrders">
-	<name>Open Work Orders</name>
-    <method>actionOpenWorkOrders</method>
+  <action key="viewWorkOrders">
+	<name>View Work Orders</name>
+    <method>actionViewWorkOrders</method>
   </action>
 
   <action key="open">
@@ -50,7 +50,7 @@
     <main>open | zoom zoomAll</main>
   </toolbar>
   <menubar>
-    <Tools>openWorkOrders | filter newList openList</Tools>
+    <Tools>viewWorkOrders | filter newList openList</Tools>
     <Map>zoom zoomAll</Map>
   </menubar>
 </config>

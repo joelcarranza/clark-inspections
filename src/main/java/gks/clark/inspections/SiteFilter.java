@@ -1,12 +1,8 @@
-/*
- * AsyncInspectionApplicationControl - Mar 30, 2005
- * 
- *
-
+/**
  * NOTICES
  * -------
  *
- * Copyright 2000 by Gatekeeper Systems All Rights Reserved.
+ * Copyright 2026 by Gatekeeper Systems All Rights Reserved.
  *
  * Unpublished Work -- Protected under the copyright laws of the United States.
  *
@@ -33,39 +29,9 @@
  */
 package gks.clark.inspections;
 
-import gks.clark.inspections.model.Inspection;
-import gks.clark.inspections.model.Site;
-import gks.clark.inspections.model.SiteList;
-import gks.control.ControlTask;
-
 /**
- * Async proxy for {@link InspectionsControl}
+ * 
  */
-public interface AsyncInspectionsControl {
-
-	/**
-	 * @see InspectionsControl#queryWorkOrder
-	 */
-	public ControlTask queryWorkOrders();
-	
-	/**
-	 * @see InspectionsControl#querySite(SiteFilter)
-	 */
-	public ControlTask querySite(SiteFilter f);
-
-	/**
-	 * @see InspectionsControl#queryInspection(String)
-	 */
-	public ControlTask queryInspection(String listKey);
-
-	/**
-	 * @see InspectionsControl#createList(SiteList)
-	 */
-	public ControlTask createList(SiteList siteList);
-
-	/**
-	 * @see InspectionsControl#save(Inspection)
-	 */
-	public ControlTask save(Inspection inspection);
+public interface SiteFilter {
 
 }

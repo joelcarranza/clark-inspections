@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- 
-	gks/crew/inspections/SiteFilter.xml
+	gks/crew/inspections/ProximitySiteFilter.xml
   -->
 
 <form>
@@ -16,8 +16,8 @@
  	
 	function validate(e) {
 		var m = form.getModel();
-		if(!m.getValue("circuit")) {
-			e.error("A circuit must be chosen");
+		if(!m.getValue("distance")) {
+			e.error("A distance must be chosen");
 		}
 		return e;
 	}
@@ -30,9 +30,18 @@
 	<table hgap="4dlu" vgap="4dlu" cols="p f" border="10px">				
 		
 		<tr>
-			<td>Circuit</td>
-			<td><text id="circuit" /></td>
+			<td>X</td>
+			<td><readOnly id="X" /></td>
 		</tr>
+		<tr>
+			<td>Y</td>
+			<td><readOnly id="Y" /></td>
+		</tr>
+		<tr>
+			<td>Distance</td>
+			<td><integer id="distance" /></td>
+		</tr>
+
 	</table>
 </body>
 </form>

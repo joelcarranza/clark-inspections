@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<form>
+<script>
+
+function validate(results) {
+	results.require('idString',"At least one value must be entered");
+}
+
+</script>
+<body onValidate="validate">
+	<table cols="f" hgap="5" vgap="5">
+		<tr>
+			<td>
+				<l text="GlobalID(s)" />
+			</td>
+		</tr>
+		<tr fill="true">
+			<td><textArea id="idString"/></td>
+		</tr>
+		<tr>
+			<td>
+				<l text="Multiple values can specified by separating with spaces" />
+			</td>
+		</tr>
+	</table>
+</body>
+</form>

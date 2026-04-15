@@ -36,20 +36,22 @@ package gks.clark.inspections.model;
  AUTO GENERATED FILE! - Do not edit, as your changes will be overwritten
  ==========================================================================
 */
-public class SiteFilter implements gks.util.dto.DataTransferObject {
+public class ProximitySiteFilter implements gks.clark.inspections.SiteFilter {
     /*
      ==========================================================================
      Fields
      ==========================================================================
     */
-    String circuit;
+    Double x;
+    Double y;
+    Integer distance;
 
     /*
      ==========================================================================
      Constructors
      ==========================================================================
     */
-    public SiteFilter() {
+    public ProximitySiteFilter() {
     }
 
     /*
@@ -57,26 +59,27 @@ public class SiteFilter implements gks.util.dto.DataTransferObject {
      Getter and setters
      ==========================================================================
     */
-    public void setCircuit(String circuit) {
-        this.circuit = circuit;
+    public void setX(Double x) {
+        this.x = x;
     }
 
-    public String getCircuit() {
-        return circuit;
+    public Double getX() {
+        return x;
     }
 
-    /*
-    ==========================================================================
-    Server Serializable object methods
-    ==========================================================================
-    */
-    public void parseFromStream(gks.util.dto.DataTransferInputStream stream)
-        throws gks.util.dto.DataTransferException {
-        this.circuit = stream.read();
+    public void setY(Double y) {
+        this.y = y;
     }
 
-    public void serializeToStream(gks.util.dto.DataTransferOutputStream stream)
-        throws gks.util.dto.DataTransferException {
-        stream.write(this.circuit);
+    public Double getY() {
+        return y;
+    }
+
+    public void setDistance(Integer distance) {
+        this.distance = distance;
+    }
+
+    public Integer getDistance() {
+        return distance;
     }
 }

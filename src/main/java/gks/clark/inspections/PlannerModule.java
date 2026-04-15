@@ -41,10 +41,12 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+import gks.clark.inspections.model.CriteriaSiteFilter;
+import gks.clark.inspections.model.GlobalidSiteFilter;
 import gks.clark.inspections.model.Inspection;
 import gks.clark.inspections.model.InspectionTableModel;
+import gks.clark.inspections.model.ProximitySiteFilter;
 import gks.clark.inspections.model.Site;
-import gks.clark.inspections.model.SiteFilter;
 import gks.clark.inspections.model.SiteList;
 import gks.clark.inspections.model.SiteTableModel;
 import gks.clark.inspections.model.WorkOrder;
@@ -68,6 +70,8 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	private static final String WIN_FILTER = "winFilter";
 	private static final String WIN_WORK_ORDER_DETAIL = "workOrderDetail";
 
+	private InspectionsControl control;
+
 	static enum ItemType {
 		SITE,
 		INSPECTION, 
@@ -75,9 +79,14 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	}
 	
 	private ItemType visibleItemType;
-	private InspectionsControl control;
+	
+	
 	private String inspectionListKey;
-	private WorkOrder workOrder;
+	
+	/**
+	 * the work order selected when sites are queried. Used to provide context for further steps
+	 */
+	private WorkOrder activeWorkOrder;
 
 	public PlannerModule(NavigateInterface application) {
 		super(application);
@@ -96,15 +105,15 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 		tableView().setTableColumnSet(Site.class.getName());
 		
-		actionOpenWorkOrders(null);
+		actionViewWorkOrders(null);
 	}
 
 	public void actionShowSiteFilter(ActionEvent e) {
 		windowManager().show(WIN_FILTER);
 	}
 	
-	public void actionOpenWorkOrders(ActionEvent e) {
-		workOrder = null;
+	public void actionViewWorkOrders(ActionEvent e) {
+		activeWorkOrder = null;
 		
 		control.proxy().queryWorkOrders()
 		.onComplete(PlannerModule.this, "onWorkOrdersQueried").start();
@@ -112,7 +121,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 	public void actionNewList(ActionEvent e) {
 		SiteList siteList = new SiteList();
-		siteList.setWorkOrder(workOrder.getKey());
+		siteList.setWorkOrder(activeWorkOrder.getKey());
 		List<Site> sites = tableView().getData(Site.class);
 		siteList.setSites(sites.toArray(new Site[0]));
 		if (Editor.edit(this, siteList, "New List")) {
@@ -194,7 +203,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	public Window createWindow(String name) {
 		if (name.equals(WIN_FILTER)) {
 
-			workOrder = tableView().getSelection(WorkOrder.class).iterator().next();
+			activeWorkOrder = tableView().getSelection(WorkOrder.class).iterator().next();
 			
 			Chooser<SiteFilter> chooser = new Chooser<SiteFilter>(this) {
 				@Override
@@ -202,31 +211,27 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 					control.proxy().querySite(filter)
 							.onComplete(PlannerModule.this, "onSitesQueried", new Object[] { filter }).start();
 				}
-
-				@Override
-				public SimpleDialog buildAsDialog(JComponent parent, int modality) {
-					SimpleDialog dlg = super.buildAsDialog(parent, modality);
-					dlg.addAction("reset", "Reset", null, SimpleDialog.SW_CORNER);
-					return dlg;
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					String cmd = e.getActionCommand();
-					if (cmd.equals("reset")) {
-						setChoiceValues(new SiteFilter());
-					} else {
-						super.actionPerformed(e);
-					}
-				}
-
 			};
 			GuiUtils.setImplementation(chooser, PlannerModule.class, this);
-			chooser.addChoice(new SiteFilter(), "gks/clark/inspections/model/SiteFilter.xml", "Sites by Criteria");
+			
+			CriteriaSiteFilter cf = new CriteriaSiteFilter();
+			cf.setCircuit(activeWorkOrder.getFeeder());
+			chooser.addChoice(cf, "gks/clark/inspections/model/CriteriaSiteFilter.xml", "Sites by Criteria");
 
-//			chooser.setPreferredSizeFromChoiceIndex(1);
+			ProximitySiteFilter pf = new ProximitySiteFilter();
+			pf.setX(activeWorkOrder.getX());
+			pf.setY(activeWorkOrder.getY());
+			pf.setDistance(1000);
+			chooser.addChoice(pf, "gks/clark/inspections/model/ProximitySiteFilter.xml", "Sites by Proximity");
+
+			
+			chooser.addChoice(new GlobalidSiteFilter(), "gks/clark/inspections/model/GlobalidSiteFilter.xml", "Sites by Globalid");
+
+			
+			chooser.setPreferredSizeFromChoiceIndex(0);
 			SimpleDialog dlg = chooser.buildAsDialog(this);
 			dlg.setTitle("Choose Sites...");
+			dlg.setResizable(true);
 			dlg.setDefaultCloseOperation(SimpleDialog.HIDE_ON_CLOSE);
 			return dlg;
 		} else if (name.equals(WIN_INSPECTION_DETAIL)) {
@@ -239,7 +244,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		else if (name.equals(WIN_WORK_ORDER_DETAIL)) {
 			WorkOrderDetailsEditor view = new WorkOrderDetailsEditor(this);
 			JFrame f = view.buildAsFrame();
-			f.setTitle("Inspection");
+			f.setTitle("Work Order");
 			f.setPreferredSize(new Dimension(600, 400));
 			return f;
 		} 

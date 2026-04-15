@@ -10,9 +10,21 @@
 	
 	
 	
-	<bean class="gks.clark.inspections.model.SiteFilter">
-		<implement>gks.util.dto.DataTransferObject</implement>
+	<bean class="gks.clark.inspections.model.CriteriaSiteFilter">
+		<implement>gks.clark.inspections.SiteFilter</implement>
 		<property name="circuit" />
+	</bean>
+	
+	<bean class="gks.clark.inspections.model.ProximitySiteFilter">
+		<implement>gks.clark.inspections.SiteFilter</implement>
+		<property name="x" class="Double" />
+		<property name="y" class="Double" />
+		<property name="distance" class="Integer" />
+	</bean>
+	
+	<bean class="gks.clark.inspections.model.GlobalidSiteFilter">
+		<implement>gks.clark.inspections.SiteFilter</implement>
+		<property name="idString" class="String" />
 	</bean>
 	
 	
@@ -44,7 +56,6 @@
 		<property name="y" class="Double" set="false"/>
 		<property name="orderSubKey" set="false"/>
 		<property name="orderNumber" set="false"/>
-		<property name="orderType" set="false"/>
 		<property name="orderSubType" set="false"/>
 		<property name="entryTs" set="false"/>
 		<property name="hazard" set="false"/>

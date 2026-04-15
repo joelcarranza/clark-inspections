@@ -42,7 +42,6 @@ JavaLink.process = function() {
             o.lat,
             o.ORDERSUBKEY,
             o.ORDNBR,
-            o.ordertype,
             o.ordersubtype,
             o.entry_ts,
             o.HAZARD,
