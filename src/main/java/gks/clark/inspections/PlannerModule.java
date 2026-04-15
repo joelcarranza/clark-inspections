@@ -47,6 +47,8 @@ import gks.clark.inspections.model.Site;
 import gks.clark.inspections.model.SiteFilter;
 import gks.clark.inspections.model.SiteList;
 import gks.clark.inspections.model.SiteTableModel;
+import gks.clark.inspections.model.WorkOrder;
+import gks.clark.inspections.model.WorkOrderTableModel;
 import gks.control.BasicControl;
 import gks.form.chooser.Chooser;
 import gks.form.details.DetailsEditor;
@@ -62,17 +64,20 @@ import gks.util.TabularModule;
  */
 public class PlannerModule extends TabularModule implements PropertyChangeListener {
 
-	private static final String WIN_INSPECTION_DETAIL = "detail";
+	private static final String WIN_INSPECTION_DETAIL = "inspectionDetail";
 	private static final String WIN_FILTER = "winFilter";
+	private static final String WIN_WORK_ORDER_DETAIL = "workOrderDetail";
 
 	static enum ItemType {
 		SITE,
-		INSPECTION
+		INSPECTION, 
+		WORK_ORDER
 	}
 	
 	private ItemType visibleItemType;
 	private InspectionsControl control;
 	private String inspectionListKey;
+	private WorkOrder workOrder;
 
 	public PlannerModule(NavigateInterface application) {
 		super(application);
@@ -90,14 +95,24 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		buildView();
 
 		tableView().setTableColumnSet(Site.class.getName());
+		
+		actionOpenWorkOrders(null);
 	}
 
 	public void actionShowSiteFilter(ActionEvent e) {
 		windowManager().show(WIN_FILTER);
 	}
+	
+	public void actionOpenWorkOrders(ActionEvent e) {
+		workOrder = null;
+		
+		control.proxy().queryWorkOrders()
+		.onComplete(PlannerModule.this, "onWorkOrdersQueried").start();
+	}
 
 	public void actionNewList(ActionEvent e) {
 		SiteList siteList = new SiteList();
+		siteList.setWorkOrder(workOrder.getKey());
 		List<Site> sites = tableView().getData(Site.class);
 		siteList.setSites(sites.toArray(new Site[0]));
 		if (Editor.edit(this, siteList, "New List")) {
@@ -111,6 +126,11 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			DetailsEditor<Object> editor = DetailsEditor.forWindow(window);
 			editor.view(tableView().getSelection());
 		}
+		else if(visibleItemType == ItemType.WORK_ORDER) {
+			Window window = windowManager().show(WIN_WORK_ORDER_DETAIL);
+			DetailsEditor<Object> editor = DetailsEditor.forWindow(window);
+			editor.view(tableView().getSelection());
+		}
 	}
 
 	public void actionOpenList(ActionEvent e) {
@@ -120,6 +140,21 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { listKey }).start();
 
 	}
+	
+	public void onWorkOrdersQueried(WorkOrder workOrders[]) {
+		WorkOrderTableModel tableModel = new WorkOrderTableModel();
+		tableModel.setValues(workOrders);
+		tableView().setTableColumnSet(tableModel, WorkOrder.class.getName());
+
+		visibleItemType = ItemType.WORK_ORDER;
+
+		actionManager().setConditional("workOrder", true);
+		actionManager().setConditional("list", false);
+		actionManager().setConditional("inspection", false);
+		actionManager().setConditional("site", false);
+	}
+
+	
 
 	public void onSitesQueried(Site site[], SiteFilter siteFilter) {
 		this.inspectionListKey = null;
@@ -129,7 +164,8 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		tableView().setTableColumnSet(tableModel, Site.class.getName());
 
 		visibleItemType = ItemType.SITE;
-		
+
+		actionManager().setConditional("workOrder", false);
 		actionManager().setConditional("site", site.length > 0);
 		actionManager().setConditional("inspection", false);
 		actionManager().setConditional("list", false);
@@ -144,6 +180,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 		visibleItemType = ItemType.INSPECTION;
 		
+		actionManager().setConditional("workOrder", false);
 		actionManager().setConditional("list", true);
 		actionManager().setConditional("inspection", insp.length > 0);
 		actionManager().setConditional("site", false);
@@ -157,6 +194,8 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	public Window createWindow(String name) {
 		if (name.equals(WIN_FILTER)) {
 
+			workOrder = tableView().getSelection(WorkOrder.class).iterator().next();
+			
 			Chooser<SiteFilter> chooser = new Chooser<SiteFilter>(this) {
 				@Override
 				public void ok(SiteFilter filter) {
@@ -196,7 +235,15 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			f.setTitle("Inspection");
 			f.setPreferredSize(new Dimension(600, 400));
 			return f;
-		} else {
+		} 
+		else if (name.equals(WIN_WORK_ORDER_DETAIL)) {
+			WorkOrderDetailsEditor view = new WorkOrderDetailsEditor(this);
+			JFrame f = view.buildAsFrame();
+			f.setTitle("Inspection");
+			f.setPreferredSize(new Dimension(600, 400));
+			return f;
+		} 
+		else {
 			throw new RuntimeException(name);
 		}
 	}

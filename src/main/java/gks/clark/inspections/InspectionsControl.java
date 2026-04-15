@@ -40,6 +40,7 @@ import gks.clark.inspections.model.Inspection;
 import gks.clark.inspections.model.Site;
 import gks.clark.inspections.model.SiteFilter;
 import gks.clark.inspections.model.SiteList;
+import gks.clark.inspections.model.WorkOrder;
 import gks.control.BasicControl;
 import gks.util.QueryBuilder;
 import gks.util.ServerLink;
@@ -64,6 +65,11 @@ public class InspectionsControl extends BasicControl {
 		QueryBuilder q = new QueryBuilder();
 		q.append("LIST", listKey);
 		return scriptQuery("/scripts/inspections/read_inspection", q, Inspection.class);
+	}
+	
+	public WorkOrder[] queryWorkOrders() throws DataTransferException {
+		QueryBuilder q = new QueryBuilder();
+		return scriptQuery("/scripts/inspections/read_work_order", q, WorkOrder.class);
 	}
 
 	/**

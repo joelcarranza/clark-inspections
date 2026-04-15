@@ -33,6 +33,88 @@
 		</derivedProperty>
 	</bean>
 	
+	<bean class="gks.clark.inspections.model.WorkOrder">
+		<implement>gks.util.dto.ServerTransferObject</implement>
+		<implement>gks.util.Mappable</implement>
+		
+		<generateTableModel class="gks.clark.inspections.model.WorkOrderTableModel" />
+		<property name="key" set="false" key="true"/>
+		<property name="orderType" set="false" />
+		<property name="x" class="Double" set="false"/>
+		<property name="y" class="Double" set="false"/>
+		<property name="orderSubKey" set="false"/>
+		<property name="orderNumber" set="false"/>
+		<property name="orderType" set="false"/>
+		<property name="orderSubType" set="false"/>
+		<property name="entryTs" set="false"/>
+		<property name="hazard" set="false"/>
+		<property name="hazardText" set="false"/>
+		<property name="lifeSupport" set="false"/>
+		<property name="customerName" set="false"/>
+		<property name="specialNeeds" set="false"/>
+		<property name="resPhone" set="false"/>
+		<property name="busPhone" set="false"/>
+		<property name="callFirst" set="false"/>
+		<property name="serviceAccount" set="false"/>
+		<property name="serviceAddress" set="false"/>
+		<property name="serviceCity" set="false"/>
+		<property name="serviceZip" set="false"/>
+		<property name="cycle" set="false"/>
+		<property name="route" set="false"/>
+		<property name="substation" set="false"/>
+		<property name="feeder" set="false"/>
+		<property name="geocode" set="false"/>
+		<property name="lightTypeDesk" set="false"/>
+		<property name="request" set="false"/>
+		<property name="reason" set="false"/>
+		<property name="orderDesc" set="false"/>
+		<property name="workLocation" set="false"/>
+		<property name="workLocationDescription" set="false"/>
+		<property name="creationUser" set="false"/>
+		<derivedProperty name="mapKey">
+			<getter>
+				return key;
+			</getter>
+		</derivedProperty>
+		<derivedProperty name="serviceAddressComplete">
+			<getter>
+			<![CDATA[
+			 boolean hasAddress = gks.util.Utils.isNotEmpty(serviceAddress);
+        boolean hasCity = gks.util.Utils.isNotEmpty(serviceCity);
+        boolean hasZip = gks.util.Utils.isNotEmpty(serviceZip);
+        java.util.ArrayList<String> lines = new java.util.ArrayList<String>(2);
+
+        // line 1
+        if (hasAddress) {
+            lines.add(serviceAddress);
+        }
+
+        // line 2
+        if (hasCity && hasZip) {
+            lines.add(serviceCity + ", " + serviceZip);
+        } else if (hasCity) {
+            lines.add(serviceCity);
+        } else if (hasZip) {
+            lines.add(serviceZip);
+        }
+
+        return gks.util.Utils.join("\n", lines);
+		]]>	
+		</getter>
+		</derivedProperty>
+		
+		<include>
+		public gks.util.BoundingBox getExtent(gks.util.BoundingBox scratchBox) {
+			return gks.map.MapControl.getExtent(x,y, scratchBox);
+		}
+	
+		public boolean isMappable() {
+			return x != null &amp;&amp; y != null ? gks.map.MapControl.isMappable(x,y, getMapKey()) : false;
+		}
+		</include>
+	</bean>
+	
+	
 	<bean class="gks.clark.inspections.model.Site">
 		<implement>gks.util.dto.ServerTransferObject</implement>
 		<implement>gks.util.Mappable</implement>

@@ -38,27 +38,23 @@ import java.util.Collections;
 import javax.swing.SwingWorker;
 
 import gks.clark.inspections.model.Inspection;
+import gks.clark.inspections.model.WorkOrder;
 import gks.form.details.DetailsEditor;
 
 /**
  * Editor window for {@link Inspection} object
  */
-public class InspectionDetailsEditor extends DetailsEditor<Inspection> {
+public class WorkOrderDetailsEditor extends DetailsEditor<WorkOrder> {
 	private final PlannerModule module;
 
-	public InspectionDetailsEditor(PlannerModule mobileWorkOrdersModule) {
+	public WorkOrderDetailsEditor(PlannerModule mobileWorkOrdersModule) {
 		module = mobileWorkOrdersModule;
-		setActionConfigPath("gks/clark/inspections/inspectionDetailAction.xml");
+		setActionConfigPath("gks/clark/inspections/workOrderDetailAction.xml");
 	}
 
 	public void actionZoom(ActionEvent e) {
-		Inspection call = (Inspection) getSelectedValue();
+		WorkOrder call = (WorkOrder) getSelectedValue();
 		module.mapCommand().layer(module.getMapLayer()).view(Collections.singleton(call), module.getMinZoomWidth())
 				.run();
-	}
-	
-	@Override
-	protected SwingWorker<?, ?> createSaveTask(Inspection value) {
-		return module.getControl().proxy().save(value).view(getVisibleForm().component());
 	}
 }

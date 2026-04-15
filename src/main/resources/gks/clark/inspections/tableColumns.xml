@@ -48,4 +48,15 @@
     <cu>10</cu>
     <tableSet>gks.clark.inspections.model.Inspection</tableSet>
   </tableColumn>
+  
+  <tableColumn modelColumn="key">
+    <header>Key</header>
+    <cu>5</cu>
+    <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
+  </tableColumn>
+   <tableColumn modelColumn="orderType">
+    <header>Type</header>
+    <cu>5</cu>
+    <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
+  </tableColumn>
 </config>

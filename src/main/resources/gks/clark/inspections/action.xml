@@ -8,11 +8,14 @@
 	<site>false</site>
     <inspection>false</inspection>
     <list>false</list>
+    <workOrder>false</workOrder>
+    <singleItemSelected>false</singleItemSelected>
   </condition>
 
   <action key="filter">
     <name>Choose Sites...</name>
     <method>actionShowSiteFilter</method>
+    <enabled>workOrder AND singleItemSelected</enabled>
   </action>
   <action key="newList">
 	<name>New List...</name>
@@ -24,6 +27,10 @@
     <method>actionOpenList</method>
   </action>
 
+  <action key="openWorkOrders">
+	<name>Open Work Orders</name>
+    <method>actionOpenWorkOrders</method>
+  </action>
 
   <action key="open">
     <name>Open....</name>
@@ -43,7 +50,7 @@
     <main>open | zoom zoomAll</main>
   </toolbar>
   <menubar>
-    <Tools>filter newList openList</Tools>
+    <Tools>openWorkOrders | filter newList openList</Tools>
     <Map>zoom zoomAll</Map>
   </menubar>
 </config>

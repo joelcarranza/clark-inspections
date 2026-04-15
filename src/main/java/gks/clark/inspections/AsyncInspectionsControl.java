@@ -45,6 +45,11 @@ import gks.control.ControlTask;
 public interface AsyncInspectionsControl {
 
 	/**
+	 * @see InspectionsControl#queryWorkOrder
+	 */
+	public ControlTask queryWorkOrders();
+	
+	/**
 	 * @see InspectionsControl#querySite(SiteFilter)
 	 */
 	public ControlTask querySite(SiteFilter f);
