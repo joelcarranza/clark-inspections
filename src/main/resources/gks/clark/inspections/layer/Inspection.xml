@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<layerStyle xmlns="http//www.gatekeeper.com/gsp/1.0/LayerDefinition">
+    <scaleRange>
+        <theme>
+            <pointStyle>
+                <symbol>
+                    <name>circle</name>
+                    <width>18px</width>
+                </symbol>
+            </pointStyle>
+        </theme>
+    </scaleRange>
+</layerStyle>

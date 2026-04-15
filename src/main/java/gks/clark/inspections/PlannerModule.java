@@ -36,6 +36,7 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -55,6 +56,7 @@ import gks.control.BasicControl;
 import gks.form.chooser.Chooser;
 import gks.form.details.DetailsEditor;
 import gks.form.editor.Editor;
+import gks.map.MapLayerSet;
 import gks.ui.GuiUtils;
 import gks.ui.SimpleDialog;
 import gks.ui.SwingProxy;
@@ -87,6 +89,9 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	 * the work order selected when sites are queried. Used to provide context for further steps
 	 */
 	private WorkOrder activeWorkOrder;
+	private LocalMapLayerManager<WorkOrder> workOrderLayerManager;
+	private LocalMapLayerManager<Site> siteLayerManager;
+	private LocalMapLayerManager<Inspection> inspectionLayerManager;
 
 	public PlannerModule(NavigateInterface application) {
 		super(application);
@@ -106,9 +111,31 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		tableView().setTableColumnSet(Site.class.getName());
 		
 		actionViewWorkOrders(null);
+		
+		workOrderLayerManager = new LocalMapLayerManager<WorkOrder>(getMapControl(), "CPU Inspections - Work Order", "gks/clark/inspections/layer/WorkOrder.xml");
+
+		siteLayerManager = new LocalMapLayerManager<Site>(getMapControl(), "CPU Inspections - Site", "gks/clark/inspections/layer/Site.xml");
+
+		inspectionLayerManager = new LocalMapLayerManager<Inspection>(getMapControl(), "CPU Inspections", "gks/clark/inspections/layer/Inspection.xml");
+
+	}
+
+	@Override
+	public void stop() throws Exception {
+		super.stop();
+		
+		if(workOrderLayerManager != null) {
+			workOrderLayerManager.destroy();
+		}
+		if(siteLayerManager != null) {
+			siteLayerManager.destroy();
+		}
+
 	}
 
 	public void actionShowSiteFilter(ActionEvent e) {
+		activeWorkOrder = tableView().getSelection(WorkOrder.class).iterator().next();
+
 		windowManager().show(WIN_FILTER);
 	}
 	
@@ -157,6 +184,9 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 		visibleItemType = ItemType.WORK_ORDER;
 
+		workOrderLayerManager.setFeatures(Arrays.asList(workOrders));
+		setMapLayer(new MapLayerSet(MapLayerSet.PHYSICAL, workOrderLayerManager.getLayerName()));
+		
 		actionManager().setConditional("workOrder", true);
 		actionManager().setConditional("list", false);
 		actionManager().setConditional("inspection", false);
@@ -167,12 +197,21 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 	public void onSitesQueried(Site site[], SiteFilter siteFilter) {
 		this.inspectionListKey = null;
+		
+		
 
+		
 		SiteTableModel tableModel = new SiteTableModel();
 		tableModel.setValues(site);
 		tableView().setTableColumnSet(tableModel, Site.class.getName());
 
 		visibleItemType = ItemType.SITE;
+		
+		workOrderLayerManager.setFeature(activeWorkOrder);
+		
+		siteLayerManager.setFeatures(Arrays.asList(site));
+		setMapLayer(new MapLayerSet(MapLayerSet.PHYSICAL, siteLayerManager.getLayerName()));
+	
 
 		actionManager().setConditional("workOrder", false);
 		actionManager().setConditional("site", site.length > 0);
@@ -189,6 +228,11 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 		visibleItemType = ItemType.INSPECTION;
 		
+		workOrderLayerManager.clear();
+		siteLayerManager.clear();
+		inspectionLayerManager.setFeatures(Arrays.asList(insp));
+		setMapLayer(new MapLayerSet(MapLayerSet.PHYSICAL, inspectionLayerManager.getLayerName()));
+		
 		actionManager().setConditional("workOrder", false);
 		actionManager().setConditional("list", true);
 		actionManager().setConditional("inspection", insp.length > 0);
@@ -203,7 +247,6 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	public Window createWindow(String name) {
 		if (name.equals(WIN_FILTER)) {
 
-			activeWorkOrder = tableView().getSelection(WorkOrder.class).iterator().next();
 			
 			Chooser<SiteFilter> chooser = new Chooser<SiteFilter>(this) {
 				@Override
@@ -232,7 +275,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			SimpleDialog dlg = chooser.buildAsDialog(this);
 			dlg.setTitle("Choose Sites...");
 			dlg.setResizable(true);
-			dlg.setDefaultCloseOperation(SimpleDialog.HIDE_ON_CLOSE);
+			dlg.setDefaultCloseOperation(SimpleDialog.DISPOSE_ON_CLOSE);
 			return dlg;
 		} else if (name.equals(WIN_INSPECTION_DETAIL)) {
 			InspectionDetailsEditor view = new InspectionDetailsEditor(this);
