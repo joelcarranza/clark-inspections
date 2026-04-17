@@ -38,9 +38,11 @@ JavaLink.useDefaultDataSource();
 
 
 JavaLink.process = function() {
-	this.outputQueryResults(`SELECT 
-			ASSET_TYPE, 
-			ASSET_ID, 
+	const mode = this.param['MODE'];
+
+	const sql = `SELECT
+			ASSET_TYPE,
+			ASSET_ID,
 			MIN_X,
 			MIN_Y,
 			MAX_X,
@@ -48,7 +50,28 @@ JavaLink.process = function() {
 			type_description,
 			equipment,
 			location
-		FROM INSPECTION_SITE WHERE FEEDERID=?`, this.param['CIRCUIT']);
+		FROM INSPECTION_SITE`;
+
+	let where = [];
+	let params = [];
+
+	if (mode === 'criteria') {
+		where.push('FEEDERID = ?');
+		params.push(this.param['CIRCUIT']);
+	}
+	else if (mode === 'proximity') {
+		where.push('SQRT(POWER((MIN_X + MAX_X) / 2 - ?, 2) + POWER((MIN_Y + MAX_Y) / 2 - ?, 2)) <= ?');
+		params = params.concat([this.param['X'], this.param['Y'], this.param['DISTANCE']]);
+	}
+	else if (mode === 'globalid') {
+		const ids = this.param['GLOBALID'].trim().split(/\s+/);
+		where.push(Sql.whereIn('GLOBALID', ids));
+	}
+	else {
+		throw new Error(`Unsupported MODE: ${mode}`);
+	}
+
+	this.outputQueryResults(sql + ' WHERE ' + where.join(' AND '), params);
 };
 
 JavaLink.run();
