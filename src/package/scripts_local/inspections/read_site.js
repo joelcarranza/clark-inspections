@@ -67,6 +67,11 @@ JavaLink.process = function() {
 		const ids = this.param['GLOBALID'].trim().split(/\s+/);
 		where.push(Sql.whereIn('GLOBALID', ids));
 	}
+	else if (mode === 'trace') {
+		// TODO: determine join from trace_feature to INSPECTION_SITE
+		where.push('1=0');
+		params.push(this.param['TRACE_ID']);
+	}
 	else {
 		throw new Error(`Unsupported MODE: ${mode}`);
 	}

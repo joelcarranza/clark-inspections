@@ -79,6 +79,22 @@ public class InspectionsControl extends BasicControl {
 			q.append("MODE", "globalid");
 			q.append("GLOBALID", gf.getIdString());
 		}
+		else if(filter instanceof TraceSiteFilter) {
+			TraceSiteFilter tf = (TraceSiteFilter)filter;
+			if(tf.getTraceID() == null) {
+				TraceOperation op = new TraceOperation(tf.getTraceSession());
+				op.execute();
+				try {
+					op.get();
+					tf.setTraceID(tf.getTraceSession().getID());
+				}
+				catch(Exception e) {
+					throw new DataTransferException("Trace failed", e);
+				}
+			}
+			q.append("MODE", "trace");
+			q.append("TRACE_ID", tf.getTraceID());
+		}
 		else {
 			throw new UnsupportedOperationException(filter.getClass().getName());
 		}

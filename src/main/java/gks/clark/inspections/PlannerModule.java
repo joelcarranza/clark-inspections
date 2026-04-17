@@ -57,6 +57,9 @@ import gks.form.chooser.Chooser;
 import gks.form.details.DetailsEditor;
 import gks.form.editor.Editor;
 import gks.map.MapLayerSet;
+import gks.form.ValueModel;
+import gks.trace.TraceFeature;
+import gks.trace.TraceMapSelectionWindow;
 import gks.ui.GuiUtils;
 import gks.ui.SimpleDialog;
 import gks.ui.SwingProxy;
@@ -70,6 +73,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 	private static final String WIN_INSPECTION_DETAIL = "inspectionDetail";
 	private static final String WIN_FILTER = "winFilter";
+	private static final String WIN_TRACE_FEATURE_SELECTOR = "traceFeatureSelector";
 	private static final String WIN_WORK_ORDER_DETAIL = "workOrderDetail";
 
 	private InspectionsControl control;
@@ -131,6 +135,11 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			siteLayerManager.destroy();
 		}
 
+	}
+
+	public void chooseTraceMapFeature(ValueModel model) {
+		Window w = windowManager().show(WIN_TRACE_FEATURE_SELECTOR);
+		GuiUtils.setImplementation(w, ValueModel.class, model);
 	}
 
 	public void actionShowSiteFilter(ActionEvent e) {
@@ -272,9 +281,9 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			pf.setDistance(1000);
 			chooser.addChoice(pf, "gks/clark/inspections/model/ProximitySiteFilter.xml", "Sites by Proximity");
 
+			chooser.addChoice(new TraceSiteFilter(), "gks/clark/inspections/model/TraceSiteFilter.xml", "Sites by Trace");
 			
 			chooser.addChoice(new GlobalidSiteFilter(), "gks/clark/inspections/model/GlobalidSiteFilter.xml", "Sites by Globalid");
-
 			
 			chooser.setPreferredSizeFromChoiceIndex(0);
 			SimpleDialog dlg = chooser.buildAsDialog(this);
@@ -282,6 +291,28 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			dlg.setResizable(true);
 			dlg.setDefaultCloseOperation(SimpleDialog.DISPOSE_ON_CLOSE);
 			return dlg;
+		} else if (name.equals(WIN_TRACE_FEATURE_SELECTOR)) {
+			final TraceMapSelectionWindow window = new TraceMapSelectionWindow(this, "ELECTRIC");
+			window.setAllowMultipleSelections(false);
+			window.setTitle("Select start feature");
+			window.addActionListener(new java.awt.event.ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String cmd = e.getActionCommand();
+					if ("ok".equals(cmd)) {
+						ValueModel model = (ValueModel) GuiUtils.getImplementation(window, ValueModel.class);
+						TraceFeature f = window.getSelectedFeature();
+						if (f != null) {
+							model.setValue(f);
+							windowManager().show(WIN_FILTER);
+						}
+						window.close();
+					} else {
+						window.close();
+					}
+				}
+			});
+			return window;
 		} else if (name.equals(WIN_INSPECTION_DETAIL)) {
 			InspectionDetailsEditor view = new InspectionDetailsEditor(this);
 			JFrame f = view.buildAsFrame();

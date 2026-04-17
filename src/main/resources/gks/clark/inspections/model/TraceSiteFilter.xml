@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<form>
+<script><![CDATA[
+var gks = Packages.gks;
+
+function formValues() {
+	var values = {};
+	var k;
+	for (var i = 0; i < arguments.length; ++i) {
+		k = arguments[i];
+		values[k] = form.model.getValue(k);
+	}
+	return values;
+}
+
+function beforeCommit(values) {
+	var f = formValues('startFeature', 'direction', 'phases', 'stopConditions', 'threePhase');
+	var trace = new gks.trace.electric.ElectricTraceSession();
+	if (f.phases || f.threePhase) {
+		trace.phases = f.threePhase ? gks.trace.electric.Phase.values() : f.phases;
+	}
+	if (f.direction) {
+		trace.direction = f.direction;
+	}
+	trace.startFeature = f.startFeature;
+	if (f.stopConditions) {
+		trace.stopConditions = f.stopConditions;
+	}
+	values.traceSession = trace;
+	values.traceID = null;
+}
+
+function beforeUpdate(values) {
+	var p = values['phases'];
+	if (!p || p.length == 0) {
+		values['phases'] = gks.trace.electric.Phase.values();
+	}
+	if (!values['direction']) {
+		values['direction'] = gks.trace.electric.TraceDirection.DOWN;
+	}
+}
+
+function validate(result) {
+	var f = formValues('startFeature', 'direction', 'phases', 'threePhase');
+	if (!f.startFeature) {
+		result.error("A start feature must be chosen");
+	}
+	if (!f.direction) {
+		result.error("A trace direction must be chosen");
+	}
+	if (!f.phases && !f.threePhase) {
+		result.error("One or more trace phases must be chosen");
+	}
+	return null;
+}
+
+function test(v) {
+	return v ? true : false;
+}
+]]></script>
+<body beforeCommit="beforeCommit" beforeUpdate="beforeUpdate" onValidate="validate">
+<table cols="16px  p p f" hgap="4dlu" vgap="4dlu" border="10px">
+
+	<tr>
+		<td><l icon="gks/clark/inspections/images/warn.gif" visible="$:!test($startFeature)"/></td>
+		<td>Start</td>
+		<td columns="2"><gks.clark.inspections.StartFeatureView id="startFeature"/></td>
+	</tr>
+
+	<tr>
+		<td/>
+		<td>Direction</td>
+		<td><radioGroup id="direction" dataClass="gks.trace.electric.TraceDirection"/></td>
+	</tr>
+
+	<tr>
+		<td/>
+		<td>Phases</td>
+		<td><checkGroup id="phases" dataClass="gks.trace.electric.Phase" rows="1" enabled="$:!$threePhase"/></td>
+	</tr>
+
+	<tr><td columns="2"/>
+		<td columns="2"><check id="threePhase">Three Phase</check></td>
+	</tr>
+
+	<tr height="4dlu"/>
+	<tr><td/>
+		<td columns="3">Stop Features</td>
+	</tr>
+
+	<tr fill="true"><td/>
+	<td columns="3">
+		<checkList id="stopConditions" data="$:gks.trace.code.StopCondition.all()" itemClass="gks.trace.code.StopCondition"/>
+	</td></tr>
+
+</table>
+</body>
+</form>
