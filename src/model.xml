@@ -82,6 +82,20 @@
 		<property name="workLocation" set="false"/>
 		<property name="workLocationDescription" set="false"/>
 		<property name="creationUser" set="false"/>
+
+		<property name="listId" set="false"/>
+		<property name="listCompleted" class="Integer"  set="false"/>
+		<property name="listTotal" class="Integer"  set="false"/>
+		<property name="crew"  set="false"/>
+
+		<derivedProperty name="status">
+			<getter>
+			<![CDATA[
+			if (gks.util.Utils.isEmpty(listId)) return null;
+			return (listCompleted != null && listTotal != null && listCompleted.equals(listTotal)) ? "C" : "I";
+			]]>
+			</getter>
+		</derivedProperty>
 		<derivedProperty name="mapKey">
 			<getter>
 				return key;

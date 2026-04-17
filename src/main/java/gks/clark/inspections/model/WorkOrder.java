@@ -75,6 +75,10 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
     String workLocation;
     String workLocationDescription;
     String creationUser;
+    String listId;
+    Integer listCompleted;
+    Integer listTotal;
+    String crew;
 
     /*
      ==========================================================================
@@ -231,6 +235,31 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
         return creationUser;
     }
 
+    public String getListId() {
+        return listId;
+    }
+
+    public Integer getListCompleted() {
+        return listCompleted;
+    }
+
+    public Integer getListTotal() {
+        return listTotal;
+    }
+
+    public String getCrew() {
+        return crew;
+    }
+
+    public String getStatus() {
+        if (gks.util.Utils.isEmpty(listId)) {
+            return null;
+        }
+
+        return ((listCompleted != null) && (listTotal != null) &&
+        listCompleted.equals(listTotal)) ? "C" : "I";
+    }
+
     public String getMapKey() {
         return key;
     }
@@ -297,6 +326,10 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
         this.workLocation = stream.read();
         this.workLocationDescription = stream.read();
         this.creationUser = stream.read();
+        this.listId = stream.read();
+        this.listCompleted = stream.readInteger();
+        this.listTotal = stream.readInteger();
+        this.crew = stream.read();
     }
 
     public void serializeToStream(gks.util.dto.DataTransferOutputStream stream)
@@ -333,6 +366,10 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
         stream.write(this.workLocation);
         stream.write(this.workLocationDescription);
         stream.write(this.creationUser);
+        stream.write(this.listId);
+        stream.write(this.listCompleted);
+        stream.write(this.listTotal);
+        stream.write(this.crew);
     }
 
     public void serializeModifiableToStream(

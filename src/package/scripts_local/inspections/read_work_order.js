@@ -35,8 +35,15 @@ JavaLink.useDefaultDataSource();
 
 JavaLink.process = function() {
 	this.outputQueryResults(`
-		SELECT 
-			o.order_key,
+		with list_stats as (
+select 
+    list_id, 
+    count(*) as total,
+    count(completion_status) as completed
+from wm_inspection
+group by list_id)
+SELECT 
+            o.order_key,
             o.ordertype,
             o.lon,
             o.lat,
@@ -67,9 +74,16 @@ JavaLink.process = function() {
             o.OUTAGETYPE orderdesc,
             o.workloccd,
             o.worklocdesc,
-            o.CRUSRID
-		FROM WM_ORDER o
-        WHERE compltn_ts is null
+            o.CRUSRID,
+            l.id as list_id,
+            ls.completed as completed,
+            ls.total as total,
+            a.assigned_to as crew
+        FROM WM_ORDER o
+        LEFT JOIN WM_LIST l on l.order_key = o.order_key
+        LEFT JOIN LIST_STATS ls on l.id = ls.list_id
+        LEFT JOIN WM_ASSIGNMENT a ON A.ORDER_KEY = o.ORDER_KEY
+        WHERE o.compltn_ts is null
 	`);
 };
 

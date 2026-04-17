@@ -70,8 +70,13 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
     public static final int WORK_LOCATION = 29;
     public static final int WORK_LOCATION_DESCRIPTION = 30;
     public static final int CREATION_USER = 31;
-    public static final int MAP_KEY = 32;
-    public static final int SERVICE_ADDRESS_COMPLETE = 33;
+    public static final int LIST_ID = 32;
+    public static final int LIST_COMPLETED = 33;
+    public static final int LIST_TOTAL = 34;
+    public static final int CREW = 35;
+    public static final int STATUS = 36;
+    public static final int MAP_KEY = 37;
+    public static final int SERVICE_ADDRESS_COMPLETE = 38;
     private static final String[] COLUMN_NAMES = {
             "key", "orderType", "x", "y", "orderSubKey", "orderNumber",
             "orderSubType", "entryTs", "hazard", "hazardText", "lifeSupport",
@@ -79,8 +84,8 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
             "serviceAccount", "serviceAddress", "serviceCity", "serviceZip",
             "cycle", "route", "substation", "feeder", "geocode", "lightTypeDesk",
             "request", "reason", "orderDesc", "workLocation",
-            "workLocationDescription", "creationUser", "mapKey",
-            "serviceAddressComplete",
+            "workLocationDescription", "creationUser", "listId", "listCompleted",
+            "listTotal", "crew", "status", "mapKey", "serviceAddressComplete",
         };
 
     public String getColumnName(int column) {
@@ -100,6 +105,10 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
         case X:
         case Y:
             return Double.class;
+
+        case LIST_COMPLETED:
+        case LIST_TOTAL:
+            return Integer.class;
 
         default:
             return String.class;
@@ -206,6 +215,21 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
         case CREATION_USER:
             return v.getCreationUser();
 
+        case LIST_ID:
+            return v.getListId();
+
+        case LIST_COMPLETED:
+            return v.getListCompleted();
+
+        case LIST_TOTAL:
+            return v.getListTotal();
+
+        case CREW:
+            return v.getCrew();
+
+        case STATUS:
+            return v.getStatus();
+
         case MAP_KEY:
             return v.getMapKey();
 
@@ -218,7 +242,7 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
     }
 
     public int getColumnCount() {
-        return 34;
+        return 39;
     }
 
     protected Class<?> getValueClass() {

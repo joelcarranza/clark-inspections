@@ -54,6 +54,23 @@
     <cu>5</cu>
     <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
   </tableColumn>
+  <tableColumn modelColumn="status">
+    <header>S</header>
+    <cu>3</cu>
+    <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
+    <valueRenderer>gks.clark.inspections.WorkOrderStatusRenderer</valueRenderer>
+  </tableColumn>
+  
+  <tableColumn modelColumn="listCompleted">
+    <header>C</header>
+    <cu>3</cu>
+    <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
+  </tableColumn>
+  <tableColumn modelColumn="listTotal">
+    <header>T</header>
+    <cu>3</cu>
+    <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
+  </tableColumn>  
    <tableColumn modelColumn="orderType">
     <header>Type</header>
     <cu>5</cu>
