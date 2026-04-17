@@ -68,4 +68,9 @@ public interface AsyncInspectionsControl {
 	 */
 	public ControlTask save(Inspection inspection);
 
+	/**
+	 * @see InspectionsControl#queryExceptions()
+	 */
+	public ControlTask queryExceptions();
+
 }

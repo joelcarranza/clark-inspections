@@ -146,6 +146,11 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		.onComplete(PlannerModule.this, "onWorkOrdersQueried").start();
 	}
 
+	public void actionViewExceptions(ActionEvent e) {
+		control.proxy().queryExceptions()
+				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { null }).start();
+	}
+
 	public void actionNewList(ActionEvent e) {
 		SiteList siteList = new SiteList();
 		siteList.setWorkOrder(activeWorkOrder.getKey());

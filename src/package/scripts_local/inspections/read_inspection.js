@@ -36,11 +36,9 @@ var Sql = require('Sql');
 JavaLink.useDefaultDataSource();
 
 JavaLink.process = function() {
-	var listKey = this.param['LIST'];
-
-	this.outputQueryResults(`
-		SELECT 
-			i.ID, 
+	const sql = `
+		SELECT
+			i.ID,
 			i.X,
 			i.Y,
 			l.program,
@@ -87,9 +85,19 @@ JavaLink.process = function() {
 		JOIN WM_LIST l on i.list_id = l.id
 		LEFT JOIN WM_ORDER o on l.order_key = o.order_key
 		LEFT JOIN WM_ASSIGNMENT a ON A.ORDER_KEY = o.ORDER_KEY
-		LEFT JOIN INSPECTION_SITE s ON i.asset_id = s.asset_id
-		WHERE i.list_id =  ? 
-	`,listKey)
+		LEFT JOIN INSPECTION_SITE s ON i.asset_id = s.asset_id`;
+
+	let where = [];
+	let params = [];
+
+	if (this.param['EXCEPTIONS'] === 'true') {
+		where.push("i.completion_status = 'X'");
+	} else {
+		where.push('i.list_id = ?');
+		params.push(this.param['LIST']);
+	}
+
+	this.outputQueryResults(sql + ' WHERE ' + where.join(' AND '), params);
 };
 
 JavaLink.run();

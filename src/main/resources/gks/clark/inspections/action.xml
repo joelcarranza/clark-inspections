@@ -32,6 +32,11 @@
     <method>actionViewWorkOrders</method>
   </action>
 
+  <action key="viewExceptions">
+    <name>View Exceptions</name>
+    <method>actionViewExceptions</method>
+  </action>
+
   <action key="open">
     <name>Open....</name>
     <method>actionOpen</method>
@@ -50,7 +55,7 @@
     <main>open | zoom zoomAll</main>
   </toolbar>
   <menubar>
-    <Tools>viewWorkOrders | filter newList openList</Tools>
+    <Tools>viewWorkOrders viewExceptions | filter newList openList</Tools>
     <Map>zoom zoomAll</Map>
   </menubar>
 </config>

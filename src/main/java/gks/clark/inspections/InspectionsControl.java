@@ -91,6 +91,12 @@ public class InspectionsControl extends BasicControl {
 		return scriptQuery("/scripts/inspections/read_inspection", q, Inspection.class);
 	}
 	
+	public Inspection[] queryExceptions() throws DataTransferException {
+		QueryBuilder q = new QueryBuilder();
+		q.append("EXCEPTIONS", "true");
+		return scriptQuery("/scripts/inspections/read_inspection", q, Inspection.class);
+	}
+
 	public WorkOrder[] queryWorkOrders() throws DataTransferException {
 		QueryBuilder q = new QueryBuilder();
 		return scriptQuery("/scripts/inspections/read_work_order", q, WorkOrder.class);
