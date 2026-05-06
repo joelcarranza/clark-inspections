@@ -48,6 +48,12 @@
     <cu>10</cu>
     <tableSet>gks.clark.inspections.model.Inspection</tableSet>
   </tableColumn>
+   <tableColumn modelColumn="resolutionStatus">
+    <header>Resolution</header>
+    <cu>10</cu>
+    <tableSet>gks.clark.inspections.model.ResolutionStatus</tableSet>
+  </tableColumn>
+
    <tableColumn modelColumn="comment">
     <header>Comment</header>
     <cu>10</cu>

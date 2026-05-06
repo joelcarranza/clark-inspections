@@ -42,7 +42,8 @@ JavaLink.process = function() {
         'ID',
         'COMPLETION_STATUS',
         'ISSUE_PRIORITY',
-        'COMMENT'
+        'COMMENT',
+        'RESOLUTION_STATUS'
       ]);
      var literals;
      if(data['COMPLETION_STATUS']) {

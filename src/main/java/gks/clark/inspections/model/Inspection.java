@@ -86,6 +86,7 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
     String materialsRequired;
     gks.clark.inspections.model.CompletionStatus completionStatus;
     gks.clark.inspections.model.IssuePriority issuePriority;
+    gks.clark.inspections.model.ResolutionStatus resolutionStatus;
     String comment;
 
     /*
@@ -296,6 +297,15 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         return issuePriority;
     }
 
+    public void setResolutionStatus(
+        gks.clark.inspections.model.ResolutionStatus resolutionStatus) {
+        this.resolutionStatus = resolutionStatus;
+    }
+
+    public gks.clark.inspections.model.ResolutionStatus getResolutionStatus() {
+        return resolutionStatus;
+    }
+
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -385,6 +395,7 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         this.materialsRequired = stream.read();
         this.completionStatus = stream.readCode(gks.clark.inspections.model.CompletionStatus.class);
         this.issuePriority = stream.readCode(gks.clark.inspections.model.IssuePriority.class);
+        this.resolutionStatus = stream.readCode(gks.clark.inspections.model.ResolutionStatus.class);
         this.comment = stream.read();
     }
 
@@ -433,6 +444,7 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         stream.write(this.materialsRequired);
         stream.write(this.completionStatus);
         stream.write(this.issuePriority);
+        stream.write(this.resolutionStatus);
         stream.write(this.comment);
     }
 
@@ -442,6 +454,7 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         stream.write(this.key);
         stream.write(this.completionStatus);
         stream.write(this.issuePriority);
+        stream.write(this.resolutionStatus);
         stream.write(this.comment);
     }
 

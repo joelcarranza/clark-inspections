@@ -169,6 +169,9 @@ function dateFormat(date)
 				<tr>
 					<td>Comment</td><td><textArea id="comment"/></td>
 				</tr>
+				<tr>
+					<td>Resolution</td><td><combo id="resolutionStatus" dataClass="gks.clark.inspections.model.ResolutionStatus" /></td>
+				</tr>
 			 </table>
           </tab>
         </tabs>
