@@ -25,6 +25,7 @@
   <action key="openList">
 	<name>Open List...</name>
     <method>actionOpenList</method>
+    <enabled>workOrder</enabled>
   </action>
 
   <action key="viewWorkOrders">

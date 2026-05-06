@@ -184,8 +184,9 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	}
 
 	public void actionOpenList(ActionEvent e) {
-		String listKey = "5"; // XXX: test
-
+		// XXX: this is a hack
+		String listKey = tableView().getSelection(WorkOrder.class).iterator().next().getListId();
+		
 		control.proxy().queryInspection(listKey)
 				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { listKey }).start();
 
@@ -226,7 +227,8 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		
 		siteLayerManager.setFeatures(Arrays.asList(site));
 		setMapLayer(new MapLayerSet(MapLayerSet.PHYSICAL, siteLayerManager.getLayerName()));
-	
+
+		setTitle("Sites");
 
 		actionManager().setConditional("workOrder", false);
 		actionManager().setConditional("site", site.length > 0);
