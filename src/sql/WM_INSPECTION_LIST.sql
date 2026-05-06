@@ -1,0 +1,1 @@
+create table dbo.WM_INSPECTION_LIST (ID int identity, WORK_ORDER varchar(100));

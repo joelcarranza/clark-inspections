@@ -82,7 +82,7 @@ JavaLink.process = function() {
 			i.completion_status,
 			i.comment
 		FROM WM_INSPECTION i
-		JOIN WM_LIST l on i.list_id = l.id
+		JOIN WM_INSPECTION_LIST l on i.list_id = l.id
 		LEFT JOIN WM_ORDER o on l.order_key = o.order_key
 		LEFT JOIN WM_ASSIGNMENT a ON A.ORDER_KEY = o.ORDER_KEY
 		LEFT JOIN INSPECTION_SITE s ON i.asset_id = s.asset_id`;

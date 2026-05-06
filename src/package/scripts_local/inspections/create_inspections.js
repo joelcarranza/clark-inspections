@@ -55,12 +55,12 @@ JavaLink.process = function() {
 	 Lang.assert(order_key, "Invalid work order #: " + data.WORK_ORDER);
 
 	 Logger.dump(data, 'info');
-	 var woListKey = this.db.insertRowReturnKey('WM_LIST', {
+	 var woListKey = this.db.insertRowReturnKey('WM_INSPECTION_LIST', {
 	 	WORK_ORDER: data.WORK_ORDER,
 	 	ORDER_KEY: order_key,
 	 	PROGRAM: data.PROGRAM
 	 });
-	 Lang.assert(woListKey, "No ID for WM_LIST returned");
+	 Lang.assert(woListKey, "No ID for WM_INSPECTION_LIST returned");
 
 	 var sth = this.db.prepare(`
 	 insert into wm_inspection (LIST_ID, ASSET_TYPE, ASSET_ID, X,Y)

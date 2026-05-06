@@ -1,1 +1,0 @@
-create table dbo.WM_LIST (ID int identity, WORK_ORDER varchar(100));
