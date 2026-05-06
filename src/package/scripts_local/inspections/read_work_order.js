@@ -83,7 +83,9 @@ SELECT
         LEFT JOIN WM_INSPECTION_LIST l on l.order_key = o.order_key
         LEFT JOIN LIST_STATS ls on l.id = ls.list_id
         LEFT JOIN WM_ASSIGNMENT a ON A.ORDER_KEY = o.ORDER_KEY
-        WHERE o.compltn_ts is null
+        WHERE a.ATTR_1 = 'INSP' AND
+        o.compltn_ts is null
+
 	`);
 };
 
