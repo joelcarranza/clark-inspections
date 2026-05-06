@@ -41,6 +41,7 @@ JavaLink.process = function() {
 	 var data = this.thawData([
         'ID',
         'COMPLETION_STATUS',
+        'ISSUE_PRIORITY',
         'COMMENT'
       ]);
      var literals;

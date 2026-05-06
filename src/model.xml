@@ -10,6 +10,7 @@
 	
 	
 	
+	
 	<bean class="gks.clark.inspections.model.CriteriaSiteFilter">
 		<implement>gks.clark.inspections.SiteFilter</implement>
 		<property name="circuit" />
@@ -182,6 +183,10 @@
 		<extend>gks.util.OrderedCode</extend>
 	</bean>
 	
+	<bean class="gks.clark.inspections.model.IssuePriority">
+		<extend>gks.util.OrderedCode</extend>
+	</bean>
+	
 	
 	<bean class="gks.clark.inspections.model.Inspection">
 		<implement>gks.util.dto.ServerTransferObject</implement>
@@ -232,6 +237,8 @@
 		<property name="materialsRequired" set="false"/>
 
 		<property name="completionStatus" class="gks.clark.inspections.model.CompletionStatus" />
+		<property name="issuePriority" class="gks.clark.inspections.model.IssuePriority" />
+
 		<property name="comment" />
 		<derivedProperty name="complete" class="boolean">
 			<getter>

@@ -38,16 +38,16 @@ import gks.util.SimpleCodeCache;
   AUTO GENERATED FILE! - Do not edit, as your changes will be overwritten
   ==========================================================================
 */
-public class Crew extends gks.util.SimpleCode {
-    private static SimpleCodeCache<Crew> cache = SimpleCodeCache.create(Crew.class);
+public class IssuePriority extends gks.util.OrderedCode {
+    private static SimpleCodeCache<IssuePriority> cache = SimpleCodeCache.create(IssuePriority.class);
 
     /*
     ==========================================================================
     Constructor
     ==========================================================================
     */
-    public Crew(String code, String description) {
-        super(code, description);
+    public IssuePriority(String code, String description, int order) {
+        super(code, description, order);
     }
 
     /*
@@ -60,8 +60,8 @@ public class Crew extends gks.util.SimpleCode {
     }
 
     /** Adds a new instance to the cache */
-    public static Crew cache(String code, String description) {
-        Crew __v = new Crew(code, description);
+    public static IssuePriority cache(String code, String description, int order) {
+        IssuePriority __v = new IssuePriority(code, description, order);
         cache.cache(__v);
 
         return __v;
@@ -71,15 +71,15 @@ public class Crew extends gks.util.SimpleCode {
      * Looks up an instance in the cache and returns it if found,
      * otherwise returns null.
      */
-    public static Crew lookup(String id) {
-        return (Crew) cache.lookup(id);
+    public static IssuePriority lookup(String id) {
+        return (IssuePriority) cache.lookup(id);
     }
 
     /**
      * Returns an array of all the cached instances, sorted by
      * displayString.
      */
-    public static Crew[] all() {
-        return (Crew[]) cache.all();
+    public static IssuePriority[] all() {
+        return (IssuePriority[]) cache.all();
     }
 }

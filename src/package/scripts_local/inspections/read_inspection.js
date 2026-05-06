@@ -80,6 +80,7 @@ JavaLink.process = function() {
             a.priority,
             (case o.mat_required_flag when 'Y' then 'M' else '' end) as materials_required,
 			i.completion_status,
+			i.issue_priority,
 			i.comment
 		FROM WM_INSPECTION i
 		JOIN WM_INSPECTION_LIST l on i.list_id = l.id

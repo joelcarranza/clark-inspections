@@ -164,6 +164,9 @@ function dateFormat(date)
 					<td>Completion</td><td><combo id="completionStatus" dataClass="gks.clark.inspections.model.CompletionStatus" /></td>
 				</tr>
 				<tr>
+					<td>Priority</td><td><combo id="issuePriority" dataClass="gks.clark.inspections.model.IssuePriority" /></td>
+				</tr>
+				<tr>
 					<td>Comment</td><td><textArea id="comment"/></td>
 				</tr>
 			 </table>

@@ -43,6 +43,11 @@
     <cu>10</cu>
     <tableSet>gks.clark.inspections.model.Inspection</tableSet>
   </tableColumn>
+   <tableColumn modelColumn="issuePriority">
+    <header>Priority</header>
+    <cu>10</cu>
+    <tableSet>gks.clark.inspections.model.Inspection</tableSet>
+  </tableColumn>
    <tableColumn modelColumn="comment">
     <header>Comment</header>
     <cu>10</cu>

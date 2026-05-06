@@ -6,6 +6,7 @@ X float,
 Y float,
 COMPLETION_STATUS varchar(1),
 COMMENT varchar(2000),
+ISSUE_PRIORITY varchar(1),
 COMPLETION_DATE datetime,
 COMPLETION_USER varchar(100)
 );

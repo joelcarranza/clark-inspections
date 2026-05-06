@@ -42,7 +42,9 @@ JSONPage.process = function() {
 		'gks.clark.inspections.model.Crew': 
 			this.db.queryAll('select crew_code, crew_name from wm_active_crew'),
 		'gks.clark.inspections.model.CompletionStatus': 
-			this.db.queryAll('SELECT code,name,display_order FROM insp_completion_status')		
+			this.db.queryAll('SELECT code,name,display_order FROM insp_completion_status'),
+		'gks.clark.inspections.model.IssuePriority': 
+			this.db.queryAll('SELECT code,name,display_order FROM insp_issue_priority')		
 	};
 }
 
