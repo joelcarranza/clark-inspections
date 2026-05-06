@@ -197,6 +197,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		tableView().setTableColumnSet(tableModel, WorkOrder.class.getName());
 
 		visibleItemType = ItemType.WORK_ORDER;
+		setTitle("Work Orders");
 
 		workOrderLayerManager.setFeatures(Arrays.asList(workOrders));
 		setMapLayer(new MapLayerSet(MapLayerSet.PHYSICAL, workOrderLayerManager.getLayerName()));
@@ -246,6 +247,8 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		siteLayerManager.clear();
 		inspectionLayerManager.setFeatures(Arrays.asList(insp));
 		setMapLayer(new MapLayerSet(MapLayerSet.PHYSICAL, inspectionLayerManager.getLayerName()));
+		
+		setTitle("Inspections");
 		
 		actionManager().setConditional("workOrder", false);
 		actionManager().setConditional("list", true);
