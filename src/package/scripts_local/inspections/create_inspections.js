@@ -40,7 +40,7 @@ JavaLink.useDefaultDataSource();
 JavaLink.process = function() {
 	 var data = this.thawData([
 	 	'PROGRAM',
-        'WORK_ORDER',
+        'ORDER_KEY',
         'CREW',
         {
             name: 'SITES', fields: [
@@ -50,13 +50,16 @@ JavaLink.process = function() {
         },
       ]);
 
-
-	 var order_key = this.db.queryValue('SELECT order_key FROM WM_ORDER where order_key = ?', data.WORK_ORDER);
-	 Lang.assert(order_key, "Invalid work order #: " + data.WORK_ORDER);
+	 let order_key = data.ORDER_KEY;
+	 var order = this.db.queryRow('SELECT ordersubkey, ordertype FROM WM_ORDER where order_key = ?', order_key);
+	 Lang.assert(order, "Invalid work order #: " + order_key);
+	 let orderSubKey = order.ORDERSUBKEY;
+	 let orderType = order.ORDERTYPE;
+	 Lang.assert(['PFRS', 'PTRE', 'PCRS'].indexOf(orderType), "Invalid order type");
 
 	 Logger.dump(data, 'info');
 	 var woListKey = this.db.insertRowReturnKey('WM_INSPECTION_LIST', {
-	 	WORK_ORDER: data.WORK_ORDER,
+	 	WORK_ORDER: orderSubKey,
 	 	ORDER_KEY: order_key,
 	 	PROGRAM: data.PROGRAM
 	 });
