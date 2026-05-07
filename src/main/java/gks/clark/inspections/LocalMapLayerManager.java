@@ -197,7 +197,7 @@ public class LocalMapLayerManager<T> {
 		if(m.isMappable()) {
 			MGGeometry geometry = geometryForObject(m);
 			String style = d.getClass().getName();
-			layer.createMapObject(m.getMapKey(),null,null,style,geometry,false);
+			layer.createMapObject(m.getMapKey(),null,null,style,geometry,true);
 		}
 	}
 
