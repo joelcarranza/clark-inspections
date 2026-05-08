@@ -31,7 +31,7 @@
 		
 		<tr>
 			<td>Circuit</td>
-			<td><text id="circuit" /></td>
+			<td><text id="circuit" columns="10" /></td>
 		</tr>
 	</table>
 </body>
