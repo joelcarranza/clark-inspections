@@ -60,7 +60,7 @@ JavaLink.process = function() {
 		params.push(this.param['CIRCUIT']);
 	}
 	else if (mode === 'proximity') {
-		where.push('SQRT(POWER((MIN_X + MAX_X) / 2 - ?, 2) + POWER((MIN_Y + MAX_Y) / 2 - ?, 2)) <= ?');
+		where.push('GEOM.STDistance(geometry::Point(?, ?, 2286)) <= ?');
 		params = params.concat([this.param['X'], this.param['Y'], this.param['DISTANCE']]);
 	}
 	else if (mode === 'globalid') {

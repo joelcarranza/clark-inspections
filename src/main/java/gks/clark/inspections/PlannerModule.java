@@ -63,6 +63,7 @@ import gks.trace.TraceMapSelectionWindow;
 import gks.ui.GuiUtils;
 import gks.ui.SimpleDialog;
 import gks.ui.SwingProxy;
+import gks.util.Location;
 import gks.util.NavigateInterface;
 import gks.util.TabularModule;
 
@@ -281,8 +282,9 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			chooser.addChoice(cf, "gks/clark/inspections/model/CriteriaSiteFilter.xml", "Sites by Criteria");
 
 			ProximitySiteFilter pf = new ProximitySiteFilter();
-			pf.setX(activeWorkOrder.getX());
-			pf.setY(activeWorkOrder.getY());
+			Location xy = getMapControl().mcsLocation(new Location(activeWorkOrder.getX(), activeWorkOrder.getY()));
+			pf.setX(xy.getX());
+			pf.setY(xy.getY());
 			pf.setDistance(1000);
 			chooser.addChoice(pf, "gks/clark/inspections/model/ProximitySiteFilter.xml", "Sites by Proximity");
 
