@@ -14,10 +14,10 @@ function formValues() {
 }
 
 function beforeCommit(values) {
-	var f = formValues('startFeature', 'direction', 'phases', 'stopConditions', 'threePhase');
-	var trace = new gks.trace.electric.ElectricTraceSession();
-	if (f.phases || f.threePhase) {
-		trace.phases = f.threePhase ? gks.trace.electric.Phase.values() : f.phases;
+	var f = formValues('startFeature', 'direction', 'phases', 'stopConditions');
+	var trace = new gks.clark.trace.ElectricTraceSession();
+	if (f.phases) {
+		trace.phases = f.phases;
 	}
 	if (f.direction) {
 		trace.direction = f.direction;
@@ -41,14 +41,14 @@ function beforeUpdate(values) {
 }
 
 function validate(result) {
-	var f = formValues('startFeature', 'direction', 'phases', 'threePhase');
+	var f = formValues('startFeature', 'direction', 'phases');
 	if (!f.startFeature) {
 		result.error("A start feature must be chosen");
 	}
 	if (!f.direction) {
 		result.error("A trace direction must be chosen");
 	}
-	if (!f.phases && !f.threePhase) {
+	if (!f.phases) {
 		result.error("One or more trace phases must be chosen");
 	}
 	return null;
@@ -76,11 +76,7 @@ function test(v) {
 	<tr>
 		<td/>
 		<td>Phases</td>
-		<td><checkGroup id="phases" dataClass="gks.trace.electric.Phase" rows="1" enabled="$:!$threePhase"/></td>
-	</tr>
-
-	<tr><td columns="2"/>
-		<td columns="2"><check id="threePhase">Three Phase</check></td>
+		<td><checkGroup id="phases" dataClass="gks.trace.electric.Phase" rows="1"/></td>
 	</tr>
 
 	<tr height="4dlu"/>

@@ -44,6 +44,11 @@
 			<artifactId>trace</artifactId>
 			<version>6.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.gatekeeper.customer</groupId>
+			<artifactId>clark</artifactId>
+			<version>6.0.4</version>
+		</dependency>
 	</dependencies>
 
 

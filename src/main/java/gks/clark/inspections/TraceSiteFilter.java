@@ -1,17 +1,17 @@
 package gks.clark.inspections;
 
-import gks.trace.TraceSession;
+import gks.clark.trace.ElectricTraceSession;
 
 public class TraceSiteFilter implements SiteFilter {
 
-	private TraceSession session;
+	private ElectricTraceSession session;
 	private Long traceID;
 
-	public TraceSession getTraceSession() {
+	public ElectricTraceSession getTraceSession() {
 		return session;
 	}
 
-	public void setTraceSession(TraceSession v) {
+	public void setTraceSession(ElectricTraceSession v) {
 		session = v;
 	}
 

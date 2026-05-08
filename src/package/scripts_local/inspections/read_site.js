@@ -68,8 +68,7 @@ JavaLink.process = function() {
 		where.push(Sql.whereIn('GLOBALID', ids));
 	}
 	else if (mode === 'trace') {
-		// TODO: determine join from trace_feature to INSPECTION_SITE
-		where.push('1=0');
+		where.push('GLOBALID in (SELECT GLOBALID FROM INSPECTION_SITE_TRACE_RESULTS WHERE TRACE_ID = ?)');
 		params.push(this.param['TRACE_ID']);
 	}
 	else {
