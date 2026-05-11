@@ -30,6 +30,10 @@
  */
 package gks.clark.inspections.model;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /*
  ==========================================================================
@@ -63,5 +67,16 @@ public class GlobalidSiteFilter implements gks.clark.inspections.SiteFilter {
 
     public String getIdString() {
         return idString;
+    }
+
+    public List<String> getNormalizedIds() {
+        if (idString == null || idString.trim().isEmpty()) return Collections.emptyList();
+        return Arrays.stream(idString.trim().split("\\s+"))
+            .map(s -> s.replaceAll("[{}\\-]", "").toUpperCase())
+            .filter(s -> s.length() == 32)
+            .map(s -> "{" + s.substring(0,8) + "-" + s.substring(8,12) + "-"
+                          + s.substring(12,16) + "-" + s.substring(16,20) + "-"
+                          + s.substring(20) + "}")
+            .collect(Collectors.toList());
     }
 }

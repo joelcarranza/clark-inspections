@@ -77,7 +77,7 @@ public class InspectionsControl extends BasicControl {
 		else if(filter instanceof GlobalidSiteFilter) {
 			GlobalidSiteFilter gf = (GlobalidSiteFilter)filter;
 			q.append("MODE", "globalid");
-			q.append("GLOBALID", gf.getIdString());
+			q.append("GLOBALID", gks.util.Utils.join(" ", gf.getNormalizedIds()));
 		}
 		else if(filter instanceof TraceSiteFilter) {
 			TraceSiteFilter tf = (TraceSiteFilter)filter;
