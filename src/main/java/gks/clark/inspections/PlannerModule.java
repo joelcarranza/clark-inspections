@@ -271,6 +271,12 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			Chooser<SiteFilter> chooser = new Chooser<SiteFilter>(this) {
 				@Override
 				public void ok(SiteFilter filter) {
+					if (filter instanceof ProximitySiteFilter) {
+						ProximitySiteFilter pf = (ProximitySiteFilter) filter;
+						Location mcs = getMapControl().mcsLocation(new Location(pf.getLon(), pf.getLat()));
+						pf.setX(mcs.getX());
+						pf.setY(mcs.getY());
+					}
 					control.proxy().querySite(filter)
 							.onComplete(PlannerModule.this, "onSitesQueried", new Object[] { filter }).start();
 				}
@@ -282,9 +288,8 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			chooser.addChoice(cf, "gks/clark/inspections/model/CriteriaSiteFilter.xml", "Sites by Criteria");
 
 			ProximitySiteFilter pf = new ProximitySiteFilter();
-			Location xy = getMapControl().mcsLocation(new Location(activeWorkOrder.getX(), activeWorkOrder.getY()));
-			pf.setX(xy.getX());
-			pf.setY(xy.getY());
+			pf.setLon(activeWorkOrder.getX());
+			pf.setLat(activeWorkOrder.getY());
 			pf.setDistance(1000);
 			chooser.addChoice(pf, "gks/clark/inspections/model/ProximitySiteFilter.xml", "Sites by Proximity");
 

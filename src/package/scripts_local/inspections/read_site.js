@@ -56,7 +56,7 @@ JavaLink.process = function() {
 	let params = [];
 
 	if (mode === 'criteria') {
-		where.push('FEEDERID = ?');
+		where.push('GLOBALID in (SELECT GLOBALID FROM INSPECTION_SITE_FEEDER WHERE FEEDERID = ?)');
 		params.push(this.param['CIRCUIT']);
 	}
 	else if (mode === 'proximity') {

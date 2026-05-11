@@ -42,6 +42,8 @@ public class ProximitySiteFilter implements gks.clark.inspections.SiteFilter {
      Fields
      ==========================================================================
     */
+    Double lat;
+    Double lon;
     Double x;
     Double y;
     Integer distance;
@@ -59,6 +61,22 @@ public class ProximitySiteFilter implements gks.clark.inspections.SiteFilter {
      Getter and setters
      ==========================================================================
     */
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLon(Double lon) {
+        this.lon = lon;
+    }
+
+    public Double getLon() {
+        return lon;
+    }
+
     public void setX(Double x) {
         this.x = x;
     }

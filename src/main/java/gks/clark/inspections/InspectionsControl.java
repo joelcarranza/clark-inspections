@@ -34,7 +34,10 @@
 package gks.clark.inspections;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import gks.clark.inspections.model.CriteriaSiteFilter;
 import gks.clark.inspections.model.GlobalidSiteFilter;
@@ -77,7 +80,7 @@ public class InspectionsControl extends BasicControl {
 		else if(filter instanceof GlobalidSiteFilter) {
 			GlobalidSiteFilter gf = (GlobalidSiteFilter)filter;
 			q.append("MODE", "globalid");
-			q.append("GLOBALID", gks.util.Utils.join(" ", gf.getNormalizedIds()));
+			q.append("GLOBALID", gks.util.Utils.join(" ", getNormalizedIds(gf.getIdString())));
 		}
 		else if(filter instanceof TraceSiteFilter) {
 			TraceSiteFilter tf = (TraceSiteFilter)filter;
@@ -100,6 +103,17 @@ public class InspectionsControl extends BasicControl {
 		}
 		return scriptQuery("/scripts/inspections/read_site", q, Site.class);
 	}
+	
+	private static List<String> getNormalizedIds(String idString) {
+        if (idString == null || idString.trim().isEmpty()) return Collections.emptyList();
+        return Arrays.stream(idString.trim().split("\\s+"))
+            .map(s -> s.replaceAll("[{}\\-]", "").toUpperCase())
+            .filter(s -> s.length() == 32)
+            .map(s -> "{" + s.substring(0,8) + "-" + s.substring(8,12) + "-"
+                          + s.substring(12,16) + "-" + s.substring(16,20) + "-"
+                          + s.substring(20) + "}")
+            .collect(Collectors.toList());
+    }
 
 	public Inspection[] queryInspection(String listKey) throws DataTransferException {
 		QueryBuilder q = new QueryBuilder();

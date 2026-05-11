@@ -16,6 +16,12 @@
  	
 	function validate(e) {
 		var m = form.getModel();
+		if(!m.getValue("lat")) {
+			e.error("A latitude must be entered");
+		}
+		if(!m.getValue("lon")) {
+			e.error("A longitude must be entered");
+		}
 		if(!m.getValue("distance")) {
 			e.error("A distance must be chosen");
 		}
@@ -30,12 +36,12 @@
 	<table hgap="4dlu" vgap="4dlu" cols="p f" border="10px">				
 		
 		<tr>
-			<td>X</td>
-			<td><readOnly id="X" /></td>
+			<td>Latitude</td>
+			<td><readOnly id="lat" /></td>
 		</tr>
 		<tr>
-			<td>Y</td>
-			<td><readOnly id="Y" /></td>
+			<td>Longitude</td>
+			<td><readOnly id="lon" /></td>
 		</tr>
 		<tr>
 			<td>Distance</td>

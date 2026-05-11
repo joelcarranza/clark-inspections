@@ -18,6 +18,8 @@
 	
 	<bean class="gks.clark.inspections.model.ProximitySiteFilter">
 		<implement>gks.clark.inspections.SiteFilter</implement>
+		<property name="lat" class="Double" />
+		<property name="lon" class="Double" />
 		<property name="x" class="Double" />
 		<property name="y" class="Double" />
 		<property name="distance" class="Integer" />
