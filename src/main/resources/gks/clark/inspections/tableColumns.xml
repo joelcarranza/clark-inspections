@@ -60,7 +60,7 @@
     <tableSet>gks.clark.inspections.model.Inspection</tableSet>
   </tableColumn>
   
-  <tableColumn modelColumn="key">
+  <tableColumn modelColumn="orderSubKey">
     <header>#</header>
     <cu>5</cu>
     <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
@@ -82,7 +82,7 @@
     <cu>3</cu>
     <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
   </tableColumn>  
-   <tableColumn modelColumn="orderType">
+   <tableColumn modelColumn="orderSubType">
     <header>Type</header>
     <cu>5</cu>
     <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
