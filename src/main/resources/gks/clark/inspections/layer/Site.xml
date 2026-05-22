@@ -6,6 +6,7 @@
                 <symbol>
                     <name>circle</name>
                     <width>18px</width>
+					<fillColor>rgb(255,215,0)</fillColor>
                 </symbol>
             </pointStyle>
         </theme>
