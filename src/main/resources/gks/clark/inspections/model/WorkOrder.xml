@@ -85,8 +85,7 @@ function dateFormat(date)
 						
 					<!--  row 5 -->
 					
-					<f label="Special Needs">
-						<readOnly id="specialNeeds" /></f>
+					<row offset="4" />
 				
 					<f label="Geocode">
 						<readOnly id="geocode" /></f>
