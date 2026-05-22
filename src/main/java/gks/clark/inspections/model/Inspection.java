@@ -84,6 +84,7 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
     String completionDate;
     String priority;
     String materialsRequired;
+    gks.clark.inspections.FileAttachment[] attachedFiles;
     gks.clark.inspections.model.CompletionStatus completionStatus;
     gks.clark.inspections.model.IssuePriority issuePriority;
     gks.clark.inspections.model.ResolutionStatus resolutionStatus;
@@ -279,6 +280,15 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         return materialsRequired;
     }
 
+    public void setAttachedFiles(
+        gks.clark.inspections.FileAttachment[] attachedFiles) {
+        this.attachedFiles = attachedFiles;
+    }
+
+    public gks.clark.inspections.FileAttachment[] getAttachedFiles() {
+        return attachedFiles;
+    }
+
     public void setCompletionStatus(
         gks.clark.inspections.model.CompletionStatus completionStatus) {
         this.completionStatus = completionStatus;
@@ -393,6 +403,21 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         this.completionDate = stream.read();
         this.priority = stream.read();
         this.materialsRequired = stream.read();
+
+        Integer __attachedFiles_countObj = stream.readInteger();
+
+        if (__attachedFiles_countObj != null) {
+            int __attachedFiles_count = __attachedFiles_countObj.intValue();
+            this.attachedFiles = new gks.clark.inspections.FileAttachment[__attachedFiles_count];
+
+            for (int k = 0; k < __attachedFiles_count; ++k) {
+                this.attachedFiles[k] = new gks.clark.inspections.FileAttachment();
+                this.attachedFiles[k].parseFromStream(stream);
+            }
+        } else {
+            this.attachedFiles = null;
+        }
+
         this.completionStatus = stream.readCode(gks.clark.inspections.model.CompletionStatus.class);
         this.issuePriority = stream.readCode(gks.clark.inspections.model.IssuePriority.class);
         this.resolutionStatus = stream.readCode(gks.clark.inspections.model.ResolutionStatus.class);
@@ -442,6 +467,17 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         stream.write(this.completionDate);
         stream.write(this.priority);
         stream.write(this.materialsRequired);
+
+        if (this.attachedFiles != null) {
+            stream.write(this.attachedFiles.length);
+
+            for (int k = 0; k < this.attachedFiles.length; ++k) {
+                this.attachedFiles[k].serializeToStream(stream);
+            }
+        } else {
+            stream.writeNull();
+        }
+
         stream.write(this.completionStatus);
         stream.write(this.issuePriority);
         stream.write(this.resolutionStatus);
@@ -452,6 +488,17 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
         stream.write(this.key);
+
+        if (this.attachedFiles != null) {
+            stream.write(this.attachedFiles.length);
+
+            for (int k = 0; k < this.attachedFiles.length; ++k) {
+                this.attachedFiles[k].serializeModifiableToStream(stream);
+            }
+        } else {
+            stream.writeNull();
+        }
+
         stream.write(this.completionStatus);
         stream.write(this.issuePriority);
         stream.write(this.resolutionStatus);

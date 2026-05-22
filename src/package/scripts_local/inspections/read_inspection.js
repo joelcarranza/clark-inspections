@@ -36,7 +36,7 @@ var Sql = require('Sql');
 JavaLink.useDefaultDataSource();
 
 JavaLink.process = function() {
-	const sql = `
+	let sql = `
 		SELECT
 			i.ID,
 			i.X,
@@ -79,6 +79,7 @@ JavaLink.process = function() {
             o.compltn_ts,
             a.priority,
             (case o.mat_required_flag when 'Y' then 'M' else '' end) as materials_required,
+			i.id ATTACHMENTS,
 			i.completion_status,
 			i.issue_priority,
 			i.comment,
@@ -90,16 +91,27 @@ JavaLink.process = function() {
 		LEFT JOIN INSPECTION_SITE s ON i.asset_id = s.asset_id`;
 
 	let where = [];
-	let params = [];
+	let bind = [];
 
 	if (this.param['EXCEPTIONS'] === 'true') {
 		where.push("i.completion_status = 'X'");
 	} else {
 		where.push('i.list_id = ?');
-		params.push(this.param['LIST']);
+		bind.push(this.param['LIST']);
 	}
 
-	this.outputQueryResults(sql + ' WHERE ' + where.join(' AND '), params);
+	sql = sql + ' WHERE ' + where.join(' AND ');
+	this.outputQueryTreeResults(sql, {
+		ATTACHMENTS: `SELECT
+            F.ID,
+            F.NAME,
+            F.PATH,
+            F.CREATE_TS,
+            F.CREATOR,
+            F.COMMENT
+        FROM MWM_ORDER_FILE F
+        WHERE F.INSPECTION_ID = ?`
+	}, bind);
 };
 
 JavaLink.run();

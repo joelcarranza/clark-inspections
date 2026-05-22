@@ -37,9 +37,45 @@ var Lang = require('Lang');
 
 JavaLink.useDefaultDataSource();
 
+JavaLink.updateFiles = function(files, id) {
+  var existingFiles = this.db.queryColumn('SELECT id FROM MWM_ORDER_FILE WHERE INSPECTION_ID=?', id);
+  var newFiles = [];
+  
+  files.forEach((f) => {
+   let id = f.id;
+    let ix = existingFiles.indexOf(id);
+    if(ix == -1) {
+      newFiles.push(id);
+    }
+    else {
+      existingFiles.splice(ix, 1);
+    }
+  });  
+
+  if(newFiles.length > 0) {
+    let sth = this.db.prepare("UPDATE MWM_ORDER_FILE SET INSPECTION_ID = ? WHERE ID = ?");
+    newFiles.forEach((id) => {
+      sth.execute(id, id);
+    });
+    sth.close()
+  }
+
+  // these can be removed
+  if(existingFiles.length > 0) {
+    let sth = this.db.prepare("UPDATE MWM_ORDER_FILE SET INSPECTION_ID = NULL WHERE ID = ?");
+    existingFiles.forEach((id) => {
+      sth.execute(id);
+    });
+    sth.close()
+  }
+}
+
 JavaLink.process = function() {
 	 var data = this.thawData([
         'ID',
+        {name:'FILES', fields: [
+         'ID'
+        ]},
         'COMPLETION_STATUS',
         'ISSUE_PRIORITY',
         'COMMENT',
@@ -59,8 +95,10 @@ JavaLink.process = function() {
         }
      }
 
-	 this.db.updateRow('WM_INSPECTION', data, 'ID', literals);
+    var files = Lang.take(data, 'FILES');     
 
+    this.updateFiles(files, data.ID);
+	 this.db.updateRow('WM_INSPECTION', data, 'ID', literals);
 };
 
 JavaLink.run();

@@ -57,6 +57,10 @@ public class InspectionDetailsEditor extends DetailsEditor<Inspection> {
 				.run();
 	}
 	
+	public AsyncInspectionsControl getControlProxy() {
+		return module.getControl().proxy();
+	}
+	
 	@Override
 	protected SwingWorker<?, ?> createSaveTask(Inspection value) {
 		return module.getControl().proxy().save(value).view(getVisibleForm().component());

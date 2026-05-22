@@ -33,6 +33,7 @@
  */
 package gks.clark.inspections;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -47,6 +48,8 @@ import gks.clark.inspections.model.Site;
 import gks.clark.inspections.model.SiteList;
 import gks.clark.inspections.model.WorkOrder;
 import gks.control.BasicControl;
+import gks.field.control.ControlException;
+import gks.util.FileLink;
 import gks.util.QueryBuilder;
 import gks.util.ServerLink;
 import gks.util.Utils;
@@ -180,4 +183,44 @@ public class InspectionsControl extends BasicControl {
 		return proxy;
 	}
 
+	
+	 public static final String SCRIPT_UPLOAD_FILE =
+		        "/scripts/dispatch/upload_file";
+
+    /**
+     * Create a new item in MWM_ORDER_FILE for an uploaded file and return an associated record
+     * These files are not associated with the work order until the save occurs
+     */
+    public FileAttachment[] attachFiles(File[] files) throws ControlException {
+        String query = "";
+        List<FileAttachment> results = new ArrayList<FileAttachment>();
+        for (File file : files) {
+            if (!file.exists()) throw new RuntimeException();
+            try {
+                FileLink link = new FileLink(
+                    getHostname(),
+                    SCRIPT_UPLOAD_FILE,
+                    query,
+                    file,
+                    file.getName()
+                );
+                try {
+                    ServerLinkInputStream in = link.open();
+                    if (in.next()) {
+                        FileAttachment a = new FileAttachment();
+                        a.parseFromStream(in);
+                        results.add(a);
+                    }
+                } finally {
+                    link.release();
+                }
+            } catch (DataTransferException e) {
+                throw new ControlException(
+                    "Unable to upload file " + file.getAbsolutePath(),
+                    e
+                );
+            }
+        }
+        return results.toArray(new FileAttachment[0]);
+    }
 }

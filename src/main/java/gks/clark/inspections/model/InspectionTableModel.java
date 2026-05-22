@@ -79,13 +79,14 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     public static final int COMPLETION_DATE = 38;
     public static final int PRIORITY = 39;
     public static final int MATERIALS_REQUIRED = 40;
-    public static final int COMPLETION_STATUS = 41;
-    public static final int ISSUE_PRIORITY = 42;
-    public static final int RESOLUTION_STATUS = 43;
-    public static final int COMMENT = 44;
-    public static final int COMPLETE = 45;
-    public static final int MAP_KEY = 46;
-    public static final int SERVICE_ADDRESS_COMPLETE = 47;
+    public static final int ATTACHED_FILES = 41;
+    public static final int COMPLETION_STATUS = 42;
+    public static final int ISSUE_PRIORITY = 43;
+    public static final int RESOLUTION_STATUS = 44;
+    public static final int COMMENT = 45;
+    public static final int COMPLETE = 46;
+    public static final int MAP_KEY = 47;
+    public static final int SERVICE_ADDRESS_COMPLETE = 48;
     private static final String[] COLUMN_NAMES = {
             "key", "x", "y", "program", "type", "equipmentIdentifier",
             "location", "orderKey", "orderSubKey", "orderNumber", "orderType",
@@ -96,8 +97,9 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
             "feeder", "geocode", "lightTypeDesk", "request", "reason",
             "orderDesc", "workLocation", "workLocationDescription",
             "creationUser", "completionDate", "priority", "materialsRequired",
-            "completionStatus", "issuePriority", "resolutionStatus", "comment",
-            "complete", "mapKey", "serviceAddressComplete",
+            "attachedFiles", "completionStatus", "issuePriority",
+            "resolutionStatus", "comment", "complete", "mapKey",
+            "serviceAddressComplete",
         };
 
     public String getColumnName(int column) {
@@ -120,6 +122,9 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
         case X:
         case Y:
             return Double.class;
+
+        case ATTACHED_FILES:
+            return java.util.List.class;
 
         case ISSUE_PRIORITY:
             return gks.clark.inspections.model.IssuePriority.class;
@@ -265,6 +270,9 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
         case MATERIALS_REQUIRED:
             return v.getMaterialsRequired();
 
+        case ATTACHED_FILES:
+            return java.util.Arrays.asList(v.getAttachedFiles());
+
         case COMPLETION_STATUS:
             return v.getCompletionStatus();
 
@@ -292,7 +300,7 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     }
 
     public int getColumnCount() {
-        return 48;
+        return 49;
     }
 
     protected Class<?> getValueClass() {

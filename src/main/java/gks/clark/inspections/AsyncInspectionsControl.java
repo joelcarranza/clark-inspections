@@ -33,6 +33,8 @@
  */
 package gks.clark.inspections;
 
+import java.io.File;
+
 import gks.clark.inspections.model.Inspection;
 import gks.clark.inspections.model.Site;
 import gks.clark.inspections.model.SiteList;
@@ -72,5 +74,7 @@ public interface AsyncInspectionsControl {
 	 * @see InspectionsControl#queryExceptions()
 	 */
 	public ControlTask queryExceptions();
+
+	public ControlTask attachFiles(File[] files);
 
 }
