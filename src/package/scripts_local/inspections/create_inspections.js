@@ -50,6 +50,9 @@ JavaLink.process = function() {
         },
       ]);
 
+
+	 this.db.autoCommit = false;
+
 	 let order_key = data.ORDER_KEY;
 	 var order = this.db.queryRow('SELECT ordersubkey, ordertype FROM WM_ORDER where order_key = ?', order_key);
 	 Lang.assert(order, "Invalid work order #: " + order_key);
@@ -67,12 +70,14 @@ JavaLink.process = function() {
 
 	 var sth = this.db.prepare(`
 	 insert into wm_inspection (LIST_ID, ASSET_TYPE, ASSET_ID, X,Y)
-	  select ${woListKey} as LIST_ID, ASSET_TYPE, ASSET_ID,(MIN_X + MAX_X / 2) as X, (MIN_Y + MAX_Y) / 2 as Y 
+	  select ${woListKey} as LIST_ID, ASSET_TYPE, ASSET_ID,(MIN_X + MAX_X) / 2 as X, (MIN_Y + MAX_Y) / 2 as Y 
 	 	from INSPECTION_SITE where ASSET_TYPE= ? and ASSET_ID = ?`);
 	 data.SITES.forEach((site) => {
 	 	sth.execute(site.TYPE, site.ID);
 	 });
 	 sth.close();
+
+	 this.db.autoCommit = true;
 
 	 this.outputData([woListKey]);
 
