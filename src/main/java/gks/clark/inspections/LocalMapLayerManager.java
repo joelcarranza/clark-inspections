@@ -61,12 +61,14 @@ public class LocalMapLayerManager<T> {
 	
 	final String stylesResourcePath;
 	
+	final boolean mcs;
 	
-	public LocalMapLayerManager(MapControl mapControl, String layerName, String stylesResourcePath) {
+	public LocalMapLayerManager(MapControl mapControl, String layerName, String stylesResourcePath, boolean mcs) {
 		this.mapControl  = mapControl;
 		this.layerName = layerName;
 		this.stylesResourcePath = stylesResourcePath;
 		this.features = new ArrayList<T>();
+		this.mcs = mcs;
 	}
 
 	protected void createLayer() {
@@ -197,7 +199,7 @@ public class LocalMapLayerManager<T> {
 		if(m.isMappable()) {
 			MGGeometry geometry = geometryForObject(m);
 			String style = d.getClass().getName();
-			layer.createMapObject(m.getMapKey(),null,null,style,geometry,true);
+			layer.createMapObject(m.getMapKey(),null,null,style,geometry,mcs);
 		}
 	}
 

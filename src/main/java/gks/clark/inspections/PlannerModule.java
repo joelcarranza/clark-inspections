@@ -117,11 +117,11 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		
 		actionViewWorkOrders(null);
 		
-		workOrderLayerManager = new LocalMapLayerManager<WorkOrder>(getMapControl(), "CPU Inspections - Work Order", "gks/clark/inspections/layer/WorkOrder.xml");
+		workOrderLayerManager = new LocalMapLayerManager<WorkOrder>(getMapControl(), "CPU Inspections - Work Order", "gks/clark/inspections/layer/WorkOrder.xml", false);
 
-		siteLayerManager = new LocalMapLayerManager<Site>(getMapControl(), "CPU Inspections - Site", "gks/clark/inspections/layer/Site.xml");
+		siteLayerManager = new LocalMapLayerManager<Site>(getMapControl(), "CPU Inspections - Site", "gks/clark/inspections/layer/Site.xml", true);
 
-		inspectionLayerManager = new LocalMapLayerManager<Inspection>(getMapControl(), "CPU Inspections", "gks/clark/inspections/layer/Inspection.xml");
+		inspectionLayerManager = new LocalMapLayerManager<Inspection>(getMapControl(), "CPU Inspections", "gks/clark/inspections/layer/Inspection.xml", true);
 
 	}
 
