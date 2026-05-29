@@ -34,6 +34,7 @@ var Config = require('Config');
 var Sql = require('Sql');
 var Logger = require('Logger');
 var Lang = require('Lang');
+var WM = require('WM');
 
 JavaLink.useDefaultDataSource();
 
@@ -54,17 +55,24 @@ JavaLink.process = function() {
 	 this.db.autoCommit = false;
 
 	 let order_key = data.ORDER_KEY;
-	 var order = this.db.queryRow('SELECT ordersubkey, ordertype FROM WM_ORDER where order_key = ?', order_key);
+	 var order = this.db.queryRow('SELECT ordersubkey, ordersubtype, svcrtacct FROM WM_ORDER where order_key = ?', order_key);
 	 Lang.assert(order, "Invalid work order #: " + order_key);
-	 let orderSubKey = order.ORDERSUBKEY;
-	 let orderType = order.ORDERTYPE;
-	 Lang.assert(['PFRS', 'PTRE', 'PCRS'].indexOf(orderType), "Invalid order type");
+	 let orderSubKey = order[0];
+	 let orderType = order[1];
+	 let locationNumber = order[2];
 
-	 Logger.dump(data, 'info');
+	 Lang.assert(['PFRS', 'PTRE', 'PCRS'].indexOf(orderType) != -1, `Invalid order type: ${orderType}`);
+
+	 var wmResult = WM.createServiceOrder(orderSubKey, orderType, locationNumber);
+	 if(!wmResult.ok) {
+		 this.quit("Unable to create service order: " + wmResult.message);
+	 }
+	 let serviceOrderNumber = wmResult.data.serviceOrderNumber;
+	 Logger.info(`serviceOrderNumber = ${serviceOrderNumber}`);
 	 var woListKey = this.db.insertRowReturnKey('WM_INSPECTION_LIST', {
-	 	WORK_ORDER: orderSubKey,
-	 	ORDER_KEY: order_key,
-	 	PROGRAM: data.PROGRAM
+	 	SERVICE_ORDNBR: serviceOrderNumber,
+	 	PROGRAM_ORDER_KEY: order_key,
+	 	PROGRAM_TYPE: data.PROGRAM
 	 });
 	 Lang.assert(woListKey, "No ID for WM_INSPECTION_LIST returned");
 
