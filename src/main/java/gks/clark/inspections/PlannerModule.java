@@ -284,7 +284,6 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			GuiUtils.setImplementation(chooser, PlannerModule.class, this);
 			
 			CriteriaSiteFilter cf = new CriteriaSiteFilter();
-			cf.setCircuit(activeWorkOrder.getFeeder());
 			chooser.addChoice(cf, "gks/clark/inspections/model/CriteriaSiteFilter.xml", "Sites by Criteria");
 
 			ProximitySiteFilter pf = new ProximitySiteFilter();

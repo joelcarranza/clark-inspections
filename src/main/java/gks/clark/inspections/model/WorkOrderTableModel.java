@@ -58,31 +58,24 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
     public static final int SERVICE_ADDRESS = 17;
     public static final int SERVICE_CITY = 18;
     public static final int SERVICE_ZIP = 19;
-    public static final int CYCLE = 20;
-    public static final int ROUTE = 21;
-    public static final int SUBSTATION = 22;
-    public static final int FEEDER = 23;
-    public static final int GEOCODE = 24;
-    public static final int LIGHT_TYPE_DESK = 25;
-    public static final int REQUEST = 26;
-    public static final int REASON = 27;
-    public static final int ORDER_DESC = 28;
-    public static final int WORK_LOCATION = 29;
-    public static final int WORK_LOCATION_DESCRIPTION = 30;
-    public static final int CREATION_USER = 31;
-    public static final int LIST_ID = 32;
-    public static final int LIST_COMPLETED = 33;
-    public static final int LIST_TOTAL = 34;
-    public static final int CREW = 35;
-    public static final int STATUS = 36;
-    public static final int MAP_KEY = 37;
-    public static final int SERVICE_ADDRESS_COMPLETE = 38;
+    public static final int REQUEST = 20;
+    public static final int REASON = 21;
+    public static final int ORDER_DESC = 22;
+    public static final int WORK_LOCATION = 23;
+    public static final int WORK_LOCATION_DESCRIPTION = 24;
+    public static final int CREATION_USER = 25;
+    public static final int LIST_ID = 26;
+    public static final int LIST_COMPLETED = 27;
+    public static final int LIST_TOTAL = 28;
+    public static final int CREW = 29;
+    public static final int STATUS = 30;
+    public static final int MAP_KEY = 31;
+    public static final int SERVICE_ADDRESS_COMPLETE = 32;
     private static final String[] COLUMN_NAMES = {
             "key", "orderType", "x", "y", "orderSubKey", "orderNumber",
             "orderSubType", "entryTs", "hazard", "hazardText", "lifeSupport",
             "customerName", "specialNeeds", "resPhone", "busPhone", "callFirst",
             "serviceAccount", "serviceAddress", "serviceCity", "serviceZip",
-            "cycle", "route", "substation", "feeder", "geocode", "lightTypeDesk",
             "request", "reason", "orderDesc", "workLocation",
             "workLocationDescription", "creationUser", "listId", "listCompleted",
             "listTotal", "crew", "status", "mapKey", "serviceAddressComplete",
@@ -179,24 +172,6 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
         case SERVICE_ZIP:
             return v.getServiceZip();
 
-        case CYCLE:
-            return v.getCycle();
-
-        case ROUTE:
-            return v.getRoute();
-
-        case SUBSTATION:
-            return v.getSubstation();
-
-        case FEEDER:
-            return v.getFeeder();
-
-        case GEOCODE:
-            return v.getGeocode();
-
-        case LIGHT_TYPE_DESK:
-            return v.getLightTypeDesk();
-
         case REQUEST:
             return v.getRequest();
 
@@ -242,7 +217,7 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
     }
 
     public int getColumnCount() {
-        return 39;
+        return 33;
     }
 
     protected Class<?> getValueClass() {
