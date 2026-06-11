@@ -52,40 +52,35 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     public static final int ORDER_SUB_TYPE = 11;
     public static final int SCHEDULED_TS = 12;
     public static final int ENTRY_TS = 13;
-    public static final int HAZARD = 14;
-    public static final int HAZARD_TEXT = 15;
-    public static final int LIFE_SUPPORT = 16;
-    public static final int CUSTOMER_NAME = 17;
-    public static final int SPECIAL_NEEDS = 18;
-    public static final int RES_PHONE = 19;
-    public static final int BUS_PHONE = 20;
-    public static final int CALL_FIRST = 21;
-    public static final int SERVICE_ACCOUNT = 22;
-    public static final int SERVICE_ADDRESS = 23;
-    public static final int SERVICE_CITY = 24;
-    public static final int SERVICE_ZIP = 25;
-    public static final int REQUEST = 26;
-    public static final int REASON = 27;
-    public static final int ORDER_DESC = 28;
-    public static final int WORK_LOCATION = 29;
-    public static final int WORK_LOCATION_DESCRIPTION = 30;
-    public static final int CREATION_USER = 31;
-    public static final int COMPLETION_DATE = 32;
-    public static final int PRIORITY = 33;
-    public static final int MATERIALS_REQUIRED = 34;
-    public static final int ATTACHED_FILES = 35;
-    public static final int COMPLETION_STATUS = 36;
-    public static final int ISSUE_PRIORITY = 37;
-    public static final int RESOLUTION_STATUS = 38;
-    public static final int COMMENT = 39;
-    public static final int COMPLETE = 40;
-    public static final int MAP_KEY = 41;
-    public static final int SERVICE_ADDRESS_COMPLETE = 42;
+    public static final int CUSTOMER_NAME = 14;
+    public static final int RES_PHONE = 15;
+    public static final int BUS_PHONE = 16;
+    public static final int CALL_FIRST = 17;
+    public static final int SERVICE_ACCOUNT = 18;
+    public static final int SERVICE_ADDRESS = 19;
+    public static final int SERVICE_CITY = 20;
+    public static final int SERVICE_ZIP = 21;
+    public static final int REQUEST = 22;
+    public static final int REASON = 23;
+    public static final int ORDER_DESC = 24;
+    public static final int WORK_LOCATION = 25;
+    public static final int WORK_LOCATION_DESCRIPTION = 26;
+    public static final int CREATION_USER = 27;
+    public static final int COMPLETION_DATE = 28;
+    public static final int PRIORITY = 29;
+    public static final int MATERIALS_REQUIRED = 30;
+    public static final int ATTACHED_FILES = 31;
+    public static final int COMPLETION_STATUS = 32;
+    public static final int ISSUE_PRIORITY = 33;
+    public static final int RESOLUTION_STATUS = 34;
+    public static final int COMMENT = 35;
+    public static final int COMPLETE = 36;
+    public static final int MAP_KEY = 37;
+    public static final int SERVICE_ADDRESS_COMPLETE = 38;
     private static final String[] COLUMN_NAMES = {
             "key", "x", "y", "program", "type", "equipmentIdentifier",
             "location", "orderKey", "orderSubKey", "orderNumber", "orderType",
-            "orderSubType", "scheduledTs", "entryTs", "hazard", "hazardText",
-            "lifeSupport", "customerName", "specialNeeds", "resPhone",
+            "orderSubType", "scheduledTs", "entryTs", "customerName", "resPhone",
             "busPhone", "callFirst", "serviceAccount", "serviceAddress",
             "serviceCity", "serviceZip", "request", "reason", "orderDesc",
             "workLocation", "workLocationDescription", "creationUser",
@@ -181,20 +176,8 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
         case ENTRY_TS:
             return v.getEntryTs();
 
-        case HAZARD:
-            return v.getHazard();
-
-        case HAZARD_TEXT:
-            return v.getHazardText();
-
-        case LIFE_SUPPORT:
-            return v.getLifeSupport();
-
         case CUSTOMER_NAME:
             return v.getCustomerName();
-
-        case SPECIAL_NEEDS:
-            return v.getSpecialNeeds();
 
         case RES_PHONE:
             return v.getResPhone();
@@ -274,7 +257,7 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     }
 
     public int getColumnCount() {
-        return 43;
+        return 39;
     }
 
     protected Class<?> getValueClass() {

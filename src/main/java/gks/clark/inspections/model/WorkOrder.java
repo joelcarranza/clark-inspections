@@ -51,11 +51,7 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
     String orderNumber;
     String orderSubType;
     String entryTs;
-    String hazard;
-    String hazardText;
-    String lifeSupport;
     String customerName;
-    String specialNeeds;
     String resPhone;
     String busPhone;
     String callFirst;
@@ -133,24 +129,8 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
         return entryTs;
     }
 
-    public String getHazard() {
-        return hazard;
-    }
-
-    public String getHazardText() {
-        return hazardText;
-    }
-
-    public String getLifeSupport() {
-        return lifeSupport;
-    }
-
     public String getCustomerName() {
         return customerName;
-    }
-
-    public String getSpecialNeeds() {
-        return specialNeeds;
     }
 
     public String getResPhone() {
@@ -272,11 +252,7 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
         this.orderNumber = stream.read();
         this.orderSubType = stream.read();
         this.entryTs = stream.read();
-        this.hazard = stream.read();
-        this.hazardText = stream.read();
-        this.lifeSupport = stream.read();
         this.customerName = stream.read();
-        this.specialNeeds = stream.read();
         this.resPhone = stream.read();
         this.busPhone = stream.read();
         this.callFirst = stream.read();
@@ -306,11 +282,7 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
         stream.write(this.orderNumber);
         stream.write(this.orderSubType);
         stream.write(this.entryTs);
-        stream.write(this.hazard);
-        stream.write(this.hazardText);
-        stream.write(this.lifeSupport);
         stream.write(this.customerName);
-        stream.write(this.specialNeeds);
         stream.write(this.resPhone);
         stream.write(this.busPhone);
         stream.write(this.callFirst);

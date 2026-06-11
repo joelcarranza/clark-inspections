@@ -46,37 +46,32 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
     public static final int ORDER_NUMBER = 5;
     public static final int ORDER_SUB_TYPE = 6;
     public static final int ENTRY_TS = 7;
-    public static final int HAZARD = 8;
-    public static final int HAZARD_TEXT = 9;
-    public static final int LIFE_SUPPORT = 10;
-    public static final int CUSTOMER_NAME = 11;
-    public static final int SPECIAL_NEEDS = 12;
-    public static final int RES_PHONE = 13;
-    public static final int BUS_PHONE = 14;
-    public static final int CALL_FIRST = 15;
-    public static final int SERVICE_ACCOUNT = 16;
-    public static final int SERVICE_ADDRESS = 17;
-    public static final int SERVICE_CITY = 18;
-    public static final int SERVICE_ZIP = 19;
-    public static final int REQUEST = 20;
-    public static final int REASON = 21;
-    public static final int ORDER_DESC = 22;
-    public static final int WORK_LOCATION = 23;
-    public static final int WORK_LOCATION_DESCRIPTION = 24;
-    public static final int CREATION_USER = 25;
-    public static final int LIST_ID = 26;
-    public static final int LIST_COMPLETED = 27;
-    public static final int LIST_TOTAL = 28;
-    public static final int CREW = 29;
-    public static final int STATUS = 30;
-    public static final int MAP_KEY = 31;
-    public static final int SERVICE_ADDRESS_COMPLETE = 32;
+    public static final int CUSTOMER_NAME = 8;
+    public static final int RES_PHONE = 9;
+    public static final int BUS_PHONE = 10;
+    public static final int CALL_FIRST = 11;
+    public static final int SERVICE_ACCOUNT = 12;
+    public static final int SERVICE_ADDRESS = 13;
+    public static final int SERVICE_CITY = 14;
+    public static final int SERVICE_ZIP = 15;
+    public static final int REQUEST = 16;
+    public static final int REASON = 17;
+    public static final int ORDER_DESC = 18;
+    public static final int WORK_LOCATION = 19;
+    public static final int WORK_LOCATION_DESCRIPTION = 20;
+    public static final int CREATION_USER = 21;
+    public static final int LIST_ID = 22;
+    public static final int LIST_COMPLETED = 23;
+    public static final int LIST_TOTAL = 24;
+    public static final int CREW = 25;
+    public static final int STATUS = 26;
+    public static final int MAP_KEY = 27;
+    public static final int SERVICE_ADDRESS_COMPLETE = 28;
     private static final String[] COLUMN_NAMES = {
             "key", "orderType", "x", "y", "orderSubKey", "orderNumber",
-            "orderSubType", "entryTs", "hazard", "hazardText", "lifeSupport",
-            "customerName", "specialNeeds", "resPhone", "busPhone", "callFirst",
-            "serviceAccount", "serviceAddress", "serviceCity", "serviceZip",
-            "request", "reason", "orderDesc", "workLocation",
+            "orderSubType", "entryTs", "customerName", "resPhone", "busPhone",
+            "callFirst", "serviceAccount", "serviceAddress", "serviceCity",
+            "serviceZip", "request", "reason", "orderDesc", "workLocation",
             "workLocationDescription", "creationUser", "listId", "listCompleted",
             "listTotal", "crew", "status", "mapKey", "serviceAddressComplete",
         };
@@ -136,20 +131,8 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
         case ENTRY_TS:
             return v.getEntryTs();
 
-        case HAZARD:
-            return v.getHazard();
-
-        case HAZARD_TEXT:
-            return v.getHazardText();
-
-        case LIFE_SUPPORT:
-            return v.getLifeSupport();
-
         case CUSTOMER_NAME:
             return v.getCustomerName();
-
-        case SPECIAL_NEEDS:
-            return v.getSpecialNeeds();
 
         case RES_PHONE:
             return v.getResPhone();
@@ -217,7 +200,7 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
     }
 
     public int getColumnCount() {
-        return 33;
+        return 29;
     }
 
     protected Class<?> getValueClass() {

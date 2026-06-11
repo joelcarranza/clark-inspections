@@ -61,11 +61,7 @@
 		<property name="orderNumber" set="false"/>
 		<property name="orderSubType" set="false"/>
 		<property name="entryTs" set="false"/>
-		<property name="hazard" set="false"/>
-		<property name="hazardText" set="false"/>
-		<property name="lifeSupport" set="false"/>
 		<property name="customerName" set="false"/>
-		<property name="specialNeeds" set="false"/>
 		<property name="resPhone" set="false"/>
 		<property name="busPhone" set="false"/>
 		<property name="callFirst" set="false"/>
@@ -209,11 +205,7 @@
 		<property name="orderSubType" set="false"/>
 		<property name="scheduledTs" set="false"/>
 		<property name="entryTs" set="false"/>
-		<property name="hazard" set="false"/>
-		<property name="hazardText" set="false"/>
-		<property name="lifeSupport" set="false"/>
 		<property name="customerName" set="false"/>
-		<property name="specialNeeds" set="false"/>
 		<property name="resPhone" set="false"/>
 		<property name="busPhone" set="false"/>
 		<property name="callFirst" set="false"/>
