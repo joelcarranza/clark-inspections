@@ -43,112 +43,24 @@ function dateFormat(date)
 		<center>
 		<border border="10px" vgap="10px">
 		<north>
-			<jgpanel columns="645" rows="d,d,d,d,d">
-				<cell cc="1,1">
-					<jgform columns="56dlu,5dlu,125dlu,15dlu,d,5dlu,56dlu,15dlu,d,5dlu,56dlu">
-					<f label="Order #">
-						<jgform columns="pref:grow,10px,p,5dlu,50px">
-							<readOnly id="orderNumber" />
-							<f label="Priority">
-								<readOnly id="priority"/>
-							</f>
-						</jgform>
-					</f>
-					<f label="Entered"><readOnly id="entryDate" prototype="date"/></f>
-					
-					<f label="Appointment"><readOnly id="appointmentDate" prototype="date"/></f>
-					<eol />
-
-					<!--  row 2 -->
-					<f label="Customer"><readOnly id="customerName" /></f>
-					<f label="Creator"><readOnly id="creationUser" /></f>
-					<f columns="3">
-						<left visible="$:$callFirst" background="$:$callFirst? java.awt.Color.YELLOW : null">
-							<l><![CDATA[<html><b>Call First</b></html>]]></l>
-						</left>
-					</f>
-					
-					<!--  row 3 -->
-					
-					<row offset="4" />
-					<f label="Res Phone"><readOnly id="resPhone" /></f>
-				
-					<f label="Bus Phone"><readOnly id="busPhone"/></f>
-						
-					<!--  row 4 -->	
-					<row offset="4" />
-					<f label="Circ">
-						<readOnly id="subFeeder" /></f>
-				
-					<f label="Cycle / Route">
-						<readOnly id="cycleRouteLabel" />	</f>
-						
-					<!--  row 5 -->
-					
-					<f label="Special Needs">
-						<readOnly id="specialNeeds" /></f>
-				
-					<f label="Geocode">
-						<readOnly id="geocode" /></f>
-					
-					
-					<f label="Action Number">
-						<readOnly id="actionNumber"/>
-					</f>
-					
-					<eol/>
-					
-					<cell cc="1,5">
-						Address
-					</cell>
-					
-					<cell cc="3,5,1,3">
-						<readOnlyArea id="serviceAddressComplete" rows="3" />
-					</cell>
-				</jgform>
-				</cell>
-				<cell cc="1,2">
-				<jgform columns="56dlu,5dlu,125dlu,15dlu,d:grow" border="5 0 0 0" visible="$:$category=='F'">
-				<!--  row 6 -->
-					<!-- TODO: this has been reduced from 4 reasons to 1 so probably can be laid out differently -->
-					<f label="Reason" columns="3">
-						<hgrid hgap="5px">
-							<readOnly id="reason" />
-						</hgrid>
-					</f>
-				</jgform>
-				</cell>
-				<cell cc="1,3">
-				<!--  work location shown for Rio Orders only -->
-				<jgform columns="56dlu,5dlu,240dlu,15dlu,d:grow,5dlu,p" border="5 0 0 0" visible="$:$category=='R'" >
-					<f label="Work Desc" columns="1">
-						<readOnly id="workDescription" />
-					</f>
-					<f columns="3">
-						<check id="inCity" editable="false">In-City</check>
-					</f>
-					<f label="Light Type" columns="1">
-						<readOnly id="lightTypeDesc" />
-					</f>
-				</jgform>
-				</cell>
-				<cell cc="1,4">
-					<jgform columns="56dlu,5dlu,125dlu,15dlu,d:grow" border="5 0 0 0">
-						<f columns="3" label="Request">
-							<readOnlyArea rows="3" id="request" />
-						</f>
-						<eol/>
-					</jgform>
-				</cell>
-				<cell cc="1,5">
-					<!--  work location shown for FDSP only -->
-					<jgform columns="56dlu,5dlu,125dlu,15dlu,d:grow" border="5 0 0 0" visible="$:$category=='F' &amp;&amp; $type &amp;&amp; $type.code=='FDSP'">
-						<f label="Work Location">
-							<readOnly id="workLocationLabel" />
-						</f>
-					</jgform>
-				</cell>
-			</jgpanel>
+			<table cols="p f " hgap="3"  vgap="3" border="10px">
+		<tr>
+			<td>Order #</td>
+			<td><readOnly id="orderNumber" /></td>
+		</tr>
+		<tr>
+			<td>Customer</td>
+			<td><readOnly id="customerName" /></td>
+		</tr>
+		<tr>
+			<td>Address</td>
+			<td><readOnlyArea rows="4" id="serviceAddressComplete" /></td>
+		</tr>
+		<tr>
+			<td>Request</td>
+			<td><readOnlyArea rows="3" id="request" /></td>
+		</tr>
+	 </table>
 		</north>
 			<center>
         <tabs>
@@ -164,13 +76,13 @@ function dateFormat(date)
 					<td>Completion</td><td><combo id="completionStatus" dataClass="gks.clark.inspections.model.CompletionStatus" /></td>
 				</tr>
 				<tr>
-					<td>Priority</td><td><combo id="issuePriority" dataClass="gks.clark.inspections.model.IssuePriority" /></td>
+					<td>Priority</td><td><combo id="issuePriority" dataClass="gks.clark.inspections.model.IssuePriority"  enabled="$:$completionStatus=='X'" /></td>
 				</tr>
 				<tr>
 					<td>Comment</td><td><textArea id="comment"/></td>
 				</tr>
 				<tr>
-					<td>Resolution</td><td><combo id="resolutionStatus" dataClass="gks.clark.inspections.model.ResolutionStatus" /></td>
+					<td>Resolution</td><td><combo id="resolutionStatus" dataClass="gks.clark.inspections.model.ResolutionStatus" enabled="$:$completionStatus=='X'" /></td>
 				</tr>
 			 </table>
           </tab>

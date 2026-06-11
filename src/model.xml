@@ -73,12 +73,6 @@
 		<property name="serviceAddress" set="false"/>
 		<property name="serviceCity" set="false"/>
 		<property name="serviceZip" set="false"/>
-		<property name="cycle" set="false"/>
-		<property name="route" set="false"/>
-		<property name="substation" set="false"/>
-		<property name="feeder" set="false"/>
-		<property name="geocode" set="false"/>
-		<property name="lightTypeDesk" set="false"/>
 		<property name="request" set="false"/>
 		<property name="reason" set="false"/>
 		<property name="orderDesc" set="false"/>
@@ -227,12 +221,6 @@
 		<property name="serviceAddress" set="false"/>
 		<property name="serviceCity" set="false"/>
 		<property name="serviceZip" set="false"/>
-		<property name="cycle" set="false"/>
-		<property name="route" set="false"/>
-		<property name="substation" set="false"/>
-		<property name="feeder" set="false"/>
-		<property name="geocode" set="false"/>
-		<property name="lightTypeDesk" set="false"/>
 		<property name="request" set="false"/>
 		<property name="reason" set="false"/>
 		<property name="orderDesc" set="false"/>

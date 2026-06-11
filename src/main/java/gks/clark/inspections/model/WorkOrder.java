@@ -63,12 +63,6 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
     String serviceAddress;
     String serviceCity;
     String serviceZip;
-    String cycle;
-    String route;
-    String substation;
-    String feeder;
-    String geocode;
-    String lightTypeDesk;
     String request;
     String reason;
     String orderDesc;
@@ -187,30 +181,6 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
         return serviceZip;
     }
 
-    public String getCycle() {
-        return cycle;
-    }
-
-    public String getRoute() {
-        return route;
-    }
-
-    public String getSubstation() {
-        return substation;
-    }
-
-    public String getFeeder() {
-        return feeder;
-    }
-
-    public String getGeocode() {
-        return geocode;
-    }
-
-    public String getLightTypeDesk() {
-        return lightTypeDesk;
-    }
-
     public String getRequest() {
         return request;
     }
@@ -314,12 +284,6 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
         this.serviceAddress = stream.read();
         this.serviceCity = stream.read();
         this.serviceZip = stream.read();
-        this.cycle = stream.read();
-        this.route = stream.read();
-        this.substation = stream.read();
-        this.feeder = stream.read();
-        this.geocode = stream.read();
-        this.lightTypeDesk = stream.read();
         this.request = stream.read();
         this.reason = stream.read();
         this.orderDesc = stream.read();
@@ -354,12 +318,6 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
         stream.write(this.serviceAddress);
         stream.write(this.serviceCity);
         stream.write(this.serviceZip);
-        stream.write(this.cycle);
-        stream.write(this.route);
-        stream.write(this.substation);
-        stream.write(this.feeder);
-        stream.write(this.geocode);
-        stream.write(this.lightTypeDesk);
         stream.write(this.request);
         stream.write(this.reason);
         stream.write(this.orderDesc);

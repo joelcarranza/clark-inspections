@@ -64,42 +64,34 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     public static final int SERVICE_ADDRESS = 23;
     public static final int SERVICE_CITY = 24;
     public static final int SERVICE_ZIP = 25;
-    public static final int CYCLE = 26;
-    public static final int ROUTE = 27;
-    public static final int SUBSTATION = 28;
-    public static final int FEEDER = 29;
-    public static final int GEOCODE = 30;
-    public static final int LIGHT_TYPE_DESK = 31;
-    public static final int REQUEST = 32;
-    public static final int REASON = 33;
-    public static final int ORDER_DESC = 34;
-    public static final int WORK_LOCATION = 35;
-    public static final int WORK_LOCATION_DESCRIPTION = 36;
-    public static final int CREATION_USER = 37;
-    public static final int COMPLETION_DATE = 38;
-    public static final int PRIORITY = 39;
-    public static final int MATERIALS_REQUIRED = 40;
-    public static final int ATTACHED_FILES = 41;
-    public static final int COMPLETION_STATUS = 42;
-    public static final int ISSUE_PRIORITY = 43;
-    public static final int RESOLUTION_STATUS = 44;
-    public static final int COMMENT = 45;
-    public static final int COMPLETE = 46;
-    public static final int MAP_KEY = 47;
-    public static final int SERVICE_ADDRESS_COMPLETE = 48;
+    public static final int REQUEST = 26;
+    public static final int REASON = 27;
+    public static final int ORDER_DESC = 28;
+    public static final int WORK_LOCATION = 29;
+    public static final int WORK_LOCATION_DESCRIPTION = 30;
+    public static final int CREATION_USER = 31;
+    public static final int COMPLETION_DATE = 32;
+    public static final int PRIORITY = 33;
+    public static final int MATERIALS_REQUIRED = 34;
+    public static final int ATTACHED_FILES = 35;
+    public static final int COMPLETION_STATUS = 36;
+    public static final int ISSUE_PRIORITY = 37;
+    public static final int RESOLUTION_STATUS = 38;
+    public static final int COMMENT = 39;
+    public static final int COMPLETE = 40;
+    public static final int MAP_KEY = 41;
+    public static final int SERVICE_ADDRESS_COMPLETE = 42;
     private static final String[] COLUMN_NAMES = {
             "key", "x", "y", "program", "type", "equipmentIdentifier",
             "location", "orderKey", "orderSubKey", "orderNumber", "orderType",
             "orderSubType", "scheduledTs", "entryTs", "hazard", "hazardText",
             "lifeSupport", "customerName", "specialNeeds", "resPhone",
             "busPhone", "callFirst", "serviceAccount", "serviceAddress",
-            "serviceCity", "serviceZip", "cycle", "route", "substation",
-            "feeder", "geocode", "lightTypeDesk", "request", "reason",
-            "orderDesc", "workLocation", "workLocationDescription",
-            "creationUser", "completionDate", "priority", "materialsRequired",
-            "attachedFiles", "completionStatus", "issuePriority",
-            "resolutionStatus", "comment", "complete", "mapKey",
-            "serviceAddressComplete",
+            "serviceCity", "serviceZip", "request", "reason", "orderDesc",
+            "workLocation", "workLocationDescription", "creationUser",
+            "completionDate", "priority", "materialsRequired", "attachedFiles",
+            "completionStatus", "issuePriority", "resolutionStatus", "comment",
+            "complete", "mapKey", "serviceAddressComplete",
         };
 
     public String getColumnName(int column) {
@@ -225,24 +217,6 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
         case SERVICE_ZIP:
             return v.getServiceZip();
 
-        case CYCLE:
-            return v.getCycle();
-
-        case ROUTE:
-            return v.getRoute();
-
-        case SUBSTATION:
-            return v.getSubstation();
-
-        case FEEDER:
-            return v.getFeeder();
-
-        case GEOCODE:
-            return v.getGeocode();
-
-        case LIGHT_TYPE_DESK:
-            return v.getLightTypeDesk();
-
         case REQUEST:
             return v.getRequest();
 
@@ -300,7 +274,7 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     }
 
     public int getColumnCount() {
-        return 49;
+        return 43;
     }
 
     protected Class<?> getValueClass() {
