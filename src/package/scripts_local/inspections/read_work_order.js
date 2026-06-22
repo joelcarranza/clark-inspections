@@ -44,12 +44,11 @@ from wm_inspection
 group by list_id)
 SELECT 
             o.order_key,
-            o.ordertype,
+            o.ordersubtype,
             o.lon,
             o.lat,
             o.ORDERSUBKEY,
             o.ORDNBR,
-            o.ordersubtype,
             o.entry_ts,
             o.CUSTNAME,
             o.SPECNEEDS,

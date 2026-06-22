@@ -54,12 +54,11 @@
 		
 		<generateTableModel class="gks.clark.inspections.model.WorkOrderTableModel" />
 		<property name="key" set="false" key="true"/>
-		<property name="orderType" set="false" />
+		<property name="program" class="gks.clark.inspections.model.Program" set="false"/>
 		<property name="x" class="Double" set="false"/>
 		<property name="y" class="Double" set="false"/>
 		<property name="orderSubKey" set="false"/>
 		<property name="orderNumber" set="false"/>
-		<property name="orderSubType" set="false"/>
 		<property name="entryTs" set="false"/>
 		<property name="customerName" set="false"/>
 		<property name="resPhone" set="false"/>
@@ -201,8 +200,6 @@
 		<property name="orderKey" set="false"/>
 		<property name="orderSubKey" set="false"/>
 		<property name="orderNumber" set="false"/>
-		<property name="orderType" set="false"/>
-		<property name="orderSubType" set="false"/>
 		<property name="scheduledTs" set="false"/>
 		<property name="entryTs" set="false"/>
 		<property name="customerName" set="false"/>

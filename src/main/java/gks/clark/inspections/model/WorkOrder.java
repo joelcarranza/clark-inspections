@@ -44,12 +44,11 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
      ==========================================================================
     */
     String key;
-    String orderType;
+    gks.clark.inspections.model.Program program;
     Double x;
     Double y;
     String orderSubKey;
     String orderNumber;
-    String orderSubType;
     String entryTs;
     String customerName;
     String resPhone;
@@ -101,8 +100,8 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
         return key;
     }
 
-    public String getOrderType() {
-        return orderType;
+    public gks.clark.inspections.model.Program getProgram() {
+        return program;
     }
 
     public Double getX() {
@@ -119,10 +118,6 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
 
     public String getOrderNumber() {
         return orderNumber;
-    }
-
-    public String getOrderSubType() {
-        return orderSubType;
     }
 
     public String getEntryTs() {
@@ -245,12 +240,11 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
     public void parseFromStream(gks.util.dto.DataTransferInputStream stream)
         throws gks.util.dto.DataTransferException {
         this.key = stream.read();
-        this.orderType = stream.read();
+        this.program = stream.readCode(gks.clark.inspections.model.Program.class);
         this.x = stream.readDouble();
         this.y = stream.readDouble();
         this.orderSubKey = stream.read();
         this.orderNumber = stream.read();
-        this.orderSubType = stream.read();
         this.entryTs = stream.read();
         this.customerName = stream.read();
         this.resPhone = stream.read();
@@ -275,12 +269,11 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
     public void serializeToStream(gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
         stream.write(this.key);
-        stream.write(this.orderType);
+        stream.write(this.program);
         stream.write(this.x);
         stream.write(this.y);
         stream.write(this.orderSubKey);
         stream.write(this.orderNumber);
-        stream.write(this.orderSubType);
         stream.write(this.entryTs);
         stream.write(this.customerName);
         stream.write(this.resPhone);

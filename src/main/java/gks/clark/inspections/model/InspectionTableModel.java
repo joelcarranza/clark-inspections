@@ -48,45 +48,43 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     public static final int ORDER_KEY = 7;
     public static final int ORDER_SUB_KEY = 8;
     public static final int ORDER_NUMBER = 9;
-    public static final int ORDER_TYPE = 10;
-    public static final int ORDER_SUB_TYPE = 11;
-    public static final int SCHEDULED_TS = 12;
-    public static final int ENTRY_TS = 13;
-    public static final int CUSTOMER_NAME = 14;
-    public static final int RES_PHONE = 15;
-    public static final int BUS_PHONE = 16;
-    public static final int CALL_FIRST = 17;
-    public static final int SERVICE_ACCOUNT = 18;
-    public static final int SERVICE_ADDRESS = 19;
-    public static final int SERVICE_CITY = 20;
-    public static final int SERVICE_ZIP = 21;
-    public static final int REQUEST = 22;
-    public static final int REASON = 23;
-    public static final int ORDER_DESC = 24;
-    public static final int WORK_LOCATION = 25;
-    public static final int WORK_LOCATION_DESCRIPTION = 26;
-    public static final int CREATION_USER = 27;
-    public static final int COMPLETION_DATE = 28;
-    public static final int PRIORITY = 29;
-    public static final int MATERIALS_REQUIRED = 30;
-    public static final int ATTACHED_FILES = 31;
-    public static final int COMPLETION_STATUS = 32;
-    public static final int ISSUE_PRIORITY = 33;
-    public static final int RESOLUTION_STATUS = 34;
-    public static final int COMMENT = 35;
-    public static final int COMPLETE = 36;
-    public static final int MAP_KEY = 37;
-    public static final int SERVICE_ADDRESS_COMPLETE = 38;
+    public static final int SCHEDULED_TS = 10;
+    public static final int ENTRY_TS = 11;
+    public static final int CUSTOMER_NAME = 12;
+    public static final int RES_PHONE = 13;
+    public static final int BUS_PHONE = 14;
+    public static final int CALL_FIRST = 15;
+    public static final int SERVICE_ACCOUNT = 16;
+    public static final int SERVICE_ADDRESS = 17;
+    public static final int SERVICE_CITY = 18;
+    public static final int SERVICE_ZIP = 19;
+    public static final int REQUEST = 20;
+    public static final int REASON = 21;
+    public static final int ORDER_DESC = 22;
+    public static final int WORK_LOCATION = 23;
+    public static final int WORK_LOCATION_DESCRIPTION = 24;
+    public static final int CREATION_USER = 25;
+    public static final int COMPLETION_DATE = 26;
+    public static final int PRIORITY = 27;
+    public static final int MATERIALS_REQUIRED = 28;
+    public static final int ATTACHED_FILES = 29;
+    public static final int COMPLETION_STATUS = 30;
+    public static final int ISSUE_PRIORITY = 31;
+    public static final int RESOLUTION_STATUS = 32;
+    public static final int COMMENT = 33;
+    public static final int COMPLETE = 34;
+    public static final int MAP_KEY = 35;
+    public static final int SERVICE_ADDRESS_COMPLETE = 36;
     private static final String[] COLUMN_NAMES = {
             "key", "x", "y", "program", "type", "equipmentIdentifier",
-            "location", "orderKey", "orderSubKey", "orderNumber", "orderType",
-            "orderSubType", "scheduledTs", "entryTs", "customerName", "resPhone",
-            "busPhone", "callFirst", "serviceAccount", "serviceAddress",
-            "serviceCity", "serviceZip", "request", "reason", "orderDesc",
-            "workLocation", "workLocationDescription", "creationUser",
-            "completionDate", "priority", "materialsRequired", "attachedFiles",
-            "completionStatus", "issuePriority", "resolutionStatus", "comment",
-            "complete", "mapKey", "serviceAddressComplete",
+            "location", "orderKey", "orderSubKey", "orderNumber", "scheduledTs",
+            "entryTs", "customerName", "resPhone", "busPhone", "callFirst",
+            "serviceAccount", "serviceAddress", "serviceCity", "serviceZip",
+            "request", "reason", "orderDesc", "workLocation",
+            "workLocationDescription", "creationUser", "completionDate",
+            "priority", "materialsRequired", "attachedFiles", "completionStatus",
+            "issuePriority", "resolutionStatus", "comment", "complete", "mapKey",
+            "serviceAddressComplete",
         };
 
     public String getColumnName(int column) {
@@ -163,12 +161,6 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
 
         case ORDER_NUMBER:
             return v.getOrderNumber();
-
-        case ORDER_TYPE:
-            return v.getOrderType();
-
-        case ORDER_SUB_TYPE:
-            return v.getOrderSubType();
 
         case SCHEDULED_TS:
             return v.getScheduledTs();
@@ -257,7 +249,7 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     }
 
     public int getColumnCount() {
-        return 39;
+        return 37;
     }
 
     protected Class<?> getValueClass() {

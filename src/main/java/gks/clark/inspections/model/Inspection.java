@@ -53,8 +53,6 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
     String orderKey;
     String orderSubKey;
     String orderNumber;
-    String orderType;
-    String orderSubType;
     String scheduledTs;
     String entryTs;
     String customerName;
@@ -144,14 +142,6 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
 
     public String getOrderNumber() {
         return orderNumber;
-    }
-
-    public String getOrderType() {
-        return orderType;
-    }
-
-    public String getOrderSubType() {
-        return orderSubType;
     }
 
     public String getScheduledTs() {
@@ -322,8 +312,6 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         this.orderKey = stream.read();
         this.orderSubKey = stream.read();
         this.orderNumber = stream.read();
-        this.orderType = stream.read();
-        this.orderSubType = stream.read();
         this.scheduledTs = stream.read();
         this.entryTs = stream.read();
         this.customerName = stream.read();
@@ -376,8 +364,6 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         stream.write(this.orderKey);
         stream.write(this.orderSubKey);
         stream.write(this.orderNumber);
-        stream.write(this.orderType);
-        stream.write(this.orderSubType);
         stream.write(this.scheduledTs);
         stream.write(this.entryTs);
         stream.write(this.customerName);

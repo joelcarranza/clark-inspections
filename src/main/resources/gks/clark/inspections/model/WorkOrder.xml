@@ -40,6 +40,10 @@ function dateFormat(date)
 			<td><readOnly id="orderNumber" /></td>
 		</tr>
 		<tr>
+			<td>Program</td>
+			<td><readOnly id="program" /></td>
+		</tr>
+		<tr>
 			<td>Customer</td>
 			<td><readOnly id="customerName" /></td>
 		</tr>

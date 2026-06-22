@@ -48,8 +48,6 @@ JavaLink.process = function() {
 			a.order_key,
             o.ORDERSUBKEY,
 			o.ORDNBR,
-            o.ordertype,
-            o.ordersubtype,
             a.scheduled_ts,
             o.entry_ts,
             o.CUSTNAME,

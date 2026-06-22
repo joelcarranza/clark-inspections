@@ -58,12 +58,12 @@ JavaLink.process = function() {
 	 var order = this.db.queryRow('SELECT ordersubkey, ordersubtype, svcrtacct FROM WM_ORDER where order_key = ?', order_key);
 	 Lang.assert(order, "Invalid work order #: " + order_key);
 	 let orderSubKey = order[0];
-	 let orderType = order[1];
+	 let orderSubType = order[1];
 	 let locationNumber = order[2];
 
-	 Lang.assert(['PFRS', 'PTRE', 'PCRS'].indexOf(orderType) != -1, `Invalid order type: ${orderType}`);
+	 Lang.assert(data.program == orderSubType, `Invalid order type: ${orderSubType}`);
 
-	 var wmResult = WM.createServiceOrder(orderSubKey, orderType, locationNumber);
+	 var wmResult = WM.createServiceOrder(orderSubKey, orderSubType, locationNumber);
 	 if(!wmResult.ok) {
 		 this.quit("Unable to create service order: " + wmResult.message);
 	 }

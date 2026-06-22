@@ -39,39 +39,38 @@ package gks.clark.inspections.model;
 public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
     private static final long serialVersionUID = 1L;
     public static final int KEY = 0;
-    public static final int ORDER_TYPE = 1;
+    public static final int PROGRAM = 1;
     public static final int X = 2;
     public static final int Y = 3;
     public static final int ORDER_SUB_KEY = 4;
     public static final int ORDER_NUMBER = 5;
-    public static final int ORDER_SUB_TYPE = 6;
-    public static final int ENTRY_TS = 7;
-    public static final int CUSTOMER_NAME = 8;
-    public static final int RES_PHONE = 9;
-    public static final int BUS_PHONE = 10;
-    public static final int CALL_FIRST = 11;
-    public static final int SERVICE_ACCOUNT = 12;
-    public static final int SERVICE_ADDRESS = 13;
-    public static final int SERVICE_CITY = 14;
-    public static final int SERVICE_ZIP = 15;
-    public static final int REQUEST = 16;
-    public static final int REASON = 17;
-    public static final int ORDER_DESC = 18;
-    public static final int WORK_LOCATION = 19;
-    public static final int WORK_LOCATION_DESCRIPTION = 20;
-    public static final int CREATION_USER = 21;
-    public static final int LIST_ID = 22;
-    public static final int LIST_COMPLETED = 23;
-    public static final int LIST_TOTAL = 24;
-    public static final int CREW = 25;
-    public static final int STATUS = 26;
-    public static final int MAP_KEY = 27;
-    public static final int SERVICE_ADDRESS_COMPLETE = 28;
+    public static final int ENTRY_TS = 6;
+    public static final int CUSTOMER_NAME = 7;
+    public static final int RES_PHONE = 8;
+    public static final int BUS_PHONE = 9;
+    public static final int CALL_FIRST = 10;
+    public static final int SERVICE_ACCOUNT = 11;
+    public static final int SERVICE_ADDRESS = 12;
+    public static final int SERVICE_CITY = 13;
+    public static final int SERVICE_ZIP = 14;
+    public static final int REQUEST = 15;
+    public static final int REASON = 16;
+    public static final int ORDER_DESC = 17;
+    public static final int WORK_LOCATION = 18;
+    public static final int WORK_LOCATION_DESCRIPTION = 19;
+    public static final int CREATION_USER = 20;
+    public static final int LIST_ID = 21;
+    public static final int LIST_COMPLETED = 22;
+    public static final int LIST_TOTAL = 23;
+    public static final int CREW = 24;
+    public static final int STATUS = 25;
+    public static final int MAP_KEY = 26;
+    public static final int SERVICE_ADDRESS_COMPLETE = 27;
     private static final String[] COLUMN_NAMES = {
-            "key", "orderType", "x", "y", "orderSubKey", "orderNumber",
-            "orderSubType", "entryTs", "customerName", "resPhone", "busPhone",
-            "callFirst", "serviceAccount", "serviceAddress", "serviceCity",
-            "serviceZip", "request", "reason", "orderDesc", "workLocation",
+            "key", "program", "x", "y", "orderSubKey", "orderNumber", "entryTs",
+            "customerName", "resPhone", "busPhone", "callFirst",
+            "serviceAccount", "serviceAddress", "serviceCity", "serviceZip",
+            "request", "reason", "orderDesc", "workLocation",
             "workLocationDescription", "creationUser", "listId", "listCompleted",
             "listTotal", "crew", "status", "mapKey", "serviceAddressComplete",
         };
@@ -98,6 +97,9 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
         case LIST_TOTAL:
             return Integer.class;
 
+        case PROGRAM:
+            return gks.clark.inspections.model.Program.class;
+
         default:
             return String.class;
         }
@@ -110,8 +112,8 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
         case KEY:
             return v.getKey();
 
-        case ORDER_TYPE:
-            return v.getOrderType();
+        case PROGRAM:
+            return v.getProgram();
 
         case X:
             return v.getX();
@@ -124,9 +126,6 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
 
         case ORDER_NUMBER:
             return v.getOrderNumber();
-
-        case ORDER_SUB_TYPE:
-            return v.getOrderSubType();
 
         case ENTRY_TS:
             return v.getEntryTs();
@@ -200,7 +199,7 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
     }
 
     public int getColumnCount() {
-        return 29;
+        return 28;
     }
 
     protected Class<?> getValueClass() {
