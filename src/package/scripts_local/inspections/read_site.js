@@ -53,15 +53,17 @@ JavaLink.process = function() {
 		FROM INSPECTION_SITE`;
 
 	let where = [];
-	let params = [];
+	let bind = [];
 
 	if (mode === 'criteria') {
 		where.push('GLOBALID in (SELECT GLOBALID FROM INSPECTION_SITE_FEEDER WHERE FEEDERID = ?)');
-		params.push(this.param['CIRCUIT']);
+		bind.push(this.param['CIRCUIT']);
+
+
 	}
 	else if (mode === 'proximity') {
 		where.push('GEOM.STDistance(geometry::Point(?, ?, 2286)) <= ?');
-		params = params.concat([this.param['X'], this.param['Y'], this.param['DISTANCE']]);
+		bind = bind.concat([this.param['X'], this.param['Y'], this.param['DISTANCE']]);
 	}
 	else if (mode === 'globalid') {
 		const ids = this.param['GLOBALID'].trim().split(/\s+/);
@@ -69,13 +71,18 @@ JavaLink.process = function() {
 	}
 	else if (mode === 'trace') {
 		where.push('GLOBALID in (SELECT GLOBALID FROM INSPECTION_SITE_TRACE_RESULTS WHERE TRACE_ID = ?)');
-		params.push(this.param['TRACE_ID']);
+		bind.push(this.param['TRACE_ID']);
 	}
 	else {
 		throw new Error(`Unsupported MODE: ${mode}`);
 	}
 
-	this.outputQueryResults(sql + ' WHERE ' + where.join(' AND '), params);
+	if(this.param.TYPE) {
+		where.push('ASSET_TYPE = ?');
+		bind.push(this.param['TYPE'].toLowerCase());
+	}
+
+	this.outputQueryResults(sql + ' WHERE ' + where.join(' AND '), bind);
 };
 
 JavaLink.run();

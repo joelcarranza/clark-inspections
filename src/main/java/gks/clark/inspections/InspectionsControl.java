@@ -72,6 +72,9 @@ public class InspectionsControl extends BasicControl {
 			CriteriaSiteFilter cf = (CriteriaSiteFilter)filter;
 			q.append("MODE", "criteria");
 			q.append("CIRCUIT", cf.getCircuit());
+			if(cf.getType() != null) {
+				q.append("TYPE", cf.getType().name());				
+			}
 		}
 		else if(filter instanceof ProximitySiteFilter) {
 			ProximitySiteFilter pf = (ProximitySiteFilter)filter;

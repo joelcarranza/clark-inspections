@@ -43,6 +43,7 @@ public class CriteriaSiteFilter implements gks.clark.inspections.SiteFilter {
      ==========================================================================
     */
     String circuit;
+    gks.clark.inspections.AssetTypeFilter type;
 
     /*
      ==========================================================================
@@ -63,5 +64,13 @@ public class CriteriaSiteFilter implements gks.clark.inspections.SiteFilter {
 
     public String getCircuit() {
         return circuit;
+    }
+
+    public void setType(gks.clark.inspections.AssetTypeFilter type) {
+        this.type = type;
+    }
+
+    public gks.clark.inspections.AssetTypeFilter getType() {
+        return type;
     }
 }
