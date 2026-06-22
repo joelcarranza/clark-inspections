@@ -14,7 +14,9 @@
 	<bean class="gks.clark.inspections.model.CriteriaSiteFilter">
 		<implement>gks.clark.inspections.SiteFilter</implement>
 		<property name="circuit" />
-		<property name="type" class="gks.clark.inspections.AssetTypeFilter" />
+		<property name="types" class="gks.clark.inspections.AssetTypeFilter[]">
+			<initValue>gks.clark.inspections.AssetTypeFilter.values()</initValue>
+		</property>
 	</bean>
 	
 	<bean class="gks.clark.inspections.model.ProximitySiteFilter">

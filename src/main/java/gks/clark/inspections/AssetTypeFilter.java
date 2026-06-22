@@ -34,7 +34,8 @@ package gks.clark.inspections;
  */
 public enum AssetTypeFilter {
 	POLE("Pole"),
-	CONDUCTOR("Conductor");
+	PRIMARY("Primary"),
+	SECONDARY("Secondary");
 
 	private String label;
 
