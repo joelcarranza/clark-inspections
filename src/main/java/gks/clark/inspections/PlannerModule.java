@@ -289,7 +289,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			ProximitySiteFilter pf = new ProximitySiteFilter();
 			pf.setLon(activeWorkOrder.getX());
 			pf.setLat(activeWorkOrder.getY());
-			pf.setDistance(1000);
+			pf.setDistance(100);
 			chooser.addChoice(pf, "gks/clark/inspections/model/ProximitySiteFilter.xml", "Sites by Proximity");
 
 			chooser.addChoice(new TraceSiteFilter(), "gks/clark/inspections/model/TraceSiteFilter.xml", "Sites by Trace");

@@ -47,7 +47,7 @@
 		<tr>
 			<td>Distance</td>
 			<td><integer id="distance" /></td>
-			<td><l>m</l></td>
+			<td><l>ft</l></td>
 		</tr>
 
 		<tr>

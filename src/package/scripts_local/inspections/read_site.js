@@ -61,7 +61,8 @@ JavaLink.queryPole = function() {
 	}
 	else if (mode === 'proximity') {
 		where.push('GEOM.STDistance(geometry::Point(?, ?, 2286)) <= ?');
-		bind = bind.concat([this.param['X'], this.param['Y'], this.param['DISTANCE']]);
+		let meters = 0.3048 * +this.param['DISTANCE'];
+		bind = bind.concat([this.param['X'], this.param['Y'], meters]);
 	}
 	else if (mode === 'globalid') {
 		const ids = this.param['GLOBALID'].trim().split(/\s+/);
@@ -103,7 +104,8 @@ JavaLink.queryElectricLine = function(types) {
 	}
 	else if (mode === 'proximity') {
 		where.push('GEOM.STDistance(geometry::Point(?, ?, 2286)) <= ?');
-		bind = bind.concat([this.param['X'], this.param['Y'], this.param['DISTANCE']]);
+		let meters = 0.3048 * +this.param['DISTANCE'];
+		bind = bind.concat([this.param['X'], this.param['Y'], meters]);
 	}
 	else if (mode === 'globalid') {
 		const ids = this.param['GLOBALID'].trim().split(/\s+/);
