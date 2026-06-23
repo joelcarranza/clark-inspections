@@ -76,13 +76,13 @@ function dateFormat(date)
 					<td>Completion</td><td><combo id="completionStatus" dataClass="gks.clark.inspections.model.CompletionStatus" /></td>
 				</tr>
 				<tr>
-					<td>Priority</td><td><combo id="issuePriority" dataClass="gks.clark.inspections.model.IssuePriority"  enabled="$:$completionStatus=='X'" /></td>
+					<td>Priority</td><td><combo id="issuePriority" dataClass="gks.clark.inspections.model.IssuePriority"  enabled="$:dot($completionStatus,'code')=='X'" /></td>
 				</tr>
 				<tr>
 					<td>Comment</td><td><textArea id="comment"/></td>
 				</tr>
 				<tr>
-					<td>Resolution</td><td><combo id="resolutionStatus" dataClass="gks.clark.inspections.model.ResolutionStatus" enabled="$:$completionStatus=='X'" /></td>
+					<td>Resolution</td><td><combo id="resolutionStatus" dataClass="gks.clark.inspections.model.ResolutionStatus" enabled="$:dot($completionStatus,'code')=='X'" /></td>
 				</tr>
 			 </table>
           </tab>
