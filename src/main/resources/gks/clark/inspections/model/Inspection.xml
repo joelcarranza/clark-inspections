@@ -79,11 +79,18 @@ function dateFormat(date)
 					<td>Priority</td><td><combo id="issuePriority" dataClass="gks.clark.inspections.model.IssuePriority"  enabled="$:dot($completionStatus,'code')=='X'" /></td>
 				</tr>
 				<tr>
-					<td>Comment</td><td><textArea id="comment"/></td>
+					<td>Comment</td><td><textArea id="comment" length="200"/></td>
 				</tr>
 				<tr>
-					<td>Resolution</td><td><combo id="resolutionStatus" dataClass="gks.clark.inspections.model.ResolutionStatus" enabled="$:dot($completionStatus,'code')=='X'" /></td>
+					<td>Resolution</td><td><combo id="resolutionStatus" dataClass="gks.clark.inspections.model.ResolutionStatus" enabled="$:dot($completionStatus,'code')=='X'" includeNull="true" nullLabel="None" /></td>
 				</tr>
+				<tr>
+					<td>Work Order #</td><td><text id="resolutionWorkOrder" enabled="$:dot($resolutionStatus,'code')=='R'" length="10"/></td>
+				</tr>
+				<tr>
+					<td>Comment</td><td><textArea id="resolutionComment" enabled="$:dot($resolutionStatus,'code')=='R'" length="200"/></td>
+				</tr>
+				
 			 </table>
           </tab>
           <tab name="Attachments">

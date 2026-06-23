@@ -79,7 +79,9 @@ JavaLink.process = function() {
         'COMPLETION_STATUS',
         'ISSUE_PRIORITY',
         'COMMENT',
-        'RESOLUTION_STATUS'
+        'RESOLUTION_STATUS',
+        'RESOLUTION_WORK_ORDER',
+        'RESOLUTION_COMMENT',        
       ]);
      var literals;
      if(data['COMPLETION_STATUS']) {

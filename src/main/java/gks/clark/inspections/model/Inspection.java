@@ -75,8 +75,10 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
     gks.clark.inspections.FileAttachment[] attachedFiles;
     gks.clark.inspections.model.CompletionStatus completionStatus;
     gks.clark.inspections.model.IssuePriority issuePriority;
-    gks.clark.inspections.model.ResolutionStatus resolutionStatus;
     String comment;
+    gks.clark.inspections.model.ResolutionStatus resolutionStatus;
+    String resolutionWorkOrder;
+    String resolutionComment;
 
     /*
      ==========================================================================
@@ -247,6 +249,14 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         return issuePriority;
     }
 
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
     public void setResolutionStatus(
         gks.clark.inspections.model.ResolutionStatus resolutionStatus) {
         this.resolutionStatus = resolutionStatus;
@@ -256,12 +266,20 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         return resolutionStatus;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setResolutionWorkOrder(String resolutionWorkOrder) {
+        this.resolutionWorkOrder = resolutionWorkOrder;
     }
 
-    public String getComment() {
-        return comment;
+    public String getResolutionWorkOrder() {
+        return resolutionWorkOrder;
+    }
+
+    public void setResolutionComment(String resolutionComment) {
+        this.resolutionComment = resolutionComment;
+    }
+
+    public String getResolutionComment() {
+        return resolutionComment;
     }
 
     public boolean isComplete() {
@@ -348,8 +366,10 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
 
         this.completionStatus = stream.readCode(gks.clark.inspections.model.CompletionStatus.class);
         this.issuePriority = stream.readCode(gks.clark.inspections.model.IssuePriority.class);
-        this.resolutionStatus = stream.readCode(gks.clark.inspections.model.ResolutionStatus.class);
         this.comment = stream.read();
+        this.resolutionStatus = stream.readCode(gks.clark.inspections.model.ResolutionStatus.class);
+        this.resolutionWorkOrder = stream.read();
+        this.resolutionComment = stream.read();
     }
 
     public void serializeToStream(gks.util.dto.DataTransferOutputStream stream)
@@ -396,8 +416,10 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
 
         stream.write(this.completionStatus);
         stream.write(this.issuePriority);
-        stream.write(this.resolutionStatus);
         stream.write(this.comment);
+        stream.write(this.resolutionStatus);
+        stream.write(this.resolutionWorkOrder);
+        stream.write(this.resolutionComment);
     }
 
     public void serializeModifiableToStream(
@@ -417,8 +439,10 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
 
         stream.write(this.completionStatus);
         stream.write(this.issuePriority);
-        stream.write(this.resolutionStatus);
         stream.write(this.comment);
+        stream.write(this.resolutionStatus);
+        stream.write(this.resolutionWorkOrder);
+        stream.write(this.resolutionComment);
     }
 
     /**

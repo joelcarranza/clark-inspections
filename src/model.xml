@@ -234,11 +234,16 @@
 		<property name="materialsRequired" set="false"/>
 
 		<property name="attachedFiles" class="gks.clark.inspections.FileAttachment[]"/>
+
 		<property name="completionStatus" class="gks.clark.inspections.model.CompletionStatus" />
 		<property name="issuePriority" class="gks.clark.inspections.model.IssuePriority" />
-		<property name="resolutionStatus" class="gks.clark.inspections.model.ResolutionStatus" />
-
 		<property name="comment" />
+
+		<property name="resolutionStatus" class="gks.clark.inspections.model.ResolutionStatus" />
+		<property name="resolutionWorkOrder" />
+		<property name="resolutionComment" />
+
+		
 		
 
 

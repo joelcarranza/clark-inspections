@@ -71,7 +71,9 @@ JavaLink.process = function() {
 			i.completion_status,
 			i.issue_priority,
 			i.comment,
-			i.resolution_status
+			i.resolution_status,
+			i.resolution_work_order,
+			i.resolution_comment		
 		FROM WM_INSPECTION i
 		JOIN WM_INSPECTION_LIST l on i.list_id = l.id
 		LEFT JOIN WM_ORDER o on l.program_order_key = o.order_key
