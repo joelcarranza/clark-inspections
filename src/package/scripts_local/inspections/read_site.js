@@ -97,7 +97,7 @@ JavaLink.queryElectricLine = function(types) {
 	let bind = [];
 
 	if (mode === 'criteria') {
-		where.push('GLOBALID in (SELECT GLOBALID FROM INSPECTION_SITE_FEEDER WHERE FEEDERID = ?)');
+		where.push('CIRCUIT = ?');
 		bind.push(this.param['CIRCUIT']);
 
 
