@@ -45,7 +45,7 @@ public class SiteList implements gks.util.dto.ServerTransferObject {
     gks.clark.inspections.model.Program program;
     String workOrder;
     gks.clark.inspections.model.Crew crew;
-    gks.clark.inspections.model.Site[] sites;
+    gks.clark.inspections.model.SiteIdentifier[] sites;
 
     /*
      ==========================================================================
@@ -84,11 +84,11 @@ public class SiteList implements gks.util.dto.ServerTransferObject {
         return crew;
     }
 
-    public void setSites(gks.clark.inspections.model.Site[] sites) {
+    public void setSites(gks.clark.inspections.model.SiteIdentifier[] sites) {
         this.sites = sites;
     }
 
-    public gks.clark.inspections.model.Site[] getSites() {
+    public gks.clark.inspections.model.SiteIdentifier[] getSites() {
         return sites;
     }
 
@@ -111,10 +111,10 @@ public class SiteList implements gks.util.dto.ServerTransferObject {
 
         if (__sites_countObj != null) {
             int __sites_count = __sites_countObj.intValue();
-            this.sites = new gks.clark.inspections.model.Site[__sites_count];
+            this.sites = new gks.clark.inspections.model.SiteIdentifier[__sites_count];
 
             for (int k = 0; k < __sites_count; ++k) {
-                this.sites[k] = new gks.clark.inspections.model.Site();
+                this.sites[k] = new gks.clark.inspections.model.SiteIdentifier();
                 this.sites[k].parseFromStream(stream);
             }
         } else {
@@ -150,7 +150,7 @@ public class SiteList implements gks.util.dto.ServerTransferObject {
             stream.write(this.sites.length);
 
             for (int k = 0; k < this.sites.length; ++k) {
-                this.sites[k].serializeModifiableToStream(stream);
+                this.sites[k].serializeToStream(stream);
             }
         } else {
             stream.writeNull();

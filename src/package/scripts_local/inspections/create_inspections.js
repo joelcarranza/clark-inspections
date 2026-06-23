@@ -47,6 +47,8 @@ JavaLink.process = function() {
             name: 'SITES', fields: [
                 'TYPE',
                 'ID',
+                'X',
+                'Y'
             ]
         },
       ]);
@@ -61,7 +63,7 @@ JavaLink.process = function() {
 	 let orderSubType = order[1];
 	 let locationNumber = order[2];
 
-	 Lang.assert(data.program == orderSubType, `Invalid order type: ${orderSubType}`);
+	 Lang.assert(data.PROGRAM == orderSubType, `Invalid order type: ${orderSubType}`);
 
 	 var wmResult = WM.createServiceOrder(orderSubKey, orderSubType, locationNumber);
 	 if(!wmResult.ok) {
@@ -76,12 +78,9 @@ JavaLink.process = function() {
 	 });
 	 Lang.assert(woListKey, "No ID for WM_INSPECTION_LIST returned");
 
-	 var sth = this.db.prepare(`
-	 insert into wm_inspection (LIST_ID, ASSET_TYPE, ASSET_ID, X,Y)
-	  select ${woListKey} as LIST_ID, ASSET_TYPE, ASSET_ID,(MIN_X + MAX_X) / 2 as X, (MIN_Y + MAX_Y) / 2 as Y 
-	 	from INSPECTION_SITE where ASSET_TYPE= ? and ASSET_ID = ?`);
+	 var sth = this.db.prepare(`insert into wm_inspection (LIST_ID, ASSET_TYPE, ASSET_ID, X,Y) VALUES ('${woListKey}',?,?,?,?)`);
 	 data.SITES.forEach((site) => {
-	 	sth.execute(site.TYPE, site.ID);
+	 	sth.execute(site.TYPE, site.ID, site.X, site.Y);
 	 });
 	 sth.close();
 

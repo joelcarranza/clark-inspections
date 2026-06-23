@@ -34,6 +34,16 @@
 	</bean>
 	
 	
+	<bean class="gks.clark.inspections.model.SiteIdentifier">
+		<implement>gks.util.dto.DataTransferObject</implement>
+		
+		<property name="assetType"/>
+		<property name="assetID"/>
+		<property name="lon" class="double" />
+		<property name="lat" class="double" />
+	</bean>
+	
+	
 	<bean class="gks.clark.inspections.model.SiteList">
 		<implement>gks.util.dto.ServerTransferObject</implement>
 		<!--
@@ -42,7 +52,7 @@
 		<property name="program" class="gks.clark.inspections.model.Program" />
 		<property name="workOrder" class="String" />
 		<property name="crew" class="gks.clark.inspections.model.Crew" />
-		<property name="sites" class="gks.clark.inspections.model.Site[]" />
+		<property name="sites" class="gks.clark.inspections.model.SiteIdentifier[]" />
 		
 		<derivedProperty name="key">
 			<getter>

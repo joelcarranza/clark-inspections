@@ -36,6 +36,7 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,6 +49,7 @@ import gks.clark.inspections.model.Inspection;
 import gks.clark.inspections.model.InspectionTableModel;
 import gks.clark.inspections.model.ProximitySiteFilter;
 import gks.clark.inspections.model.Site;
+import gks.clark.inspections.model.SiteIdentifier;
 import gks.clark.inspections.model.SiteList;
 import gks.clark.inspections.model.SiteTableModel;
 import gks.clark.inspections.model.WorkOrder;
@@ -57,6 +59,7 @@ import gks.form.chooser.Chooser;
 import gks.form.details.DetailsEditor;
 import gks.form.editor.Editor;
 import gks.map.MapLayerSet;
+import gks.map.proxy.MGPoint;
 import gks.form.ValueModel;
 import gks.trace.TraceFeature;
 import gks.trace.TraceMapSelectionWindow;
@@ -164,8 +167,20 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	public void actionNewList(ActionEvent e) {
 		SiteList siteList = new SiteList();
 		siteList.setWorkOrder(activeWorkOrder.getKey());
-		List<Site> sites = tableView().getData(Site.class);
-		siteList.setSites(sites.toArray(new Site[0]));
+		siteList.setProgram(activeWorkOrder.getProgram());
+		ArrayList<SiteIdentifier> siteIdentifiers = new ArrayList<SiteIdentifier>();
+		for(Site s : tableView().getData(Site.class)) {
+			SiteIdentifier si = new SiteIdentifier();
+			si.setAssetID(s.getAssetID());
+			si.setAssetType(s.getAssetType());
+			double x = (s.getMinX() + s.getMaxX()) / 2;
+			double y = (s.getMinY() + s.getMaxY()) / 2;
+			MGPoint ll = getMapControl().getMap().mcsToLonLat(x,y);
+			si.setLon(ll.getX());
+			si.setLat(ll.getY());	
+			siteIdentifiers.add(si);
+		}
+		siteList.setSites(siteIdentifiers.toArray(new SiteIdentifier[0]));
 		if (Editor.edit(this, siteList, "New List")) {
 			control.proxy().createList(siteList).onComplete(this, "onListSaved").start();
 		}
