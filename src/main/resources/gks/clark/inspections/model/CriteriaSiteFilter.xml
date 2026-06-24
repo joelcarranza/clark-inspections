@@ -31,7 +31,12 @@
 		
 		<tr>
 			<td>Circuit</td>
-			<td><text id="circuit" columns="10" /></td>
+			<td><gks.clark.inspections.CircuitPicker 
+					id="circuit" 
+					organizerID="6"
+					title="Pick a Circuit"
+					circuitedMapLayers="physical:Primary Conductor" />
+			</td>
 		</tr>
 		
 		<tr>
