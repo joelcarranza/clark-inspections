@@ -42,7 +42,7 @@ public class CriteriaSiteFilter implements gks.clark.inspections.SiteFilter {
      Fields
      ==========================================================================
     */
-    String circuit;
+    gks.util.SimpleCode circuit;
     gks.clark.inspections.AssetTypeFilter[] types = gks.clark.inspections.AssetTypeFilter.values();
 
     /*
@@ -58,11 +58,11 @@ public class CriteriaSiteFilter implements gks.clark.inspections.SiteFilter {
      Getter and setters
      ==========================================================================
     */
-    public void setCircuit(String circuit) {
+    public void setCircuit(gks.util.SimpleCode circuit) {
         this.circuit = circuit;
     }
 
-    public String getCircuit() {
+    public gks.util.SimpleCode getCircuit() {
         return circuit;
     }
 

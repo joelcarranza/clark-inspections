@@ -100,6 +100,8 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	private LocalMapLayerManager<WorkOrder> workOrderLayerManager;
 	private LocalMapLayerManager<Site> siteLayerManager;
 	private LocalMapLayerManager<Inspection> inspectionLayerManager;
+	private SiteFilter siteFilter;
+	private String activeList;
 
 	public PlannerModule(NavigateInterface application) {
 		super(application);
@@ -146,6 +148,25 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		GuiUtils.setImplementation(w, ValueModel.class, model);
 	}
 
+	public void actionRefresh(ActionEvent e) {
+		// this is pretty gross
+		if(visibleItemType == ItemType.WORK_ORDER) {
+			actionViewWorkOrders(e);
+		}
+		else if(visibleItemType == ItemType.SITE) {
+			setSiteFilter(siteFilter);
+		}
+		else if(visibleItemType == ItemType.WORK_ORDER) {
+			if(activeList != null) {
+				control.proxy().queryInspection(activeList)
+				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { activeList }).start();
+			}
+			else {
+				actionViewExceptions(e);
+			}
+		}
+		
+	}
 	public void actionShowSiteFilter(ActionEvent e) {
 		activeWorkOrder = tableView().getSelection(WorkOrder.class).iterator().next();
 
@@ -202,6 +223,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	public void actionOpenList(ActionEvent e) {
 		// XXX: this is a hack
 		String listKey = tableView().getSelection(WorkOrder.class).iterator().next().getListId();
+		activeList = listKey;
 		
 		control.proxy().queryInspection(listKey)
 				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { listKey }).start();
@@ -292,8 +314,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 						pf.setX(mcs.getX());
 						pf.setY(mcs.getY());
 					}
-					control.proxy().querySite(filter)
-							.onComplete(PlannerModule.this, "onSitesQueried", new Object[] { filter }).start();
+					setSiteFilter(filter);
 				}
 			};
 			GuiUtils.setImplementation(chooser, PlannerModule.class, this);
@@ -374,6 +395,13 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 	public InspectionsControl getControl() {
 		return control;
+	}
+
+	protected void setSiteFilter(SiteFilter filter) {
+		this.siteFilter = filter;
+		
+		control.proxy().querySite(filter)
+				.onComplete(PlannerModule.this, "onSitesQueried", new Object[] { filter }).start();
 	}
 
 }
