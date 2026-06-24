@@ -11,6 +11,11 @@
     <workOrder>false</workOrder>
     <singleItemSelected>false</singleItemSelected>
   </condition>
+  
+  <action key="refresh">
+	<name>Refresh</name>
+	<method>actionRefresh</method>
+  </action>
 
   <action key="filter">
     <name>Choose Sites...</name>
@@ -53,7 +58,7 @@
     <method>actionZoomAll</method>
   </action>
   <toolbar>
-    <main>open | zoom zoomAll</main>
+    <main>open | zoom zoomAll | refresh</main>
   </toolbar>
   <menubar>
     <Tools>viewWorkOrders viewExceptions | filter newList openList</Tools>
