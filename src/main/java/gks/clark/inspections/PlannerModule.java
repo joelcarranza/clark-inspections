@@ -38,6 +38,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -77,7 +78,9 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 	private static final String WIN_INSPECTION_DETAIL = "inspectionDetail";
 	private static final String WIN_FILTER = "winFilter";
-	private static final String WIN_TRACE_FEATURE_SELECTOR = "traceFeatureSelector";
+	private static final String WIN_TRACE_START_FEATURE_SELECTOR = "traceStartFeatureSelector";
+	private static final String WIN_TRACE_STOP_FEATURE_SELECTOR = "traceStopFeatureSelector";
+
 	private static final String WIN_WORK_ORDER_DETAIL = "workOrderDetail";
 
 	private InspectionsControl control;
@@ -144,7 +147,12 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	}
 
 	public void chooseTraceMapFeature(ValueModel model) {
-		Window w = windowManager().show(WIN_TRACE_FEATURE_SELECTOR);
+		Window w = windowManager().show(WIN_TRACE_START_FEATURE_SELECTOR);
+		GuiUtils.setImplementation(w, ValueModel.class, model);
+	}
+	
+	public void chooseStopTraceMapFeature(ValueModel model) {
+		Window w = windowManager().show(WIN_TRACE_STOP_FEATURE_SELECTOR);
 		GuiUtils.setImplementation(w, ValueModel.class, model);
 	}
 
@@ -328,7 +336,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			pf.setDistance(100);
 			chooser.addChoice(pf, "gks/clark/inspections/model/ProximitySiteFilter.xml", "Sites by Proximity");
 
-			chooser.addChoice(new TraceSiteFilter(), "gks/clark/inspections/model/TraceSiteFilter.xml", "Sites by Trace");
+			chooser.addChoice(new TraceSiteFilter(), "gks/clark/inspections/TraceSiteFilter.xml", "Sites by Trace");
 			
 			chooser.addChoice(new GlobalidSiteFilter(), "gks/clark/inspections/model/GlobalidSiteFilter.xml", "Sites by Globalid");
 			
@@ -338,7 +346,8 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			dlg.setResizable(true);
 			dlg.setDefaultCloseOperation(SimpleDialog.DISPOSE_ON_CLOSE);
 			return dlg;
-		} else if (name.equals(WIN_TRACE_FEATURE_SELECTOR)) {
+		} 
+		else if (name.equals(WIN_TRACE_START_FEATURE_SELECTOR)) {
 			final TraceMapSelectionWindow window = new TraceMapSelectionWindow(this, "ELECTRIC");
 			window.setAllowMultipleSelections(false);
 			window.setTitle("Select start feature");
@@ -360,7 +369,46 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 				}
 			});
 			return window;
-		} else if (name.equals(WIN_INSPECTION_DETAIL)) {
+		}
+		else if (name.equals(WIN_TRACE_STOP_FEATURE_SELECTOR)) {
+			final TraceMapSelectionWindow window = new TraceMapSelectionWindow(this, "ELECTRIC");
+			window.setAllowMultipleSelections(true);
+			window.setTitle("Select start feature");
+			window.addActionListener(new java.awt.event.ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					TraceMapSelectionWindow w = (TraceMapSelectionWindow)e.getSource();
+					String cmd = e.getActionCommand();
+					ValueModel model = (ValueModel) GuiUtils.getImplementation(window, ValueModel.class);
+					if(cmd.equals(SimpleDialog.CMD_OK)) {
+						List<TraceFeature> stopFeatures = new ArrayList<TraceFeature>(Arrays.asList((TraceFeature[])model.getValue()));
+						for(TraceFeature selectedFeature : w.getSelectedFeatures()) {
+							boolean existingStopFeature = false;
+							for(TraceFeature f : stopFeatures) {
+								if(f.equivalent(selectedFeature)) {
+									existingStopFeature = true;
+								}
+							}
+							if(!existingStopFeature) {
+								// rebuild object to assign sequence number
+								stopFeatures.add(new TraceFeature(selectedFeature.getMapObject(), selectedFeature.getFeatureSource()));
+							}
+						}
+						model.setValue(stopFeatures.toArray(new TraceFeature[0]));
+						w.close();
+					}
+					else if(cmd.equals("none")) {
+						model.setValue(new TraceFeature[0]);
+						w.close();
+					}
+					else if(cmd.equals(SimpleDialog.CMD_CANCEL)) {
+						w.close();
+					}
+				}
+			});
+			return window;
+		}
+		else if (name.equals(WIN_INSPECTION_DETAIL)) {
 			InspectionDetailsEditor view = new InspectionDetailsEditor(this);
 			JFrame f = view.buildAsFrame();
 			f.setTitle("Inspection");
@@ -403,5 +451,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		control.proxy().querySite(filter)
 				.onComplete(PlannerModule.this, "onSitesQueried", new Object[] { filter }).start();
 	}
+
+	
 
 }

@@ -14,7 +14,7 @@ function formValues() {
 }
 
 function beforeCommit(values) {
-	var f = formValues('startFeature', 'direction', 'phases', 'stopConditions');
+	var f = formValues('startFeature', 'direction', 'phases', 'stopConditions', 'stopFeatures');
 	var trace = new gks.clark.trace.ElectricTraceSession();
 	if (f.phases) {
 		trace.phases = f.phases;
@@ -23,6 +23,9 @@ function beforeCommit(values) {
 		trace.direction = f.direction;
 	}
 	trace.startFeature = f.startFeature;
+
+	trace.stopFeatures = f.stopFeatures;
+
 	if (f.stopConditions) {
 		trace.stopConditions = f.stopConditions;
 	}
@@ -66,6 +69,7 @@ function test(v) {
 		<td>Start</td>
 		<td columns="2"><gks.clark.inspections.StartFeatureView id="startFeature"/></td>
 	</tr>
+	
 
 	<tr>
 		<td/>
@@ -80,9 +84,18 @@ function test(v) {
 	</tr>
 
 	<tr height="4dlu"/>
-	<tr><td/>
+	<tr>
+		<td/>
 		<td columns="3">Stop Features</td>
 	</tr>
+
+	<tr>
+		<td/>
+		<td columns="3">
+			<gks.clark.inspections.StopFeatureListView id="stopFeatures"/>
+		</td>
+	</tr>
+
 
 	<tr fill="true"><td/>
 	<td columns="3">
