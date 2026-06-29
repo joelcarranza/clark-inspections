@@ -69,8 +69,13 @@ JavaLink.process = function() {
 	 if(!wmResult.ok) {
 		 this.quit("Unable to create service order: " + wmResult.message);
 	 }
-	 let serviceOrderNumber = wmResult.data.serviceOrderNumber;
+	 let serviceOrderNumber = wmResult.data.serviceOrderNumber
+	 // WM.sendAsignments() expects a string	 
+	 serviceOrderNumber = serviceOrderNumber.toFixed(0);
 	 Logger.info(`serviceOrderNumber = ${serviceOrderNumber}`);
+	 if(data.CREW) {
+	 	WM.sendAssignments(this, serviceOrderNumber, data.CREW);
+	 }
 	 var woListKey = this.db.insertRowReturnKey('WM_INSPECTION_LIST', {
 	 	SERVICE_ORDNBR: serviceOrderNumber,
 	 	PROGRAM_ORDER_KEY: order_key,
