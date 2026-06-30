@@ -82,6 +82,9 @@ public class InspectionsControl extends BasicControl {
 			q.append("X", pf.getX());
 			q.append("Y", pf.getY());
 			q.append("DISTANCE", pf.getDistance());
+			if(pf.getTypes() != null && pf.getTypes().length > 0) {
+				q.append("TYPE", pf.getTypes());				
+			}
 		}
 		else if(filter instanceof GlobalidSiteFilter) {
 			GlobalidSiteFilter gf = (GlobalidSiteFilter)filter;
@@ -103,6 +106,9 @@ public class InspectionsControl extends BasicControl {
 			}
 			q.append("MODE", "trace");
 			q.append("TRACE_ID", tf.getTraceID());
+			if(tf.getTypes() != null && tf.getTypes().length > 0) {
+				q.append("TYPE", tf.getTypes());				
+			}
 		}
 		else {
 			throw new UnsupportedOperationException(filter.getClass().getName());
