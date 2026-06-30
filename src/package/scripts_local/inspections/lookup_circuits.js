@@ -45,12 +45,32 @@ JavaLink.useDefaultDataSource();
 let LINE_QUERY = `SELECT FEEDERID 
 	FROM EDGE e 
 	JOIN ELECTRIC_LINE l ON e.VIA_OBJECT_ID = l.OBJECTID 
-	WHERE VIA_FEAT_CODE IN ('PRIM', 'SEC') AND VIA_ELEMENT_ID = ?`;
+	WHERE VIA_FEAT_CODE IN ('PRIM', 'SEC','BUSBAR') AND VIA_ELEMENT_ID = ?`;
+
+let DEVICE_QUERY = 'SELECT FEEDERID FROM ELECTRIC_DEVICE WHERE OBJECTID = ?';
 
 JavaLink.process = function() {
 
 	var layersToTables = {
-		"Primary Conductor":LINE_QUERY
+		"Primary Conductor":LINE_QUERY,
+		"Primary Conductor by Phase":LINE_QUERY,
+		"Secondary Conductor":LINE_QUERY,
+		"Secondary Conductor by Phase":LINE_QUERY,
+		"Secondary Conductor - Unthemed":LINE_QUERY,
+		"Busbar":LINE_QUERY,
+		"Capacitor Bank": DEVICE_QUERY,
+		"Fault Indicator": DEVICE_QUERY,
+		"Fuse": DEVICE_QUERY,
+		"Open Point": DEVICE_QUERY,
+		"Primary Meter": DEVICE_QUERY,
+		"Recloser": DEVICE_QUERY,
+		"Sectionalizer": DEVICE_QUERY,
+		"Service Point": DEVICE_QUERY,
+		"Street Light": DEVICE_QUERY,
+		"Substation Breaker": DEVICE_QUERY,
+		"Switch": DEVICE_QUERY,
+		"Transformer": DEVICE_QUERY,
+		"Voltage Regulators": DEVICE_QUERY
 	};
 
 	// key and value is circuit ID

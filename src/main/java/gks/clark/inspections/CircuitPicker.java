@@ -34,6 +34,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -84,7 +85,7 @@ public class CircuitPicker extends AbstractView implements ActionListener, Enabl
 	private String title;
 	private JButton pickButton;
 	private PlannerModule module;
-	private MapLayerSet circuitedMapLayers;
+	private String circuitedMapLayers;
 
 	public CircuitPicker(Form form) {
 		module = (PlannerModule)form.getOwner();
@@ -130,10 +131,13 @@ public class CircuitPicker extends AbstractView implements ActionListener, Enabl
 			dlg.setVisible(true);		
 		}
 		else if(cmd.equals("pick")) {
-			
-			MGMapObject f[] = module.getMapControl().getSelectedMapObjects(circuitedMapLayers);
-			if(f.length > 0) {
-				setCircuitFromMapObjects(f);
+			List<MGMapObject> mapObjects = new ArrayList<MGMapObject>();
+			for(MapLayerSet ms : circuitMapLayerSets()) {
+				MGMapObject f[] = module.getMapControl().getSelectedMapObjects(ms);
+				mapObjects.addAll(Arrays.asList(f));
+			}
+			if(!mapObjects.isEmpty()) {
+				setCircuitFromMapObjects(mapObjects.toArray(new MGMapObject[0]));
 			}
 			else {
 				GuiUtils.alert(component(),"You must select primary conductor on the map");
@@ -294,8 +298,10 @@ public class CircuitPicker extends AbstractView implements ActionListener, Enabl
 		if(circuitedMapLayers != null && module.getMapControl() != null) {
 			buffer.append("<br>You may choose from one of the following layers:");
 			buffer.append("<ul>");
-			for(String layer: module.getMapControl().getMapLayers(this.circuitedMapLayers, false)) {
-				buffer.append("<li> "+layer);
+			for(MapLayerSet ml : circuitMapLayerSets()) {
+				for(String layer: module.getMapControl().getMapLayers(ml, false)) {
+					buffer.append("<li> "+layer);
+				}
 			}
 			buffer.append("</ul>");
 		}
@@ -303,13 +309,21 @@ public class CircuitPicker extends AbstractView implements ActionListener, Enabl
 		return buffer.toString();
 	}
 	
+	private List<MapLayerSet> circuitMapLayerSets() {
+		List<MapLayerSet> results = new ArrayList<MapLayerSet>();
+		for(String s : Utils.splitWordsComma(circuitedMapLayers)) {
+			results.add(MapLayerSet.parse(s));
+		}
+		return results;
+	}
+	
 	/********************* getters and setters *******************************/
 	
-	public MapLayerSet getCircuitedMapLayers() {
+	public String getCircuitedMapLayers() {
 		return circuitedMapLayers;
 	}
 
-	public void setCircuitedMapLayers(MapLayerSet circuitedMapLayers) {
+	public void setCircuitedMapLayers(String circuitedMapLayers) {
 		this.circuitedMapLayers = circuitedMapLayers;
 		this.pickButton.setToolTipText(toolTipTextForPickButton());
 	}
