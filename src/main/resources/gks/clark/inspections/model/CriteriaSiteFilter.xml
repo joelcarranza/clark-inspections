@@ -33,7 +33,7 @@
 			<td>Circuit</td>
 			<td><gks.clark.inspections.CircuitPicker 
 					id="circuit" 
-					organizerID="6"
+					organizerID="3"
 					title="Pick a Circuit"
 					circuitedMapLayers="ortho:3,ortho:11,ortho:4" />
 			</td>
