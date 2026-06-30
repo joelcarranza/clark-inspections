@@ -143,6 +143,9 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		if(siteLayerManager != null) {
 			siteLayerManager.destroy();
 		}
+		if(inspectionLayerManager != null) {
+			inspectionLayerManager.destroy();
+		}
 
 	}
 
