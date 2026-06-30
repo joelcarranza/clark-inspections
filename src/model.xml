@@ -26,6 +26,9 @@
 		<property name="x" class="Double" />
 		<property name="y" class="Double" />
 		<property name="distance" class="Integer" />
+		<property name="types" class="gks.clark.inspections.AssetTypeFilter[]">
+			<initValue>gks.clark.inspections.AssetTypeFilter.values()</initValue>
+		</property>
 	</bean>
 	
 	<bean class="gks.clark.inspections.model.GlobalidSiteFilter">

@@ -52,7 +52,7 @@
 
 		<tr>
 			<td>Type</td>
-			<td><combo id="type" dataClass="gks.clark.inspections.AssetTypeFilter" includeNull="true" nullLabel="All" /></td>
+			<td><checkList id="types" dataClass="gks.clark.inspections.AssetTypeFilter" /></td>
 		</tr>
 	</table>
 </body>

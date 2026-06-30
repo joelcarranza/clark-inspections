@@ -47,6 +47,7 @@ public class ProximitySiteFilter implements gks.clark.inspections.SiteFilter {
     Double x;
     Double y;
     Integer distance;
+    gks.clark.inspections.AssetTypeFilter[] types = gks.clark.inspections.AssetTypeFilter.values();
 
     /*
      ==========================================================================
@@ -99,5 +100,13 @@ public class ProximitySiteFilter implements gks.clark.inspections.SiteFilter {
 
     public Integer getDistance() {
         return distance;
+    }
+
+    public void setTypes(gks.clark.inspections.AssetTypeFilter[] types) {
+        this.types = types;
+    }
+
+    public gks.clark.inspections.AssetTypeFilter[] getTypes() {
+        return types;
     }
 }
