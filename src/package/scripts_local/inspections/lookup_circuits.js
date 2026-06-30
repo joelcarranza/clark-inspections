@@ -42,48 +42,46 @@ var Sql = require('Sql');
 
 JavaLink.useDefaultDataSource();
 
+let LINE_QUERY = `SELECT FEEDERID 
+	FROM EDGE e 
+	JOIN ELECTRIC_LINE l ON e.VIA_OBJECT_ID = l.OBJECTID 
+	WHERE VIA_FEAT_CODE IN ('PRIM', 'SEC') AND VIA_ELEMENT_ID = ?`;
+
 JavaLink.process = function() {
 
 	var layersToTables = {
-		// XXX:!
-		"Primary Conductor":{ 
-			table:"EDGE",
-			key:"VIA_ELEMENT_ID"
-		}
+		"Primary Conductor":LINE_QUERY
 	};
 
 	// key and value is circuit ID
 	var circuitIDs = {}
 
 	// gather all circuit IDs 
-	Lang.keys(this.param).forEach(function(p) {
+	Lang.keys(this.param).forEach(p => {
 		if(p in layersToTables) {
-			var query = layersToTables[p];
-			var keys = this.param[p].split(',');
-			var ids;
-			ids = this.db.queryAll(`
-					SELECT NOMINAL_FEEDERID 
-					FROM ${query.table} 
-					WHERE ${Sql.whereIn(query.key,keys)}
-			`).map(Lang.first);
-			ids.forEach(function(id) {
-				circuitIDs[id] = id;
-			});
+			let query = layersToTables[p];
+			let keys = this.param[p].split(',');
+			let sth = this.db.prepare(query);
+			try {
+				keys.forEach(key => {
+					sth.executeQuery(key);
+					let row;
+					while((row = sth.fetch()) != null) {
+						let id = row[0];
+						circuitIDs[id] = id;
+					}
+				});				
+			}
+			finally {
+				sth.close();
+			}
 		}
 		else {
 			this.quit("Invalid layer: "+p);
 		}
-	},this);
+	});
 
-	
-
-	var circuitIDList = Lang.keys(circuitIDs);
-	if(circuitIDList.length == 0) {
-		this.quit("No circuits found");
-	}
-	circuitIDList.forEach(k => {
-		this.outputData(k, k);
-	})
+	this.outputQueryResults('SELECT ID, NAME FROM CIRCUIT_SOURCE WHERE ' + Sql.whereIn('ID', Lang.keys(circuitIDs)));
 }
 
 JavaLink.run();
