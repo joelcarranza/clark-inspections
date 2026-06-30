@@ -101,6 +101,12 @@ function test(v) {
 	<td columns="3">
 		<checkList id="stopConditions" data="$:gks.trace.code.StopCondition.all()" itemClass="gks.trace.code.StopCondition"/>
 	</td></tr>
+	
+	<tr>
+		<td/>
+		<td>Type</td>
+		<td><checkList id="types" dataClass="gks.clark.inspections.AssetTypeFilter" /></td>
+	</tr>
 
 </table>
 </body>
