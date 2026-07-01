@@ -30,17 +30,17 @@
 	<table hgap="4dlu" vgap="4dlu" cols="p f" border="10px">				
 		
 		<tr>
-			<td>Circuit</td>
+			<td>Feeder</td>
 			<td><gks.clark.inspections.CircuitPicker 
 					id="circuit" 
 					organizerID="3"
-					title="Pick a Circuit"
+					title="Pick a Feeder"
 					circuitedMapLayers="ortho:3,ortho:11,ortho:4" />
 			</td>
 		</tr>
 		
 		<tr>
-			<td>Type</td>
+			<td>Inspection Sites</td>
 			<td><checkList id="types" dataClass="gks.clark.inspections.AssetTypeFilter" /></td>
 		</tr>
 	</table>

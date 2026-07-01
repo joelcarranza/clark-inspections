@@ -51,7 +51,7 @@
 		</tr>
 
 		<tr>
-			<td>Type</td>
+			<td>Inspection Sites</td>
 			<td><checkList id="types" dataClass="gks.clark.inspections.AssetTypeFilter" /></td>
 		</tr>
 	</table>

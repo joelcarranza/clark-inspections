@@ -104,8 +104,8 @@ function test(v) {
 	
 	<tr>
 		<td/>
-		<td>Type</td>
-		<td><checkList id="types" dataClass="gks.clark.inspections.AssetTypeFilter" /></td>
+		<td>Inspection Sites</td>
+		<td columns="2"><checkList id="types" dataClass="gks.clark.inspections.AssetTypeFilter" /></td>
 	</tr>
 
 </table>
