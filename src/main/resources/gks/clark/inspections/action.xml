@@ -48,20 +48,18 @@
     <method>actionOpen</method>
   </action>
   <action key="zoom">
-    <name>Go to assessment</name>
-    <tooltip>Go to the assessment area on the map</tooltip>
+    <name>View all on map</name>
     <method>actionZoomSelection</method>
   </action>
     <action key="zoomAll">
-    <name>Go to all assessments</name>
-    <tooltip>Go to all assessments on the map</tooltip>
+    <name>View selected on map</name>
     <method>actionZoomAll</method>
   </action>
   <toolbar>
     <main>open | zoom zoomAll | refresh</main>
   </toolbar>
   <menubar>
-    <Tools>viewWorkOrders viewExceptions | filter newList openList</Tools>
+    <Tools>viewWorkOrders viewExceptions | filter newList openList | refresh</Tools>
     <Map>zoom zoomAll</Map>
   </menubar>
 </config>
