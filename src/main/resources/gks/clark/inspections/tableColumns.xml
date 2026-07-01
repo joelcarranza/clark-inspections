@@ -30,7 +30,7 @@
   </tableColumn>
    <tableColumn modelColumn="program">
     <header>Program</header>
-    <cu>5</cu>
+    <cu>10</cu>
     <tableSet>gks.clark.inspections.model.Inspection</tableSet>
   </tableColumn>
    <tableColumn modelColumn="completionStatus">
