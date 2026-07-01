@@ -343,7 +343,8 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			
 			chooser.addChoice(new GlobalidSiteFilter(), "gks/clark/inspections/model/GlobalidSiteFilter.xml", "Sites by Globalid");
 			
-			chooser.setPreferredSizeFromChoiceIndex(0);
+			chooser.setPreferredSize(new Dimension(550, 525));
+			
 			SimpleDialog dlg = chooser.buildAsDialog(this);
 			dlg.setTitle("Choose Sites...");
 			dlg.setResizable(true);
@@ -415,7 +416,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			InspectionDetailsEditor view = new InspectionDetailsEditor(this);
 			JFrame f = view.buildAsFrame();
 			f.setTitle("Inspection");
-			f.setPreferredSize(new Dimension(600, 400));
+			f.setPreferredSize(new Dimension(600, 650));
 			return f;
 		} 
 		else if (name.equals(WIN_WORK_ORDER_DETAIL)) {
