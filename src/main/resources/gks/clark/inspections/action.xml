@@ -10,6 +10,9 @@
     <list>false</list>
     <workOrder>false</workOrder>
     <singleItemSelected>false</singleItemSelected>
+    <itemsSelected>false</itemsSelected>
+    <selectedItemsMappable>false</selectedItemsMappable>
+    <itemsMappable>false</itemsMappable>
   </condition>
   
   <action key="refresh">
@@ -30,7 +33,7 @@
   <action key="openList">
 	<name>Open List...</name>
     <method>actionOpenList</method>
-    <enabled>workOrder</enabled>
+    <enabled>workOrder AND singleItemSelected </enabled>
   </action>
 
   <action key="viewWorkOrders">
@@ -46,14 +49,17 @@
   <action key="open">
     <name>Open....</name>
     <method>actionOpen</method>
+    <enabled>itemsSelected</enabled>
   </action>
   <action key="zoom">
     <name>View all on map</name>
     <method>actionZoomSelection</method>
+    <enabled>selectedItemsMappable</enabled>
   </action>
     <action key="zoomAll">
     <name>View selected on map</name>
     <method>actionZoomAll</method>
+    <enabled>itemsMappable</enabled>
   </action>
   <toolbar>
     <main>open | zoom zoomAll | refresh</main>
