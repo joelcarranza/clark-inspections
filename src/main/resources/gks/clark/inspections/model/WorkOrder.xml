@@ -28,7 +28,7 @@ function dateFormat(date)
 <var id="lifeSupport" type="Boolean" />
 <var id="hazard" type="gks.clark.mwm.code.HazardCode" />
 <var id="type" />
-
+<var id="listId" class="String" />
 <var id="hazardText" />
 <var id="category" class="String" />
 
@@ -54,6 +54,13 @@ function dateFormat(date)
 		<tr>
 			<td>Request</td>
 			<td><readOnlyArea rows="3" id="request" /></td>
+		</tr>
+		
+		<tr>
+			<td columns="2">Inspections</td>
+		</tr>
+		<tr>
+			<td columns="2"><gks.clark.inspections.InspectionsView listId="$:$listId"/></td>
 		</tr>
 	 </table>
 </body>

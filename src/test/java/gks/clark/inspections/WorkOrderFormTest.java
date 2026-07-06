@@ -35,6 +35,8 @@ import java.net.MalformedURLException;
 
 import gks.clark.inspections.model.Inspection;
 import gks.clark.inspections.model.WorkOrder;
+import gks.config.table.TableColumnSet;
+import gks.config.table.TableConfiguration;
 import gks.form.Form;
 import gks.form.test.FormTesterAction;
 import gks.form.test.FormTester;
@@ -50,13 +52,14 @@ public class WorkOrderFormTest {
 	@BeforeClass
 	public static void beforeClass() throws MalformedURLException {
 		FormTester.initialize();
+		TableConfiguration.loadTableConfig("gks/clark/inspections/tableColumns.xml");
 	}
 
 	private FormTester formTester;
 
 	@Before
 	public void before() {
-		formTester = new FormTester().path(Inspection.class);
+		formTester = new FormTester().path(WorkOrder.class);
 	}
 
 	@Test

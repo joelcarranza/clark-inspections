@@ -57,4 +57,8 @@ public class WorkOrderDetailsEditor extends DetailsEditor<WorkOrder> {
 		module.mapCommand().layer(module.getMapLayer()).view(Collections.singleton(call), module.getMinZoomWidth())
 				.run();
 	}
+	
+	public InspectionsControl getControl() {
+		return module.getControl();
+	}
 }
