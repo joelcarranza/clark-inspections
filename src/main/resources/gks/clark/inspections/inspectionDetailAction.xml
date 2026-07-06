@@ -8,6 +8,7 @@
 <condition>
     <canBack>false</canBack>
     <canNext>false</canNext>
+    <itemMappable>false</itemMappable>
   </condition>
   <action key="first">
     <method>actionFirst</method>
@@ -29,7 +30,12 @@
     <method>actionSave</method>
     <tooltip>Save this inspection</tooltip>
   </action>
+    <action key="zoom">
+    <method>actionZoom</method>
+    <enabled>itemMappable</enabled>
+    <icon>map</icon>
+  </action>
     <toolbar>
-    <main>first prev next last | save</main>
+    <main>first prev next last | save | zoom </main>
   </toolbar>
 </config>

@@ -8,6 +8,7 @@
 <condition>
     <canBack>false</canBack>
     <canNext>false</canNext>
+    <itemMappable>false</itemMappable>
   </condition>
   <action key="first">
     <method>actionFirst</method>
@@ -24,8 +25,13 @@
   <action key="next">
     <method>actionNext</method>
     <enabled>canNext</enabled>
+  </action> 
+  <action key="zoom">
+    <method>actionZoom</method>
+    <enabled>itemMappable</enabled>
+    <icon>map</icon>
   </action>
     <toolbar>
-    <main>first prev next last</main>
+    <main>first prev next last | zoom</main>
   </toolbar>
 </config>
