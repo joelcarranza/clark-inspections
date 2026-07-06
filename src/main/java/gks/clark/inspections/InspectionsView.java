@@ -53,6 +53,7 @@ import gks.form.util.AbstractView;
 import gks.ui.GKSTable;
 import gks.ui.GuiUtils;
 import gks.ui.table.ArrayTableModel;
+import gks.util.DoubleClickGesture;
 import gks.util.TableSorter;
 import gks.util.Utils;
 
@@ -61,9 +62,6 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 	protected Object values[];
 	protected GKSTable table;
 	protected JScrollPane scroll;
-	protected int valueColumn = ArrayTableModel.OBJECT_VALUE_COLUMN;
-	protected boolean singleSelect;
-	private ActionListener doubleClickListener;
 	private WorkOrderDetailsEditor owner;
 	private SwingWorker<Inspection[], Void> loadTask;
 	
@@ -78,39 +76,23 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 		TableColumnSet tcs = TableColumnSet.lookup(Inspection.class.getName());
 		tcs.install(table);
 		table.getSelectionModel().addListSelectionListener(this);
-		table.addMouseListener(new DoubleClickListenerAdapter());
-	}
-	
-	
-	public void setDoubleClickListener(ActionListener actionListener) {
-		this.doubleClickListener = actionListener;
-	}
-	
-	/**
-	 * Handles double click - fires ActionEvent to actionListener if set
-	 */
-	private class DoubleClickListenerAdapter extends MouseAdapter
-	{
-		public void mouseClicked(MouseEvent e) {
-			if (e.getClickCount() > 1 ) {
-				int row = table.rowAtPoint(e.getPoint());
-				if (row >= 0) {
-					fireActionPerformed(e.getWhen(),e.getModifiers());
-				}
+		table.addMouseListener(new DoubleClickGesture() {
+			
+			@Override
+			public void onDoubleClick(MouseEvent e) {
+				InspectionsView.this.onDoubleClick(e);
 			}
-		}
+		});
+	
+	}
+	
+	protected void onDoubleClick(MouseEvent e) {
+		Inspection[] sel = (Inspection[]) table.getSelectedValues(ArrayTableModel.OBJECT_VALUE_COLUMN);
+		owner.openInspections(sel);
+	}
 
 
-		private void fireActionPerformed(long when, int modifiers) {
-			if(doubleClickListener != null) {
-				ActionEvent event = new ActionEvent(InspectionsView.this, 0, "cmd",when,modifiers);
-				doubleClickListener.actionPerformed(event);
-			}
-		}
-	}
-	
-	
-	
+
 	public Object getValue() {
 		Object[] sel = table.getSelectedValues(ArrayTableModel.OBJECT_VALUE_COLUMN);
 		return sel;
@@ -128,15 +110,7 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 		return scroll;
 	}
 	
-	/**
-	 * By default, no horizontal scroll bars will be shown on table. Setting hscroll=true
-	 * sets scrollbars to potentially be shown
-	 */
-	public void setHscroll(boolean hscroll) {
-		scroll.setHorizontalScrollBarPolicy(hscroll ? JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED : JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		table.setAutoResizeMode(hscroll ? JTable.AUTO_RESIZE_OFF : JTable.AUTO_RESIZE_ALL_COLUMNS);
-	}
-	
+
 	/**
 	 * Set the preferred number of rows to shown in scroll pane. this is useful in setting the
 	 * preferred size of the entire container and thus setting up a default height
@@ -160,6 +134,7 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 				loadTask.cancel(false);
 			}
 			
+			this.owner.setBusy(true);
 			table.getModel(InspectionTableModel.class).setValues(new Inspection[0]);
 			loadTask = new SwingWorker<Inspection[], Void>() {
 	
@@ -173,6 +148,7 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 					if(isCancelled()) {
 						return;
 					}
+					InspectionsView.this.owner.setBusy(false);
 					try {
 						Inspection[] results = get();
 						table.getModel(InspectionTableModel.class).setValues(results);

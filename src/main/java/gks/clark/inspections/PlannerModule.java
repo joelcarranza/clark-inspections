@@ -76,7 +76,7 @@ import gks.util.TabularModule;
  */
 public class PlannerModule extends TabularModule implements PropertyChangeListener {
 
-	private static final String WIN_INSPECTION_DETAIL = "inspectionDetail";
+	static final String WIN_INSPECTION_DETAIL = "inspectionDetail";
 	private static final String WIN_FILTER = "winFilter";
 	private static final String WIN_TRACE_START_FEATURE_SELECTOR = "traceStartFeatureSelector";
 	private static final String WIN_TRACE_STOP_FEATURE_SELECTOR = "traceStopFeatureSelector";

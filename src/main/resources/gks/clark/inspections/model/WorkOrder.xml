@@ -34,34 +34,34 @@ function dateFormat(date)
 
 <prototype id="date" format="date:MM/dd/yy H:mm" />
 <body beforeUpdate="onUpdate">	
-	<table cols="p f " hgap="3"  vgap="3" border="10px">
-		<tr>
-			<td>Order #</td>
-			<td><readOnly id="orderNumber" /></td>
-		</tr>
-		<tr>
-			<td>Program</td>
-			<td><readOnly id="program" /></td>
-		</tr>
-		<tr>
-			<td>Customer</td>
-			<td><readOnly id="customerName" /></td>
-		</tr>
-		<tr>
-			<td>Address</td>
-			<td><readOnlyArea rows="4" id="serviceAddressComplete" /></td>
-		</tr>
-		<tr>
-			<td>Request</td>
-			<td><readOnlyArea rows="3" id="request" /></td>
-		</tr>
-		
-		<tr>
-			<td columns="2">Inspections</td>
-		</tr>
-		<tr>
-			<td columns="2"><gks.clark.inspections.InspectionsView listId="$:$listId"/></td>
-		</tr>
-	 </table>
+	<border vgap="10">
+		<north>
+			<table cols="p f " hgap="3"  vgap="3" border="10px">
+				<tr>
+					<td>Order #</td>
+					<td><readOnly id="orderNumber" /></td>
+				</tr>
+				<tr>
+					<td>Program</td>
+					<td><readOnly id="program" /></td>
+				</tr>
+				<tr>
+					<td>Customer</td>
+					<td><readOnly id="customerName" /></td>
+				</tr>
+				<tr>
+					<td>Address</td>
+					<td><readOnlyArea rows="4" id="serviceAddressComplete" /></td>
+				</tr>
+				<tr>
+					<td>Request</td>
+					<td><readOnlyArea rows="3" id="request" /></td>
+				</tr>
+			 </table>
+		</north>
+		<center>
+			<gks.clark.inspections.InspectionsView listId="$:$listId" visible="$:!!$listId" />
+		</center>
+	</border>
 </body>
 </form>

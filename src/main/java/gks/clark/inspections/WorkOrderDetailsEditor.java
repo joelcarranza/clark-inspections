@@ -32,7 +32,9 @@
 */
 package gks.clark.inspections;
 
+import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
 import java.util.Collections;
 
 import javax.swing.SwingWorker;
@@ -61,4 +63,17 @@ public class WorkOrderDetailsEditor extends DetailsEditor<WorkOrder> {
 	public InspectionsControl getControl() {
 		return module.getControl();
 	}
+
+	@Override
+	protected void setBusy(boolean busy) {
+		super.setBusy(busy);
+	}
+
+	public void openInspections(Inspection[] inspections) {
+		Window window = module.windowManager().show(PlannerModule.WIN_INSPECTION_DETAIL);
+		DetailsEditor<Object> editor = DetailsEditor.forWindow(window);
+		editor.view(Arrays.asList(inspections));
+	}
+	
+	
 }
