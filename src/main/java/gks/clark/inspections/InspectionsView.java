@@ -29,6 +29,7 @@
  
  package gks.clark.inspections;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,6 +40,8 @@ import java.util.HashSet;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingWorker;
@@ -64,6 +67,8 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 	protected JScrollPane scroll;
 	private WorkOrderDetailsEditor owner;
 	private SwingWorker<Inspection[], Void> loadTask;
+	private JPanel component;
+	private JLabel label;
 	
 	public InspectionsView(Form form) {
 		this.owner = (WorkOrderDetailsEditor)form.getOwner();
@@ -83,6 +88,14 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 				InspectionsView.this.onDoubleClick(e);
 			}
 		});
+
+		label = new JLabel();
+
+		
+		component = new JPanel(new BorderLayout(5, 5));
+		component.add(scroll, BorderLayout.CENTER);
+		component.add(label, BorderLayout.NORTH);
+		
 	
 	}
 	
@@ -107,7 +120,7 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 	}
 
 	public JComponent component() {
-		return scroll;
+		return component;
 	}
 	
 
@@ -151,7 +164,7 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 					InspectionsView.this.owner.setBusy(false);
 					try {
 						Inspection[] results = get();
-						table.getModel(InspectionTableModel.class).setValues(results);
+						updateView(results);
 					} catch (ExecutionException e) {
 						GuiUtils.alert(component(), e);
 					} catch (InterruptedException ignored) {
@@ -164,6 +177,25 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 			table.getModel(InspectionTableModel.class).setValues(new Inspection[0]);
 		}
 		
+	}
+
+	protected void updateView(Inspection[] results) {
+		table.getModel(InspectionTableModel.class).setValues(results);
+		int completed = 0;
+		int total = results.length;
+		for(Inspection i : results) {
+			if(i.isComplete()) {
+				completed++;
+			}
+		}
+		if(total > 0) {
+			label.setText(completed + " / " + total);
+			label.setIcon(new ProgressBar(100 * completed / total));
+		}
+		else {
+			label.setText("No inspections");
+			label.setIcon(null);
+		}
 	}
 	
 }
