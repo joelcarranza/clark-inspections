@@ -255,6 +255,12 @@
 				return completionStatus != null;
 			</getter>
 		</derivedProperty>
+		
+		<derivedProperty name="attachedFileCount" class="int">
+			<getter>
+				return attachedFiles != null ? attachedFiles.length : 0;
+			</getter>
+		</derivedProperty>
 
 		<derivedProperty name="mapKey">
 			<getter>

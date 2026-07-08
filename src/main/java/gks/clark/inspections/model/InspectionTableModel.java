@@ -75,8 +75,9 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     public static final int RESOLUTION_WORK_ORDER = 34;
     public static final int RESOLUTION_COMMENT = 35;
     public static final int COMPLETE = 36;
-    public static final int MAP_KEY = 37;
-    public static final int SERVICE_ADDRESS_COMPLETE = 38;
+    public static final int ATTACHED_FILE_COUNT = 37;
+    public static final int MAP_KEY = 38;
+    public static final int SERVICE_ADDRESS_COMPLETE = 39;
     private static final String[] COLUMN_NAMES = {
             "key", "x", "y", "program", "type", "equipmentIdentifier",
             "location", "orderKey", "orderSubKey", "orderNumber", "scheduledTs",
@@ -86,8 +87,8 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
             "workLocationDescription", "creationUser", "completionDate",
             "priority", "materialsRequired", "attachedFiles", "completionStatus",
             "issuePriority", "comment", "resolutionStatus",
-            "resolutionWorkOrder", "resolutionComment", "complete", "mapKey",
-            "serviceAddressComplete",
+            "resolutionWorkOrder", "resolutionComment", "complete",
+            "attachedFileCount", "mapKey", "serviceAddressComplete",
         };
 
     public String getColumnName(int column) {
@@ -125,6 +126,9 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
 
         case COMPLETE:
             return Boolean.class;
+
+        case ATTACHED_FILE_COUNT:
+            return Integer.class;
 
         default:
             return String.class;
@@ -246,6 +250,9 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
         case COMPLETE:
             return Boolean.valueOf(v.isComplete());
 
+        case ATTACHED_FILE_COUNT:
+            return new Integer(v.getAttachedFileCount());
+
         case MAP_KEY:
             return v.getMapKey();
 
@@ -258,7 +265,7 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     }
 
     public int getColumnCount() {
-        return 39;
+        return 40;
     }
 
     protected Class<?> getValueClass() {

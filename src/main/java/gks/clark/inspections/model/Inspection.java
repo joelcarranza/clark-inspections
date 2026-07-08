@@ -286,6 +286,10 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         return completionStatus != null;
     }
 
+    public int getAttachedFileCount() {
+        return (attachedFiles != null) ? attachedFiles.length : 0;
+    }
+
     public String getMapKey() {
         return key;
     }
