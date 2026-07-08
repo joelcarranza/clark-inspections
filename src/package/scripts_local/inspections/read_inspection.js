@@ -84,7 +84,7 @@ JavaLink.process = function() {
 	let bind = [];
 
 	if (this.param['EXCEPTIONS'] === 'true') {
-		where.push("i.completion_status = 'X'");
+		where.push("i.completion_status = 'X' and resolution_status is null");
 	} else {
 		where.push('i.list_id = ?');
 		bind.push(this.param['LIST']);
