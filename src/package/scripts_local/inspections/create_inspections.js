@@ -42,6 +42,7 @@ JavaLink.process = function() {
 	 var data = this.thawData([
 	 	'PROGRAM',
         'ORDER_KEY',
+        'DEPARTMENT', // not used
         'CREW',
         {
             name: 'SITES', fields: [
