@@ -1,7 +1,7 @@
 <form>
 <import class="gks.clark.mwm.ui.jgoodies.JGoodiesForm" name="jgform" />
 <import class="gks.clark.mwm.ui.jgoodies.JGoodiesPanel" name="jgpanel" />
-<script>
+<script><![CDATA[
 var gks = Packages.gks;
 
 function onUpdate(m) {
@@ -21,7 +21,19 @@ function dateFormat(date)
 }
 
 
-</script>
+  function validate(results) {
+    // comments are optional 
+    // cpu thinks users will potentially just do a sketch
+    // require either a comment OR an attachment
+
+    var resolutionStatus = form.model.getValue('resolutionStatus');
+    var resolutionComment = form.model.getValue('resolutionComment');
+	if(resolutionStatus && !resolutionComment) {
+	    results.error("A resolution comment must be included");
+	  }
+  }
+
+]]></script>
 <var id="callFirst" type="Boolean" />	
 <var id="completionDate" type="Date" />	
 <var id="allCrews" type="gks.dispatch.Crew[]" />	
@@ -33,7 +45,7 @@ function dateFormat(date)
 <var id="category" class="String" />
 
 <prototype id="date" format="date:MM/dd/yy H:mm" />
-<body beforeUpdate="onUpdate">
+<body beforeUpdate="onUpdate" onValidate="validate">
 <border>
 		<south>
 			<left border="5 | color(#BFBFBF,1,0,0,0)" background="#FFFFFF" visible="$:$completionDate">
