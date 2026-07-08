@@ -330,18 +330,25 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			};
 			GuiUtils.setImplementation(chooser, PlannerModule.class, this);
 			
+			AssetTypeFilter defaultTypes[] = new AssetTypeFilter[] {AssetTypeFilter.POLE, AssetTypeFilter.OH_PRIMARY, AssetTypeFilter.OH_SECONDARY};
+			
 			CriteriaSiteFilter cf = new CriteriaSiteFilter();
+			cf.setTypes(defaultTypes);
 			chooser.addChoice(cf, "gks/clark/inspections/model/CriteriaSiteFilter.xml", "Sites by Criteria");
 
 			ProximitySiteFilter pf = new ProximitySiteFilter();
 			pf.setLon(activeWorkOrder.getX());
 			pf.setLat(activeWorkOrder.getY());
 			pf.setDistance(100);
+			pf.setTypes(defaultTypes);
 			chooser.addChoice(pf, "gks/clark/inspections/model/ProximitySiteFilter.xml", "Sites by Proximity");
 
-			chooser.addChoice(new TraceSiteFilter(), "gks/clark/inspections/TraceSiteFilter.xml", "Sites by Trace");
+			TraceSiteFilter tsf = new TraceSiteFilter();
+			tsf.setTypes(defaultTypes);
+			chooser.addChoice(tsf, "gks/clark/inspections/TraceSiteFilter.xml", "Sites by Trace");
 			
-			chooser.addChoice(new GlobalidSiteFilter(), "gks/clark/inspections/model/GlobalidSiteFilter.xml", "Sites by Globalid");
+			GlobalidSiteFilter gsf = new GlobalidSiteFilter();
+			chooser.addChoice(gsf, "gks/clark/inspections/model/GlobalidSiteFilter.xml", "Sites by Globalid");
 			
 			chooser.setPreferredSize(new Dimension(550, 525));
 			

@@ -119,26 +119,32 @@ JavaLink.queryElectricLine = function(types) {
 		throw new Error(`Unsupported MODE: ${mode}`);
 	}
 
-	var assetGroups = [];
-	if(types.indexOf('PRIMARY') != -1) {
-		assetGroups.push('202');
-		assetGroups.push('203');
+	var whereType = [];
+	if(types.indexOf('OH_PRIMARY') != -1) {
+		whereType.push('(ASSETGROUP = 202 AND ASSETTYPE IN (210,211,212))');
 	}
-	if(types.indexOf('SECONDARY') != -1) {
-		assetGroups.push('302');
-		assetGroups.push('303');
+	if(types.indexOf('UG_PRIMARY') != -1) {
+		whereType.push('(ASSETGROUP = 202 AND ASSETTYPE NOT IN (210,211,212))');
 	}
-	where.push(Sql.whereIn('ASSETGROUP', assetGroups, true));
+	if(types.indexOf('OH_SECONDARY') != -1) {
+		whereType.push('(ASSETGROUP = 302 AND ASSETTYPE IN (311,312,313))');
+	}
+	if(types.indexOf('UG_SECONDARY') != -1) {
+		whereType.push('(ASSETGROUP = 302 AND ASSETTYPE NOT IN (311,312,313))');
+	}
+	if(whereType) {
+		where.push('('+whereType.join(' OR ')+')');
+	}
 
 	this.outputQueryResults(sql + ' WHERE ' + where.join(' AND '), bind);
 };
 
 JavaLink.process = function() {
-	let types = this.param.TYPE ? this.param.TYPE.split(',') : ['POLE','PRIMARY', 'SECONDARY'];
+	let types = this.param.TYPE ? this.param.TYPE.split(',') : ['POLE','UG_PRIMARY', 'OH_PRIMARY', 'UG_SECONDARY', 'OH_SECONDARY'];
 	if(types.indexOf('POLE') != -1) {
 		this.queryPole();
 	}
-	if(types.indexOf('PRIMARY') != -1 || types.indexOf('SECONDARY') != -1) {	
+	if(types.indexOf('UG_PRIMARY') != -1 || types.indexOf('OH_PRIMARY') != -1 || types.indexOf('UG_SECONDARY') != -1 || types.indexOf('OH_SECONDARY') != -1) {	
 		this.queryElectricLine(types);
 	}
 };

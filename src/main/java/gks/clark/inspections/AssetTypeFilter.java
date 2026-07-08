@@ -34,9 +34,11 @@ package gks.clark.inspections;
  */
 public enum AssetTypeFilter {
 	POLE("Pole"),
-	PRIMARY("Primary"),
-	SECONDARY("Secondary");
-
+	OH_PRIMARY("OH Primary"),
+	UG_PRIMARY("UG Primary"),
+	OH_SECONDARY("OH Secondary"),
+	UG_SECONDARY("UG Secondary");
+	
 	private String label;
 
 	AssetTypeFilter(String label) {
