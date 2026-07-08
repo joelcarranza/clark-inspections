@@ -6,8 +6,12 @@
 	
 	<bean class="gks.clark.inspections.model.Crew">
 		<extend>gks.util.SimpleCode</extend>
+		<property name="department" />
 	</bean>
 	
+	<bean class="gks.clark.inspections.model.Department">
+		<extend>gks.util.SimpleCode</extend>
+	</bean>
 	
 	
 	
@@ -54,6 +58,7 @@
 		-->
 		<property name="program" class="gks.clark.inspections.model.Program" />
 		<property name="workOrder" class="String" />
+		<property name="department" class="gks.clark.inspections.model.Department" />
 		<property name="crew" class="gks.clark.inspections.model.Crew" />
 		<property name="sites" class="gks.clark.inspections.model.SiteIdentifier[]" />
 		

@@ -45,6 +45,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 import gks.clark.inspections.model.CriteriaSiteFilter;
+import gks.clark.inspections.model.Department;
 import gks.clark.inspections.model.GlobalidSiteFilter;
 import gks.clark.inspections.model.Inspection;
 import gks.clark.inspections.model.InspectionTableModel;
@@ -200,6 +201,9 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		SiteList siteList = new SiteList();
 		siteList.setWorkOrder(activeWorkOrder.getKey());
 		siteList.setProgram(activeWorkOrder.getProgram());
+		// just a default
+		siteList.setDepartment(Department.lookup("LINE"));
+
 		ArrayList<SiteIdentifier> siteIdentifiers = new ArrayList<SiteIdentifier>();
 		for(Site s : tableView().getData(Site.class)) {
 			SiteIdentifier si = new SiteIdentifier();

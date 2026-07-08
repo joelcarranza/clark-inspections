@@ -1,0 +1,73 @@
+/**
+ * NOTICES
+ * -------
+ *
+ * Copyright 2026 by Gatekeeper Systems All Rights Reserved.
+ *
+ * Unpublished Work -- Protected under the copyright laws of the United States.
+ *
+ * Restricted Rights Legend: Use, duplication or disclosure of the software
+ * contained hereon is governed by the terms of a license agreement.  In
+ * the absence of an agreement, use, duplication or disclosure by the United
+ * States Government is subject to restrictions stated in subparagraph
+ * (c)(1) of the Commercial Computer Software -- Restricted Rights clause
+ * at FAR 52.227-9 or subparagraph (c)(1)(ii) of the Rights in Technical
+ * Data and Computer Software clause at DFARS 252.227-7013, as applicable.
+ *
+ * Contractor/Manufacturer:
+ *
+ *     Gatekeeper Systems
+ *     99 East C Street Ste. 209
+ *     Upland, Ca. 91786
+ *
+ *     Tel: (626) 449-8135
+ *     Fax: (626) 440-1742
+ *
+ *     E-Mail: info@gatekeeper.com
+ *     URL:    http://www.gatekeeper.com/
+ *
+ */
+package gks.clark.inspections;
+
+import static org.junit.Assert.*;
+
+import java.net.MalformedURLException;
+
+import gks.clark.inspections.model.Inspection;
+import gks.clark.inspections.model.SiteList;
+import gks.form.Form;
+import gks.form.test.FormTesterAction;
+import gks.form.test.FormTester;
+
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+/**
+ * 
+ */
+public class SiteListTest {
+	@BeforeClass
+	public static void beforeClass() throws MalformedURLException {
+		FormTester.initialize();
+	}
+
+	private FormTester formTester;
+
+	@Before
+	public void before() {
+		formTester = new FormTester().path(SiteList.class);
+	}
+
+	@Test
+	public void testUpdate() {
+		formTester.withForm(new FormTesterAction() {
+			@Override
+			public void test(Form form) {
+				SiteList i = new SiteList();
+				form.update(i);
+			}
+		});
+	}
+
+}

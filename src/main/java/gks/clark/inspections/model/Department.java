@@ -38,24 +38,16 @@ import gks.util.SimpleCodeCache;
   AUTO GENERATED FILE! - Do not edit, as your changes will be overwritten
   ==========================================================================
 */
-public class Crew extends gks.util.SimpleCode {
-    private static SimpleCodeCache<Crew> cache = SimpleCodeCache.create(Crew.class);
-
-    /*
-    ==========================================================================
-    Fields
-    ==========================================================================
-    */
-    String department;
+public class Department extends gks.util.SimpleCode {
+    private static SimpleCodeCache<Department> cache = SimpleCodeCache.create(Department.class);
 
     /*
     ==========================================================================
     Constructor
     ==========================================================================
     */
-    public Crew(String code, String description, String department) {
+    public Department(String code, String description) {
         super(code, description);
-        this.department = department;
     }
 
     /*
@@ -68,8 +60,8 @@ public class Crew extends gks.util.SimpleCode {
     }
 
     /** Adds a new instance to the cache */
-    public static Crew cache(String code, String description, String department) {
-        Crew __v = new Crew(code, description, department);
+    public static Department cache(String code, String description) {
+        Department __v = new Department(code, description);
         cache.cache(__v);
 
         return __v;
@@ -79,24 +71,15 @@ public class Crew extends gks.util.SimpleCode {
      * Looks up an instance in the cache and returns it if found,
      * otherwise returns null.
      */
-    public static Crew lookup(String id) {
-        return (Crew) cache.lookup(id);
+    public static Department lookup(String id) {
+        return (Department) cache.lookup(id);
     }
 
     /**
      * Returns an array of all the cached instances, sorted by
      * displayString.
      */
-    public static Crew[] all() {
-        return (Crew[]) cache.all();
-    }
-
-    /*
-    ==========================================================================
-    Getter routine
-    ==========================================================================
-    */
-    public String getDepartment() {
-        return department;
+    public static Department[] all() {
+        return (Department[]) cache.all();
     }
 }

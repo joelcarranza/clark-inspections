@@ -1,5 +1,5 @@
 <form>
-<script>
+<script><![CDATA[
 function validate(results) {
 }
 
@@ -9,17 +9,34 @@ function beforeUpdate(values) {
 function beforeCommit(values) {
 }
 
-</script>
+function crewsForDepartment(dept) {
+	var results = [];
+	if(dept) {
+		var dc = dept.getCode();
+		var crews = gks.clark.inspections.model.Crew.all();
+		for(var i=0;i<crews.length;++i) {
+			if(crews[i].getDepartment() == dc) {
+				results.push(crews[i]);
+			}
+		}
+	}
+	return results;
+}
+
+]]></script>
 <body onValidate="validate" beforeUpdate="beforeUpdate" beforeCommit="beforeCommit">
 		<table cols="p f " hgap="3"  vgap="3">
 			<tr>
-				<td>Program</td><td><combo id="program" dataClass="gks.clark.inspections.model.Program" required="true"/></td>
+				<td>Program</td><td><readOnly id="program" /></td>
 			</tr>
 			<tr>
-				<td>Work Order</td><td><text id="workOrder"/></td>
+				<td>Work Order</td><td><readOnly id="workOrder"/></td>
 			</tr>
 			<tr>
-				<td>Crew</td><td><combo id="crew" dataClass="gks.clark.inspections.model.Crew" /></td>
+				<td>Department</td><td><combo id="department" dataClass="gks.clark.inspections.model.Department" /></td>
+			</tr>
+			<tr>
+				<td>Crew</td><td><combo id="crew" data="$:crewsForDepartment($department)" /></td>
 			</tr>
 		</table>
 </body>
