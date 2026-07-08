@@ -77,30 +77,31 @@ function dateFormat(date)
 			<center>
         <tabs>
           <tab name="Completion">
-	           <table cols="p f " hgap="3"  vgap="3" border="10px">
+	           <table cols="p f p" hgap="3"  vgap="3" border="10px">
 				<tr>
-					<td>ID</td><td><readOnly id="key"/></td>
+					<td>ID</td><td columns="2"><readOnly id="key"/></td>
 				</tr>
 				<tr>
-					<td>Program</td><td><readOnly id="program"/></td>
+					<td>Program</td><td columns="2"><readOnly id="program"/></td>
 				</tr>
 				<tr>
-					<td>Completion</td><td><combo id="completionStatus" dataClass="gks.clark.inspections.model.CompletionStatus" /></td>
+					<td>Completion</td><td columns="2"><combo id="completionStatus" dataClass="gks.clark.inspections.model.CompletionStatus" /></td>
 				</tr>
 				<tr>
-					<td>Priority</td><td><combo id="issuePriority" dataClass="gks.clark.inspections.model.IssuePriority"  enabled="$:dot($completionStatus,'code')=='X'" /></td>
+					<td>Priority</td><td columns="2"><combo id="issuePriority" dataClass="gks.clark.inspections.model.IssuePriority"  enabled="$:dot($completionStatus,'code')=='X'" /></td>
 				</tr>
 				<tr>
-					<td>Comment</td><td><textArea id="comment" length="200"/></td>
+					<td>Comment</td><td columns="2"><textArea id="comment" length="200"/></td>
 				</tr>
 				<tr>
-					<td>Resolution</td><td><combo id="resolutionStatus" dataClass="gks.clark.inspections.model.ResolutionStatus" enabled="$:dot($completionStatus,'code')=='X'" includeNull="true" nullLabel="None" /></td>
+					<td>Resolution</td><td columns="2"><combo id="resolutionStatus" dataClass="gks.clark.inspections.model.ResolutionStatus" enabled="$:dot($completionStatus,'code')=='X'" includeNull="true" nullLabel="None" /></td>
 				</tr>
 				<tr>
 					<td>Work Order #</td><td><text id="resolutionWorkOrder" enabled="$:dot($resolutionStatus,'code')=='R'" length="10"/></td>
+					<td><button text="Create..." enabled="false" /></td>
 				</tr>
 				<tr>
-					<td>Comment</td><td><textArea id="resolutionComment" enabled="$:dot($resolutionStatus,'code')=='R'" length="200"/></td>
+					<td>Comment</td><td columns="2"><textArea id="resolutionComment" enabled="$:dot($resolutionStatus,'code')=='R'" length="200"/></td>
 				</tr>
 				
 			 </table>
