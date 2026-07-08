@@ -39,6 +39,7 @@ import javax.swing.SwingWorker;
 
 import gks.clark.inspections.model.Inspection;
 import gks.form.details.DetailsEditor;
+import gks.util.concurrent.ObservableFuture;
 
 /**
  * Editor window for {@link Inspection} object
@@ -65,4 +66,12 @@ public class InspectionDetailsEditor extends DetailsEditor<Inspection> {
 	protected SwingWorker<?, ?> createSaveTask(Inspection value) {
 		return module.getControl().proxy().save(value).view(getVisibleForm().component());
 	}
+
+	@Override
+	protected void saveTaskCompleted(Runnable actionOnComplete) {
+		module.inspectionUpdated(getSelectedValue());
+		super.saveTaskCompleted(actionOnComplete);
+	}
+	
+	
 }

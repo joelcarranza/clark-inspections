@@ -468,5 +468,11 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	}
 
 	
+	public void inspectionUpdated(Inspection selectedValue) {
+		// may be smarter in the future
+		actionRefresh(null);
+	}
+
+	
 
 }
