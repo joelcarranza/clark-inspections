@@ -63,18 +63,17 @@ JavaLink.process = function() {
 	 let orderSubType = order[1];
 	 let locationNumber = order[2];
 
+	 let remoteUser = this.environment['REMOTE_USER'];
+
 	 Lang.assert(data.PROGRAM == orderSubType, `Invalid order type: ${orderSubType}`);
 
-	 var wmResult = WM.createServiceOrder(orderSubKey, orderSubType, locationNumber);
+	 var wmResult = WM.createServiceOrder(this, orderSubKey, orderSubType, locationNumber, data.CREW, remoteUser);
 	 if(!wmResult.ok) {
 		 this.quit("Unable to create service order: " + wmResult.message);
 	 }
-	 let serviceOrderNumber = wmResult.data.serviceOrderNumber;
+	 let serviceOrderNumber = wmResult.data.orderNumber;
+	 Lang.assert(serviceOrderNumber, "No orderNumber provided from createServiceOrder call");
 	 Logger.info(`serviceOrderNumber = ${serviceOrderNumber}`);
-	 if(data.CREW) {
-	 	let ok = WM.assignServceOrder(this, orderSubKey, serviceOrderNumber, data.CREW);
-		Logger.info("ASSIGNED TO CREW: " + data.CREW);
-	 }
 	 var woListKey = this.db.insertRowReturnKey('WM_INSPECTION_LIST', {
 	 	SERVICE_ORDNBR: serviceOrderNumber,
 	 	PROGRAM_ORDER_KEY: order_key,
