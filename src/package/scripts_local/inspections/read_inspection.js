@@ -35,7 +35,13 @@ var Sql = require('Sql');
 
 JavaLink.useDefaultDataSource();
 
+
 JavaLink.process = function() {
+	this.queryInspection('INSPECTION_SITE_POLE_VIEW', 'pole');
+	this.queryInspection('INSPECTION_SITE_ELECTRIC_LINE_VIEW', 'line');
+}
+
+JavaLink.queryInspection = function(assetTable, assetType) {
 	let sql = `
 		SELECT
 			i.ID,
@@ -78,7 +84,7 @@ JavaLink.process = function() {
 		JOIN WM_INSPECTION_LIST l on i.list_id = l.id
 		LEFT JOIN WM_ORDER o on l.program_order_key = o.order_key
 		LEFT JOIN WM_ASSIGNMENT a ON A.ORDER_KEY = o.ORDER_KEY
-		LEFT JOIN INSPECTION_SITE s ON i.asset_id = s.asset_id`;
+		LEFT JOIN ${assetTable} s ON i.asset_id = s.asset_id and i.asset_type = '${assetType}'`;
 
 	let where = [];
 	let bind = [];
