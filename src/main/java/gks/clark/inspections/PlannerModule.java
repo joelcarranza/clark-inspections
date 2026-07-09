@@ -108,7 +108,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	private LocalMapLayerManager<Inspection> inspectionLayerManager;
 	private SiteFilter siteFilter;
 	private String activeList;
-	private DisplaySettings displaySettings;
+	private Program[] visiblePrograms;
 
 	public PlannerModule(NavigateInterface application) {
 		super(application);
@@ -127,10 +127,9 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 		tableView().setTableColumnSet(Site.class.getName());
 
-		this.displaySettings = new DisplaySettings();
-		this.displaySettings.setPrograms(Program.all());
+		visiblePrograms = Program.all();
 		
-		actionViewWorkOrders(null);
+		actionViewWorkOrders();
 		
 		workOrderLayerManager = new LocalMapLayerManager<WorkOrder>(getMapControl(), "CPU Inspections - Work Order", "gks/clark/inspections/layer/WorkOrder.xml", false);
 
@@ -166,10 +165,10 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		GuiUtils.setImplementation(w, ValueModel.class, model);
 	}
 
-	public void actionRefresh(ActionEvent e) {
+	public void actionRefresh() {
 		// this is pretty gross
 		if(visibleItemType == ItemType.WORK_ORDER) {
-			actionViewWorkOrders(e);
+			actionViewWorkOrders();
 		}
 		else if(visibleItemType == ItemType.SITE) {
 			setSiteFilter(siteFilter);
@@ -180,30 +179,30 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { activeList }).start();
 			}
 			else {
-				actionViewExceptions(e);
+				actionViewExceptions();
 			}
 		}
 		
 	}
-	public void actionShowSiteFilter(ActionEvent e) {
+	public void actionShowSiteFilter() {
 		activeWorkOrder = tableView().getSelection(WorkOrder.class).iterator().next();
 
 		windowManager().show(WIN_FILTER);
 	}
 	
-	public void actionViewWorkOrders(ActionEvent e) {
+	public void actionViewWorkOrders() {
 		activeWorkOrder = null;
 		
-		control.proxy().queryWorkOrders(this.displaySettings.getPrograms())
+		control.proxy().queryWorkOrders(visiblePrograms)
 		.onComplete(PlannerModule.this, "onWorkOrdersQueried").start();
 	}
 
-	public void actionViewExceptions(ActionEvent e) {
-		control.proxy().queryExceptions(this.displaySettings.getPrograms())
+	public void actionViewExceptions() {
+		control.proxy().queryExceptions(visiblePrograms)
 				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { null }).start();
 	}
 
-	public void actionNewList(ActionEvent e) {
+	public void actionNewList() {
 		SiteList siteList = new SiteList();
 		siteList.setWorkOrder(activeWorkOrder.getKey());
 		siteList.setProgram(activeWorkOrder.getProgram());
@@ -229,9 +228,13 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	}
 	
 	public void actionDisplaySettings(ActionEvent e) {
+		
+		DisplaySettings displaySettings = new DisplaySettings();
+		displaySettings.setPrograms(visiblePrograms);
 
-		if (Editor.edit(this, this.displaySettings, "Display Settings")) {
-			actionRefresh(null);
+		if (Editor.edit(this, displaySettings, "Display Settings")) {
+			this.visiblePrograms = displaySettings.getPrograms();
+			actionRefresh();
 		}
 	}
 
@@ -483,7 +486,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	
 	public void inspectionUpdated(Inspection selectedValue) {
 		// may be smarter in the future
-		actionRefresh(null);
+		actionRefresh();
 	}
 
 	
