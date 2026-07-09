@@ -97,7 +97,6 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	private ItemType visibleItemType;
 	
 	
-	private String inspectionListKey;
 	
 	/**
 	 * the work order selected when sites are queried. Used to provide context for further steps
@@ -107,7 +106,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	private LocalMapLayerManager<Site> siteLayerManager;
 	private LocalMapLayerManager<Inspection> inspectionLayerManager;
 	private SiteFilter siteFilter;
-	private String activeList;
+	private String inspectionListKey;
 	private Program[] visiblePrograms;
 
 	public PlannerModule(NavigateInterface application) {
@@ -174,9 +173,9 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			setSiteFilter(siteFilter);
 		}
 		else if(visibleItemType == ItemType.WORK_ORDER) {
-			if(activeList != null) {
-				control.proxy().queryInspection(activeList)
-				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { activeList }).start();
+			if(inspectionListKey != null) {
+				control.proxy().queryInspection(inspectionListKey)
+				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { inspectionListKey }).start();
 			}
 			else {
 				actionViewExceptions();
@@ -252,9 +251,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	}
 
 	public void actionOpenList(ActionEvent e) {
-		// XXX: this is a hack
 		String listKey = tableView().getSelection(WorkOrder.class).iterator().next().getListId();
-		activeList = listKey;
 		
 		control.proxy().queryInspection(listKey)
 				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { listKey }).start();
