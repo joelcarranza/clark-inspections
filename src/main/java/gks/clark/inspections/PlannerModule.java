@@ -134,7 +134,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 		siteLayerManager = new LocalMapLayerManager<Site>(getMapControl(), "CPU Inspections - Site", "gks/clark/inspections/layer/Site.xml", true);
 
-		inspectionLayerManager = new LocalMapLayerManager<Inspection>(getMapControl(), "CPU Inspections", "gks/clark/inspections/layer/Inspection.xml", true);
+		inspectionLayerManager = new LocalMapLayerManager<Inspection>(getMapControl(), "CPU Inspections", "gks/clark/inspections/layer/Inspection.xml", false);
 
 	}
 
@@ -172,7 +172,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		else if(visibleItemType == ItemType.SITE) {
 			setSiteFilter(siteFilter);
 		}
-		else if(visibleItemType == ItemType.WORK_ORDER) {
+		else if(visibleItemType == ItemType.INSPECTION) {
 			if(inspectionListKey != null) {
 				control.proxy().queryInspection(inspectionListKey)
 				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { inspectionListKey }).start();
@@ -267,6 +267,9 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		setTitle("Work Orders");
 
 		workOrderLayerManager.setFeatures(Arrays.asList(workOrders));
+		siteLayerManager.clear();
+		inspectionLayerManager.clear();
+		
 		setMapLayer(new MapLayerSet(MapLayerSet.PHYSICAL, workOrderLayerManager.getLayerName()));
 		
 		actionManager().setConditional("workOrder", true);
@@ -290,8 +293,9 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		visibleItemType = ItemType.SITE;
 		
 		workOrderLayerManager.setFeature(activeWorkOrder);
-		
 		siteLayerManager.setFeatures(Arrays.asList(site));
+		inspectionLayerManager.clear();
+		
 		setMapLayer(new MapLayerSet(MapLayerSet.PHYSICAL, siteLayerManager.getLayerName()));
 
 		setTitle("Sites");
