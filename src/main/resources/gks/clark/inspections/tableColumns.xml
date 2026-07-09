@@ -65,11 +65,11 @@
     <cu>5</cu>
     <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
   </tableColumn>
-  <tableColumn modelColumn="status">
+  <tableColumn modelColumn="completionPercentage">
     <header>S</header>
-    <cu>3</cu>
+    <px>100</px>
     <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
-    <valueRenderer>gks.clark.inspections.WorkOrderStatusRenderer</valueRenderer>
+    <valueRenderer>gks.clark.inspections.CompletionPercentageRenderer</valueRenderer>
   </tableColumn>
   
   <tableColumn modelColumn="listCompleted">

@@ -39,6 +39,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.concurrent.ExecutionException;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -69,6 +71,7 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 	private SwingWorker<Inspection[], Void> loadTask;
 	private JPanel component;
 	private JLabel label;
+	private ProgressBar progressBar;
 	
 	public InspectionsView(Form form) {
 		this.owner = (WorkOrderDetailsEditor)form.getOwner();
@@ -90,11 +93,16 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 		});
 
 		label = new JLabel();
+		progressBar = new ProgressBar(100, 20);
 
+		Box north = Box.createHorizontalBox();
+		north.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
+		north.add(label);
+		north.add(Box.createHorizontalGlue());
 		
 		component = new JPanel(new BorderLayout(5, 5));
 		component.add(scroll, BorderLayout.CENTER);
-		component.add(label, BorderLayout.NORTH);
+		component.add(north, BorderLayout.NORTH);
 		
 	
 	}
@@ -190,7 +198,8 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 		}
 		if(total > 0) {
 			label.setText(completed + " / " + total);
-			label.setIcon(new ProgressBar(100 * completed / total));
+			progressBar.setPercentage((float) completed / total);
+			label.setIcon(progressBar);
 		}
 		else {
 			label.setText("No inspections");

@@ -40,42 +40,53 @@ import javax.swing.Icon;
  * 
  */
 public class ProgressBar implements Icon {
-	int pct;
+	private float pct;
+	private int width;
+	private int height;
+
+	public ProgressBar(int width, int height) {
+		this.width = width;
+		this.height = height;
+	}
 	
-	public ProgressBar(int pct) {
+	public void setPercentage(float pct) {
 		this.pct = pct;
 	}
 
 	@Override
 	public void paintIcon(Component c, Graphics g, int x, int y) {
 		Graphics2D g2d = (Graphics2D) g.create();
+		g2d.translate(x, y);
+
 		Color bg = c.getBackground();
 		g2d.setColor(new Color(bg.getRed(),bg.getGreen(),bg.getBlue(),128));
-    	g2d.fillRect(0, 0, 100,10);
-    	
+    	g2d.fillRect(0, 0, width, height);
+
     	// stroke rectangle with foreground
 	 	g2d.setColor(Color.DARK_GRAY);
-    	g2d.drawRect(0, 0, 100,10);
-    	
+    	g2d.drawRect(0, 0, width - 1, height - 1);
+
     	if(pct > 0) {
         	// fill progress bar
         	g2d.setColor(Color.BLUE);
-        	g2d.fillRect(1, 1, pct, 9);
+        	int fillWidth = Math.round(pct * (width - 2));
+        	g2d.fillRect(1, 1, fillWidth, height - 2);
     	}
     	else {
     		// TODO: barber stripe?
     	}
 
+    	g2d.dispose();
 	}
 
 	@Override
 	public int getIconWidth() {
-		return 100;
+		return width;
 	}
 
 	@Override
 	public int getIconHeight() {
-		return 10;
+		return height;
 	}
 
 }

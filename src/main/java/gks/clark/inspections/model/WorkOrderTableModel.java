@@ -64,15 +64,17 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
     public static final int LIST_TOTAL = 23;
     public static final int CREW = 24;
     public static final int STATUS = 25;
-    public static final int MAP_KEY = 26;
-    public static final int SERVICE_ADDRESS_COMPLETE = 27;
+    public static final int COMPLETION_PERCENTAGE = 26;
+    public static final int MAP_KEY = 27;
+    public static final int SERVICE_ADDRESS_COMPLETE = 28;
     private static final String[] COLUMN_NAMES = {
             "key", "program", "x", "y", "orderSubKey", "orderNumber", "entryTs",
             "customerName", "resPhone", "busPhone", "callFirst",
             "serviceAccount", "serviceAddress", "serviceCity", "serviceZip",
             "request", "reason", "orderDesc", "workLocation",
             "workLocationDescription", "creationUser", "listId", "listCompleted",
-            "listTotal", "crew", "status", "mapKey", "serviceAddressComplete",
+            "listTotal", "crew", "status", "completionPercentage", "mapKey",
+            "serviceAddressComplete",
         };
 
     public String getColumnName(int column) {
@@ -92,6 +94,9 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
         case X:
         case Y:
             return Double.class;
+
+        case COMPLETION_PERCENTAGE:
+            return Float.class;
 
         case LIST_COMPLETED:
         case LIST_TOTAL:
@@ -187,6 +192,9 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
         case STATUS:
             return v.getStatus();
 
+        case COMPLETION_PERCENTAGE:
+            return v.getCompletionPercentage();
+
         case MAP_KEY:
             return v.getMapKey();
 
@@ -199,7 +207,7 @@ public class WorkOrderTableModel extends gks.ui.table.ArrayTableModel {
     }
 
     public int getColumnCount() {
-        return 28;
+        return 29;
     }
 
     protected Class<?> getValueClass() {

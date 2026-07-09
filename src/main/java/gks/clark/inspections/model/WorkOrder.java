@@ -205,6 +205,14 @@ public class WorkOrder implements gks.util.dto.ServerTransferObject,
         listCompleted.equals(listTotal)) ? "C" : "I";
     }
 
+    public Float getCompletionPercentage() {
+        if (gks.util.Utils.isEmpty(listId) || (listTotal == 0)) {
+            return null;
+        }
+
+        return ((float) listCompleted) / listTotal;
+    }
+
     public String getMapKey() {
         return key;
     }

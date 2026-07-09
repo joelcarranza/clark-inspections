@@ -113,6 +113,16 @@
 			]]>
 			</getter>
 		</derivedProperty>
+		
+		<derivedProperty name="completionPercentage" class="Float">
+			<getter>
+			<![CDATA[
+			if (gks.util.Utils.isEmpty(listId) || listTotal == 0) return null;
+			return ((float)listCompleted) / listTotal;
+			]]>
+			</getter>
+		</derivedProperty>
+		
 		<derivedProperty name="mapKey">
 			<getter>
 				return key;
