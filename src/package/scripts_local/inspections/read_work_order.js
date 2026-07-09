@@ -30,10 +30,14 @@
 
  
 var JavaLink = require('JavaLink');
+var Sql = require('Sql');
 
 JavaLink.useDefaultDataSource();
 
 JavaLink.process = function() {
+    var programs = this.param['PROGRAMS'].split(',');
+    var programWhere = Sql.whereIn('o.ordersubtype', programs);
+
 	this.outputQueryResults(`
 		with list_stats as (
 select 
@@ -73,8 +77,8 @@ SELECT
         LEFT JOIN LIST_STATS ls on l.id = ls.list_id
         LEFT JOIN WM_ASSIGNMENT a ON A.ORDER_KEY = o.ORDER_KEY
         WHERE a.ATTR_1 = 'INSP' AND
-        o.compltn_ts is null
-
+        o.compltn_ts is null AND
+        ${programWhere}
 	`);
 };
 

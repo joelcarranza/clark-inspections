@@ -30,6 +30,11 @@
     <method>actionNewList</method>
     <enabled>site</enabled>
   </action>
+  
+  <action key="displaySettings">
+	<name>Display Settings</name>
+    <method>actionDisplaySettings</method>
+  </action>
   <action key="openList">
 	<name>Open List...</name>
     <method>actionOpenList</method>
@@ -65,7 +70,7 @@
     <main>open | zoom zoomAll | refresh</main>
   </toolbar>
   <menubar>
-    <Tools>viewWorkOrders viewExceptions | filter newList openList | refresh</Tools>
+    <Tools>viewWorkOrders viewExceptions | filter newList openList | displaySettings refresh</Tools>
     <Map>zoom zoomAll</Map>
   </menubar>
 </config>

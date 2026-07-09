@@ -85,6 +85,11 @@ JavaLink.process = function() {
 
 	if (this.param['EXCEPTIONS'] === 'true') {
 		where.push("i.completion_status = 'X' and resolution_status is null");
+
+		var programs = this.param['PROGRAMS'].split(',');
+	    var programWhere = Sql.whereIn('l.program_type', programs);
+
+	    where.push(programWhere);
 	} else {
 		where.push('i.list_id = ?');
 		bind.push(this.param['LIST']);

@@ -1,0 +1,21 @@
+<form>
+<script><![CDATA[
+function validate(results) {
+}
+
+function beforeUpdate(values) {
+}
+
+function beforeCommit(values) {
+}
+
+
+]]></script>
+<body onValidate="validate" beforeUpdate="beforeUpdate" beforeCommit="beforeCommit">
+		<table cols="p f " hgap="3"  vgap="3">
+			<tr>
+				<td>Programs</td><td><checkList id="programs" dataClass="gks.clark.inspections.model.Program" /></td>
+			</tr>
+		</table>
+</body>
+</form>

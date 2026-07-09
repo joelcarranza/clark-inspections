@@ -36,6 +36,7 @@ package gks.clark.inspections;
 import java.io.File;
 
 import gks.clark.inspections.model.Inspection;
+import gks.clark.inspections.model.Program;
 import gks.clark.inspections.model.Site;
 import gks.clark.inspections.model.SiteList;
 import gks.control.ControlTask;
@@ -48,7 +49,7 @@ public interface AsyncInspectionsControl {
 	/**
 	 * @see InspectionsControl#queryWorkOrder
 	 */
-	public ControlTask queryWorkOrders();
+	public ControlTask queryWorkOrders(Program programs[]);
 	
 	/**
 	 * @see InspectionsControl#querySite(SiteFilter)
@@ -73,7 +74,7 @@ public interface AsyncInspectionsControl {
 	/**
 	 * @see InspectionsControl#queryExceptions()
 	 */
-	public ControlTask queryExceptions();
+	public ControlTask queryExceptions(Program programs[]);
 
 	public ControlTask attachFiles(File[] files);
 

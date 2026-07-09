@@ -43,6 +43,7 @@ import java.util.stream.Collectors;
 import gks.clark.inspections.model.CriteriaSiteFilter;
 import gks.clark.inspections.model.GlobalidSiteFilter;
 import gks.clark.inspections.model.Inspection;
+import gks.clark.inspections.model.Program;
 import gks.clark.inspections.model.ProximitySiteFilter;
 import gks.clark.inspections.model.Site;
 import gks.clark.inspections.model.SiteList;
@@ -133,14 +134,16 @@ public class InspectionsControl extends BasicControl {
 		return scriptQuery("/scripts/inspections/read_inspection", q, Inspection.class);
 	}
 	
-	public Inspection[] queryExceptions() throws DataTransferException {
+	public Inspection[] queryExceptions(Program programs[]) throws DataTransferException {
 		QueryBuilder q = new QueryBuilder();
 		q.append("EXCEPTIONS", "true");
+		q.append("PROGRAMS", programs);
 		return scriptQuery("/scripts/inspections/read_inspection", q, Inspection.class);
 	}
 
-	public WorkOrder[] queryWorkOrders() throws DataTransferException {
+	public WorkOrder[] queryWorkOrders(Program programs[]) throws DataTransferException {
 		QueryBuilder q = new QueryBuilder();
+		q.append("PROGRAMS", programs);
 		return scriptQuery("/scripts/inspections/read_work_order", q, WorkOrder.class);
 	}
 

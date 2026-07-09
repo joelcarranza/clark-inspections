@@ -46,9 +46,11 @@ import javax.swing.JFrame;
 
 import gks.clark.inspections.model.CriteriaSiteFilter;
 import gks.clark.inspections.model.Department;
+import gks.clark.inspections.model.DisplaySettings;
 import gks.clark.inspections.model.GlobalidSiteFilter;
 import gks.clark.inspections.model.Inspection;
 import gks.clark.inspections.model.InspectionTableModel;
+import gks.clark.inspections.model.Program;
 import gks.clark.inspections.model.ProximitySiteFilter;
 import gks.clark.inspections.model.Site;
 import gks.clark.inspections.model.SiteIdentifier;
@@ -106,6 +108,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	private LocalMapLayerManager<Inspection> inspectionLayerManager;
 	private SiteFilter siteFilter;
 	private String activeList;
+	private DisplaySettings displaySettings;
 
 	public PlannerModule(NavigateInterface application) {
 		super(application);
@@ -123,6 +126,9 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		buildView();
 
 		tableView().setTableColumnSet(Site.class.getName());
+
+		this.displaySettings = new DisplaySettings();
+		this.displaySettings.setPrograms(Program.all());
 		
 		actionViewWorkOrders(null);
 		
@@ -188,12 +194,12 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	public void actionViewWorkOrders(ActionEvent e) {
 		activeWorkOrder = null;
 		
-		control.proxy().queryWorkOrders()
+		control.proxy().queryWorkOrders(this.displaySettings.getPrograms())
 		.onComplete(PlannerModule.this, "onWorkOrdersQueried").start();
 	}
 
 	public void actionViewExceptions(ActionEvent e) {
-		control.proxy().queryExceptions()
+		control.proxy().queryExceptions(this.displaySettings.getPrograms())
 				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { null }).start();
 	}
 
@@ -219,6 +225,13 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		siteList.setSites(siteIdentifiers.toArray(new SiteIdentifier[0]));
 		if (Editor.edit(this, siteList, "New List")) {
 			control.proxy().createList(siteList).onComplete(this, "onListSaved").start();
+		}
+	}
+	
+	public void actionDisplaySettings(ActionEvent e) {
+
+		if (Editor.edit(this, this.displaySettings, "Display Settings")) {
+			actionRefresh(null);
 		}
 	}
 
