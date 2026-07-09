@@ -40,7 +40,7 @@ JSONPage.process = function() {
 		'gks.clark.inspections.model.Program': 
 			this.db.queryAll('SELECT code,name FROM insp_program'),
 		'gks.clark.inspections.model.Crew': 
-			this.db.queryAll('select crew_code, crew_name, attr_1 from wm_active_crew'),
+			this.db.queryAll('select crew_id, crew_name, attr_1 from wm_active_crew'),
 		'gks.clark.inspections.model.Department': 
 			this.db.queryAll(`SELECT a.code,
                a.display_name
