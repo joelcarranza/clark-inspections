@@ -90,12 +90,13 @@ JavaLink.process = function() {
             COMPLETION_USER: Sql.quote(this.environment['REMOTE_USER']) 
         }
      }
-     else {
+     if(data['RESOLUTION_STATUS']) {
         literals = {
-            COMPLETION_DATE: 'NULL',
-            COMPLETION_USER: 'NULL' 
+            RESOLUTION_DATE: 'GETDATE()',
+            RESOLUTION_USER: Sql.quote(this.environment['REMOTE_USER']) 
         }
      }
+
 
     var files = Lang.take(data, 'FILES');     
 
