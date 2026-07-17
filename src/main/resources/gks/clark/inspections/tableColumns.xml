@@ -65,6 +65,11 @@
     <cu>5</cu>
     <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
   </tableColumn>
+  <tableColumn modelColumn="program">
+    <header>Program</header>
+    <cu>5</cu>
+    <tableSet>gks.clark.inspections.model.WorkOrder</tableSet>
+  </tableColumn>
   <tableColumn modelColumn="completionPercentage">
     <header>S</header>
     <px>100</px>
