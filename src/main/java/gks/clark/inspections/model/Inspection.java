@@ -286,6 +286,10 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         return completionStatus != null;
     }
 
+    public boolean isResolved() {
+        return resolutionStatus != null;
+    }
+
     public int getAttachedFileCount() {
         return (attachedFiles != null) ? attachedFiles.length : 0;
     }

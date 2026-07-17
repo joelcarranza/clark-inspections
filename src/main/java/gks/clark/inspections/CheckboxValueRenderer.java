@@ -36,11 +36,11 @@ import javax.swing.Icon;
 import gks.ui.CheckBoxIcon;
 import gks.ui.ValueRenderer;
 
-public class CompletionStatusCodeRenderer implements ValueRenderer {
+public class CheckboxValueRenderer implements ValueRenderer {
 	Icon complete;
 	Icon incomplete;
 
-	public CompletionStatusCodeRenderer() {
+	public CheckboxValueRenderer() {
 		complete = new CheckBoxIcon(true);
 		incomplete = new CheckBoxIcon(false);
 

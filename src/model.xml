@@ -275,6 +275,12 @@
 			</getter>
 		</derivedProperty>
 		
+		<derivedProperty name="resolved" class="boolean">
+			<getter>
+				return resolutionStatus != null;
+			</getter>
+		</derivedProperty>
+		
 		<derivedProperty name="attachedFileCount" class="int">
 			<getter>
 				return attachedFiles != null ? attachedFiles.length : 0;

@@ -20,7 +20,7 @@
    <tableColumn modelColumn="complete">
     <header>C</header>
     <px>16</px>
-    <valueRenderer>gks.clark.inspections.CompletionStatusCodeRenderer</valueRenderer>
+    <valueRenderer>gks.clark.inspections.CheckboxValueRenderer</valueRenderer>
     <tableSet>gks.clark.inspections.model.Inspection</tableSet>
   </tableColumn>
   <tableColumn modelColumn="key">
@@ -51,13 +51,60 @@
    <tableColumn modelColumn="resolutionStatus">
     <header>Resolution</header>
     <cu>10</cu>
-    <tableSet>gks.clark.inspections.model.ResolutionStatus</tableSet>
+    <tableSet>gks.clark.inspections.model.Inspection</tableSet>
   </tableColumn>
-
    <tableColumn modelColumn="comment">
     <header>Comment</header>
     <cu>10</cu>
     <tableSet>gks.clark.inspections.model.Inspection</tableSet>
+  </tableColumn>
+  
+    <tableColumn modelColumn="orderSubKey">
+    <header>#</header>
+    <cu>5</cu>
+    <tableSet>gks.clark.inspections.model.Inspection-exception</tableSet>
+  </tableColumn> 
+   <tableColumn modelColumn="resolved">
+    <header>R</header>
+    <px>16</px>
+    <valueRenderer>gks.clark.inspections.CheckboxValueRenderer</valueRenderer>
+    <tableSet>gks.clark.inspections.model.Inspection-exception</tableSet>
+  </tableColumn>
+  <tableColumn modelColumn="resolutionStatus">
+    <header>Resolution</header>
+    <cu>10</cu>
+    <tableSet>gks.clark.inspections.model.Inspection-exception</tableSet>
+  </tableColumn>
+  <tableColumn modelColumn="key">
+    <header>Key</header>
+    <cu>5</cu>
+    <tableSet>gks.clark.inspections.model.Inspection-exception</tableSet>
+  </tableColumn>
+  <tableColumn modelColumn="attachedFileCount">
+    <header>Files</header>
+    <cu>3</cu>
+    <tableSet>gks.clark.inspections.model.Inspection-exception</tableSet>
+  </tableColumn>  
+   <tableColumn modelColumn="program">
+    <header>Program</header>
+    <cu>10</cu>
+    <tableSet>gks.clark.inspections.model.Inspection-exception</tableSet>
+  </tableColumn>
+   <tableColumn modelColumn="completionStatus">
+    <header>Result</header>
+    <cu>10</cu>
+    <tableSet>gks.clark.inspections.model.Inspection-exception</tableSet>
+  </tableColumn>
+   <tableColumn modelColumn="issuePriority">
+    <header>Priority</header>
+    <cu>10</cu>
+    <tableSet>gks.clark.inspections.model.Inspection-exception</tableSet>
+  </tableColumn>
+  
+   <tableColumn modelColumn="comment">
+    <header>Comment</header>
+    <cu>10</cu>
+    <tableSet>gks.clark.inspections.model.Inspection-exception</tableSet>
   </tableColumn>
   
   <tableColumn modelColumn="orderSubKey">

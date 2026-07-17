@@ -219,7 +219,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 	public void actionViewExceptions() {
 		control.proxy().queryExceptions(visiblePrograms)
-				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { null }).start();
+				.onComplete(PlannerModule.this, "onExceptionsQueried").start();
 	}
 
 	public void actionNewList() {
@@ -327,6 +327,28 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		actionManager().setConditional("list", false);
 	}
 
+	public void onExceptionsQueried(Inspection insp[]) {
+		this.inspectionListKey = null;
+
+		InspectionTableModel tableModel = new InspectionTableModel();
+		tableModel.setValues(insp);
+		tableView().setTableColumnSet(tableModel, Inspection.class.getName()+"-exception");
+
+		visibleItemType = ItemType.INSPECTION;
+		
+		workOrderLayerManager.clear();
+		siteLayerManager.clear();
+		inspectionLayerManager.setFeatures(Arrays.asList(insp));
+		setMapLayer(new MapLayerSet(MapLayerSet.PHYSICAL, inspectionLayerManager.getLayerName()));
+		
+		setTitle("Exceptions");
+		
+		actionManager().setConditional("workOrder", false);
+		actionManager().setConditional("list", true);
+		actionManager().setConditional("inspection", insp.length > 0);
+		actionManager().setConditional("site", false);
+	}
+	
 	public void onInspectionsQueried(Inspection insp[], String listKey) {
 		this.inspectionListKey = listKey;
 

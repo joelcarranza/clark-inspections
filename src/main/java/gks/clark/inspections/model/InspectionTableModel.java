@@ -75,9 +75,10 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     public static final int RESOLUTION_WORK_ORDER = 34;
     public static final int RESOLUTION_COMMENT = 35;
     public static final int COMPLETE = 36;
-    public static final int ATTACHED_FILE_COUNT = 37;
-    public static final int MAP_KEY = 38;
-    public static final int SERVICE_ADDRESS_COMPLETE = 39;
+    public static final int RESOLVED = 37;
+    public static final int ATTACHED_FILE_COUNT = 38;
+    public static final int MAP_KEY = 39;
+    public static final int SERVICE_ADDRESS_COMPLETE = 40;
     private static final String[] COLUMN_NAMES = {
             "key", "x", "y", "program", "type", "equipmentIdentifier",
             "location", "orderKey", "orderSubKey", "orderNumber", "scheduledTs",
@@ -87,7 +88,7 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
             "workLocationDescription", "creationUser", "completionDate",
             "priority", "materialsRequired", "attachedFiles", "completionStatus",
             "issuePriority", "comment", "resolutionStatus",
-            "resolutionWorkOrder", "resolutionComment", "complete",
+            "resolutionWorkOrder", "resolutionComment", "complete", "resolved",
             "attachedFileCount", "mapKey", "serviceAddressComplete",
         };
 
@@ -125,6 +126,7 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
             return gks.clark.inspections.model.ResolutionStatus.class;
 
         case COMPLETE:
+        case RESOLVED:
             return Boolean.class;
 
         case ATTACHED_FILE_COUNT:
@@ -250,6 +252,9 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
         case COMPLETE:
             return Boolean.valueOf(v.isComplete());
 
+        case RESOLVED:
+            return Boolean.valueOf(v.isResolved());
+
         case ATTACHED_FILE_COUNT:
             return new Integer(v.getAttachedFileCount());
 
@@ -265,7 +270,7 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     }
 
     public int getColumnCount() {
-        return 40;
+        return 41;
     }
 
     protected Class<?> getValueClass() {
