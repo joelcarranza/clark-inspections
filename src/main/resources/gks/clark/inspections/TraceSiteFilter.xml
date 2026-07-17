@@ -54,6 +54,9 @@ function validate(result) {
 	if (!f.phases) {
 		result.error("One or more trace phases must be chosen");
 	}
+	if(!m.getValue("types")) {
+		result.error("One or more Inspection Sites must be chosen");
+	}
 	return null;
 }
 

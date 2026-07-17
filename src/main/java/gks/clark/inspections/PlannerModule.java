@@ -66,6 +66,7 @@ import gks.form.chooser.Chooser;
 import gks.form.details.DetailsEditor;
 import gks.form.editor.Editor;
 import gks.map.MapLayerSet;
+import gks.map.proxy.MGGeometry;
 import gks.map.proxy.MGPoint;
 import gks.form.ValueModel;
 import gks.trace.TraceFeature;
@@ -422,7 +423,8 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			};
 			GuiUtils.setImplementation(chooser, PlannerModule.class, this);
 			
-			AssetTypeFilter defaultTypes[] = new AssetTypeFilter[] {AssetTypeFilter.POLE, AssetTypeFilter.OH_PRIMARY, AssetTypeFilter.OH_SECONDARY};
+			// Jon requested no default types, he wants users to explicitly choose
+			AssetTypeFilter defaultTypes[] = new AssetTypeFilter[0];
 			
 			CriteriaSiteFilter cf = new CriteriaSiteFilter();
 			cf.setTypes(defaultTypes);

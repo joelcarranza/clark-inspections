@@ -25,6 +25,9 @@
 		if(!m.getValue("distance")) {
 			e.error("A distance must be chosen");
 		}
+		if(!m.getValue("types")) {
+			e.error("One or more Inspection Sites must be chosen");
+		}
 		return e;
 	}
 	
