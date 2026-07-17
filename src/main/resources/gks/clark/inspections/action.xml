@@ -34,6 +34,7 @@
   <action key="displaySettings">
 	<name>Display Settings</name>
     <method>actionDisplaySettings</method>
+    <icon>filter</icon>
   </action>
   <action key="openList">
 	<name>Open List...</name>
@@ -67,7 +68,7 @@
     <enabled>itemsMappable</enabled>
   </action>
   <toolbar>
-    <main>open | zoom zoomAll | refresh</main>
+    <main>open | zoom zoomAll | displaySettings | refresh</main>
   </toolbar>
   <menubar>
     <Tools>viewWorkOrders viewExceptions | filter newList openList | displaySettings refresh</Tools>
