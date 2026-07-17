@@ -141,7 +141,30 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 		siteLayerManager = new LocalMapLayerManager<Site>(getMapControl(), "CPU Inspections - Site", "gks/clark/inspections/layer/Site.xml", true);
 
-		inspectionLayerManager = new LocalMapLayerManager<Inspection>(getMapControl(), "CPU Inspections", "gks/clark/inspections/layer/Inspection.xml", false);
+		inspectionLayerManager = new LocalMapLayerManager<Inspection>(getMapControl(), "CPU Inspections", "gks/clark/inspections/layer/Inspection.xml", false) {
+
+			@Override
+			protected void createMapObject(Inspection insp) {
+				if(insp.isMappable()) {
+					MGGeometry geometry = geometryForObject(insp);
+					String style = "default";
+					if(insp.getCompletionStatus() != null) {
+						String compCode = insp.getCompletionStatus().getCode();
+						String priCode = insp.getIssuePriority() != null ? insp.getIssuePriority().getCode() : null;
+						if("X".equals(compCode)) {
+							if("C".equals(priCode)) {
+								style="critical";
+							}
+							else {
+								style = "exception";
+							}
+						}
+					}
+					layer.createMapObject(insp.getMapKey(),null,null,style,geometry,mcs);
+				}
+			}
+			
+		};
 
 		if (refreshRate != null && refreshRate > 0) {
 			refreshTimer = new javax.swing.Timer(1000 * 60 * refreshRate, new ActionListener() {

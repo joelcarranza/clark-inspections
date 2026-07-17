@@ -2,6 +2,7 @@
 <layerStyle xmlns="http//www.gatekeeper.com/gsp/1.0/LayerDefinition">
     <scaleRange>
         <theme>
+			<themeValue>exception</themeValue>
             <pointStyle>
                 <symbol>
                     <name>Markers/Diamond Outline</name>
