@@ -35,7 +35,7 @@ var Sql = require('Sql');
 
 JavaLink.useDefaultDataSource();
 
-JavaLink.queryPole = function() {
+JavaLink.queryPole = function(types) {
 	const mode = this.param['MODE'];
 
 	const sql = `SELECT
@@ -75,6 +75,18 @@ JavaLink.queryPole = function() {
 	else {
 		throw new Error(`Unsupported MODE: ${mode}`);
 	}
+
+	var whereType = [];
+	if(types.indexOf('POLE_PRIMARY') != -1) {
+		whereType.push('ASSETGROUP = 201');
+	}
+	if(types.indexOf('POLE_SECONDARY') != -1) {
+		whereType.push('ASSETGROUP = 301');
+	}
+	if(whereType) {
+		where.push('('+whereType.join(' OR ')+')');
+	}
+
 	this.outputQueryResults(sql + ' WHERE ' + where.join(' AND '), bind);
 };
 
@@ -140,9 +152,9 @@ JavaLink.queryElectricLine = function(types) {
 };
 
 JavaLink.process = function() {
-	let types = this.param.TYPE ? this.param.TYPE.split(',') : ['POLE','UG_PRIMARY', 'OH_PRIMARY', 'UG_SECONDARY', 'OH_SECONDARY'];
-	if(types.indexOf('POLE') != -1) {
-		this.queryPole();
+	let types = this.param.TYPE ? this.param.TYPE.split(',') : ['POLE_PRIMARY','POLE_SECONDARY', 'UG_PRIMARY', 'OH_PRIMARY', 'UG_SECONDARY', 'OH_SECONDARY'];
+	if(types.indexOf('POLE_PRIMARY') != -1 || types.indexOf('POLE_SECONDARY') != -1) {
+		this.queryPole(types);
 	}
 	if(types.indexOf('UG_PRIMARY') != -1 || types.indexOf('OH_PRIMARY') != -1 || types.indexOf('UG_SECONDARY') != -1 || types.indexOf('OH_SECONDARY') != -1) {	
 		this.queryElectricLine(types);

@@ -33,7 +33,8 @@ package gks.clark.inspections;
  * Defines choices for filter types in {@link SiteFilter}
  */
 public enum AssetTypeFilter {
-	POLE("Pole"),
+	POLE_PRIMARY("Primary Pole"),
+	POLE_SECONDARY("Secondary Pole"),
 	OH_PRIMARY("OH Primary"),
 	UG_PRIMARY("UG Primary"),
 	OH_SECONDARY("OH Secondary"),
