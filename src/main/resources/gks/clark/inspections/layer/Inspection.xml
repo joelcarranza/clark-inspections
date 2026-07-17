@@ -7,7 +7,27 @@
                 <symbol>
                     <name>Markers/Diamond Outline</name>
                     <width>18px</width>
-					<fillColor>rgb(255,215,0)</fillColor>
+					<fillColor>rgb(215,165,0)</fillColor>
+                </symbol>
+            </pointStyle>
+        </theme>
+        <theme>
+			<themeValue>critical</themeValue>
+            <pointStyle>
+                <symbol>
+                    <name>Markers/Diamond Outline</name>
+                    <width>18px</width>
+					<fillColor>rgb(215,0,0)</fillColor>
+                </symbol>
+            </pointStyle>
+        </theme>
+
+        <theme>
+            <pointStyle>
+                <symbol>
+                    <name>Markers/Diamond Outline</name>
+                    <width>18px</width>
+					<fillColor>rgb(0,215,0)</fillColor>
                 </symbol>
             </pointStyle>
         </theme>

@@ -19,6 +19,10 @@
 		if(!m.getValue("circuit")) {
 			e.error("A circuit must be chosen");
 		}
+		
+		if(!m.getValue("types")) {
+			e.error("One or more Inspection Sites must be chosen");
+		}
 		return e;
 	}
 	
