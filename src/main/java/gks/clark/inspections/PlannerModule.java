@@ -34,6 +34,7 @@ package gks.clark.inspections;
 import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 import gks.clark.inspections.model.CriteriaSiteFilter;
 import gks.clark.inspections.model.Department;
@@ -58,6 +60,7 @@ import gks.clark.inspections.model.SiteList;
 import gks.clark.inspections.model.SiteTableModel;
 import gks.clark.inspections.model.WorkOrder;
 import gks.clark.inspections.model.WorkOrderTableModel;
+import gks.config.Configured;
 import gks.control.BasicControl;
 import gks.form.chooser.Chooser;
 import gks.form.details.DetailsEditor;
@@ -108,6 +111,10 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	private SiteFilter siteFilter;
 	private String inspectionListKey;
 	private Program[] visiblePrograms;
+	
+	@Configured
+	Integer refreshRate;
+	Timer refreshTimer;
 
 	public PlannerModule(NavigateInterface application) {
 		super(application);
@@ -136,6 +143,16 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 		inspectionLayerManager = new LocalMapLayerManager<Inspection>(getMapControl(), "CPU Inspections", "gks/clark/inspections/layer/Inspection.xml", false);
 
+		if (refreshRate != null && refreshRate > 0) {
+			refreshTimer = new javax.swing.Timer(1000 * 60 * refreshRate, new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					actionRefresh();
+				}
+			});
+			refreshTimer.start();
+		}
 	}
 
 	@Override
@@ -150,6 +167,10 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		}
 		if(inspectionLayerManager != null) {
 			inspectionLayerManager.destroy();
+		}
+		
+		if(refreshTimer != null) {
+			refreshTimer.stop();
 		}
 
 	}
