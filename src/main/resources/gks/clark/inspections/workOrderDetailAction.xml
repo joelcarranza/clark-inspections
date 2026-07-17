@@ -31,7 +31,12 @@
     <enabled>itemMappable</enabled>
     <icon>map</icon>
   </action>
+  
+  <action key="openAllInspections">
+	<method>actionOpenAllInspections</method>
+	<icon>folder-open</icon>
+  </action>
     <toolbar>
-    <main>first prev next last | zoom</main>
+    <main>first prev next last | openAllInspections zoom</main>
   </toolbar>
 </config>

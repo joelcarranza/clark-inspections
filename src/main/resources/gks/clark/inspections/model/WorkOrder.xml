@@ -60,7 +60,7 @@ function dateFormat(date)
 			 </table>
 		</north>
 		<center>
-			<gks.clark.inspections.InspectionsView listId="$:$listId" visible="$:!!$listId" />
+			<gks.clark.inspections.InspectionsView id="inspectionsView" listId="$:$listId" visible="$:!!$listId" />
 		</center>
 	</border>
 </body>

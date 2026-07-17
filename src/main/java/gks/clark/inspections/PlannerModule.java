@@ -272,12 +272,17 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	}
 
 	public void actionOpenList(ActionEvent e) {
-		String listKey = tableView().getSelection(WorkOrder.class).iterator().next().getListId();
+		WorkOrder wo = tableView().getSelection(WorkOrder.class).iterator().next();
+		actionOpenList(wo);
+	}
+	
+	public void actionOpenList(WorkOrder workOrder) {
+		String listKey = workOrder.getListId();
 		
 		control.proxy().queryInspection(listKey)
 				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { listKey }).start();
-
 	}
+
 	
 	public void onWorkOrdersQueried(WorkOrder workOrders[]) {
 		WorkOrderTableModel tableModel = new WorkOrderTableModel();
@@ -533,6 +538,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		actionRefresh();
 	}
 
+	
 	
 
 }

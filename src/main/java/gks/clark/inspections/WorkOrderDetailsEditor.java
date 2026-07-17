@@ -69,6 +69,13 @@ public class WorkOrderDetailsEditor extends DetailsEditor<WorkOrder> {
 		super.setBusy(busy);
 	}
 
+	public void actionOpenAllInspections() {
+		//InspectionsView view = (InspectionsView) getVisibleForm().getComponentById("inspectionsView");
+		//openInspections(view.getInspections());
+		module.actionOpenList((WorkOrder) getSelectedValue());
+	}
+	
+	
 	public void openInspections(Inspection[] inspections) {
 		Window window = module.windowManager().show(PlannerModule.WIN_INSPECTION_DETAIL);
 		DetailsEditor<Object> editor = DetailsEditor.forWindow(window);

@@ -72,6 +72,7 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 	private JPanel component;
 	private JLabel label;
 	private ProgressBar progressBar;
+	private Inspection[] inspections;
 	
 	public InspectionsView(Form form) {
 		this.owner = (WorkOrderDetailsEditor)form.getOwner();
@@ -188,6 +189,7 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 	}
 
 	protected void updateView(Inspection[] results) {
+		this.inspections = results;
 		table.getModel(InspectionTableModel.class).setValues(results);
 		int completed = 0;
 		int total = results.length;
@@ -205,6 +207,10 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 			label.setText("No inspections");
 			label.setIcon(null);
 		}
+	}
+
+	public Inspection[] getInspections() {
+		return inspections;
 	}
 	
 }
