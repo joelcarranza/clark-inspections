@@ -64,16 +64,19 @@ JavaLink.process = function() {
             o.workloccd,
             o.worklocdesc,
             o.CRUSRID,
-            o.compltn_ts,
             a.priority,
             (case o.mat_required_flag when 'Y' then 'M' else '' end) as materials_required,
 			i.id ATTACHMENTS,
 			i.completion_status,
+			i.completion_user,
+			i.completion_date,		
 			i.issue_priority,
 			i.comment,
 			i.resolution_status,
 			i.resolution_work_order,
-			i.resolution_comment		
+			i.resolution_comment,	
+			i.resolution_user,
+			i.resolution_date
 		FROM WM_INSPECTION i
 		JOIN WM_INSPECTION_LIST l on i.list_id = l.id
 		LEFT JOIN WM_ORDER o on l.program_order_key = o.order_key

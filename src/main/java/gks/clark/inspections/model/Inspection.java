@@ -69,16 +69,19 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
     String workLocation;
     String workLocationDescription;
     String creationUser;
-    String completionDate;
     String priority;
     String materialsRequired;
     gks.clark.inspections.FileAttachment[] attachedFiles;
     gks.clark.inspections.model.CompletionStatus completionStatus;
+    String completionUser;
+    java.util.Date completionDate;
     gks.clark.inspections.model.IssuePriority issuePriority;
     String comment;
     gks.clark.inspections.model.ResolutionStatus resolutionStatus;
     String resolutionWorkOrder;
     String resolutionComment;
+    String resolutionUser;
+    java.util.Date resolutionDate;
 
     /*
      ==========================================================================
@@ -210,10 +213,6 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         return creationUser;
     }
 
-    public String getCompletionDate() {
-        return completionDate;
-    }
-
     public String getPriority() {
         return priority;
     }
@@ -238,6 +237,14 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
 
     public gks.clark.inspections.model.CompletionStatus getCompletionStatus() {
         return completionStatus;
+    }
+
+    public String getCompletionUser() {
+        return completionUser;
+    }
+
+    public java.util.Date getCompletionDate() {
+        return completionDate;
     }
 
     public void setIssuePriority(
@@ -280,6 +287,14 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
 
     public String getResolutionComment() {
         return resolutionComment;
+    }
+
+    public String getResolutionUser() {
+        return resolutionUser;
+    }
+
+    public java.util.Date getResolutionDate() {
+        return resolutionDate;
     }
 
     public boolean isComplete() {
@@ -354,7 +369,6 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         this.workLocation = stream.read();
         this.workLocationDescription = stream.read();
         this.creationUser = stream.read();
-        this.completionDate = stream.read();
         this.priority = stream.read();
         this.materialsRequired = stream.read();
 
@@ -373,11 +387,15 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         }
 
         this.completionStatus = stream.readCode(gks.clark.inspections.model.CompletionStatus.class);
+        this.completionUser = stream.read();
+        this.completionDate = stream.readDate();
         this.issuePriority = stream.readCode(gks.clark.inspections.model.IssuePriority.class);
         this.comment = stream.read();
         this.resolutionStatus = stream.readCode(gks.clark.inspections.model.ResolutionStatus.class);
         this.resolutionWorkOrder = stream.read();
         this.resolutionComment = stream.read();
+        this.resolutionUser = stream.read();
+        this.resolutionDate = stream.readDate();
     }
 
     public void serializeToStream(gks.util.dto.DataTransferOutputStream stream)
@@ -408,7 +426,6 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         stream.write(this.workLocation);
         stream.write(this.workLocationDescription);
         stream.write(this.creationUser);
-        stream.write(this.completionDate);
         stream.write(this.priority);
         stream.write(this.materialsRequired);
 
@@ -423,11 +440,15 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         }
 
         stream.write(this.completionStatus);
+        stream.write(this.completionUser);
+        stream.write(this.completionDate);
         stream.write(this.issuePriority);
         stream.write(this.comment);
         stream.write(this.resolutionStatus);
         stream.write(this.resolutionWorkOrder);
         stream.write(this.resolutionComment);
+        stream.write(this.resolutionUser);
+        stream.write(this.resolutionDate);
     }
 
     public void serializeModifiableToStream(

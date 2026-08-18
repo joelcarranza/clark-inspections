@@ -35,7 +35,6 @@ function dateFormat(date)
 
 ]]></script>
 <var id="callFirst" type="Boolean" />	
-<var id="completionDate" type="Date" />	
 <var id="allCrews" type="gks.dispatch.Crew[]" />	
 <var id="lifeSupport" type="Boolean" />
 <var id="hazard" type="gks.clark.mwm.code.HazardCode" />
@@ -47,18 +46,13 @@ function dateFormat(date)
 <prototype id="date" format="date:MM/dd/yy H:mm" />
 <body beforeUpdate="onUpdate" onValidate="validate">
 <border>
-		<south>
-			<left border="5 | color(#BFBFBF,1,0,0,0)" background="#FFFFFF" visible="$:$completionDate">
-				<l fontSize="150%" text="$:'Completed on '+dateFormat($completionDate)" color="#000000"/>
-			</left>
-		</south>
 		<center>
 		<border border="10px" vgap="10px">
 		<north>
 			<table cols="p f " hgap="3"  vgap="3" border="10px">
 		<tr>
 			<td>Order #</td>
-			<td><readOnly id="orderNumber" /></td>
+			<td><readOnly id="orderSubKey" /></td>
 		</tr>
 		<tr>
 			<td>Customer</td>
@@ -77,31 +71,46 @@ function dateFormat(date)
 			<center>
         <tabs>
           <tab name="Completion">
-	           <table cols="p f p" hgap="3"  vgap="3" border="10px">
+	           <table cols="p f 20 p f" hgap="3"  vgap="3" border="10px">
 				<tr>
-					<td>ID</td><td columns="2"><readOnly id="key"/></td>
+					<td>ID</td><td columns="4"><readOnly id="key"/></td>
 				</tr>
 				<tr>
-					<td>Program</td><td columns="2"><readOnly id="program"/></td>
+					<td>Program</td><td columns="4"><readOnly id="program"/></td>
 				</tr>
 				<tr>
-					<td>Completion</td><td columns="2"><combo id="completionStatus" dataClass="gks.clark.inspections.model.CompletionStatus" /></td>
+					<td>Completion</td><td columns="4"><combo id="completionStatus" dataClass="gks.clark.inspections.model.CompletionStatus" /></td>
+				</tr>
+
+				<tr>
+					<td>User</td><td><readOnly id="completionUser" /></td>
+					<td />
+					<td>Completion</td><td><readOnly id="completionDate" /></td>
+				</tr>
+				
+				
+				<tr>
+					<td>Priority</td><td columns="4"><combo id="issuePriority" dataClass="gks.clark.inspections.model.IssuePriority"  enabled="$:dot($completionStatus,'code')=='X'" /></td>
 				</tr>
 				<tr>
-					<td>Priority</td><td columns="2"><combo id="issuePriority" dataClass="gks.clark.inspections.model.IssuePriority"  enabled="$:dot($completionStatus,'code')=='X'" /></td>
+					<td>Comment</td><td columns="4"><textArea id="comment" length="200"/></td>
 				</tr>
 				<tr>
-					<td>Comment</td><td columns="2"><textArea id="comment" length="200"/></td>
+					<td>Resolution</td><td columns="4"><combo id="resolutionStatus" dataClass="gks.clark.inspections.model.ResolutionStatus" enabled="$:dot($completionStatus,'code')=='X'" includeNull="true" nullLabel="None" /></td>
 				</tr>
 				<tr>
-					<td>Resolution</td><td columns="2"><combo id="resolutionStatus" dataClass="gks.clark.inspections.model.ResolutionStatus" enabled="$:dot($completionStatus,'code')=='X'" includeNull="true" nullLabel="None" /></td>
+					<td>User</td><td><readOnly id="resolutionUser" /></td>
+					<td />
+					<td>Completion</td><td><readOnly id="resolutionDate" /></td>
 				</tr>
+
 				<tr>
 					<td>Work Order #</td><td><text id="resolutionWorkOrder" enabled="$:dot($resolutionStatus,'code')=='R'" length="10"/></td>
+					<td />
 					<td><button text="Create..." enabled="false" /></td>
 				</tr>
 				<tr>
-					<td>Comment</td><td columns="2"><textArea id="resolutionComment" enabled="$:dot($resolutionStatus,'code')=='R'" length="200"/></td>
+					<td>Comment</td><td columns="4"><textArea id="resolutionComment" enabled="$:dot($resolutionStatus,'code')=='R'" length="200"/></td>
 				</tr>
 				
 			 </table>

@@ -77,7 +77,10 @@ JavaLink.process = function() {
 	 var woListKey = this.db.insertRowReturnKey('WM_INSPECTION_LIST', {
 	 	SERVICE_ORDNBR: serviceOrderNumber,
 	 	PROGRAM_ORDER_KEY: order_key,
-	 	PROGRAM_TYPE: data.PROGRAM
+	 	PROGRAM_TYPE: data.PROGRAM,
+	 	CREATE_USER: remoteUser
+	 }, {
+	 	CREATE_DATE: this.db.localtimeSql
 	 });
 	 Lang.assert(woListKey, "No ID for WM_INSPECTION_LIST returned");
 

@@ -251,19 +251,23 @@
 		<property name="workLocation" set="false"/>
 		<property name="workLocationDescription" set="false"/>
 		<property name="creationUser" set="false"/>
-		<property name="completionDate" set="false"/>
 		<property name="priority" set="false"/>
 		<property name="materialsRequired" set="false"/>
 
 		<property name="attachedFiles" class="gks.clark.inspections.FileAttachment[]"/>
 
 		<property name="completionStatus" class="gks.clark.inspections.model.CompletionStatus" />
+		<property name="completionUser" set="false" />
+		<property name="completionDate" class="Date" set="false" />
+		
 		<property name="issuePriority" class="gks.clark.inspections.model.IssuePriority" />
 		<property name="comment" />
 
 		<property name="resolutionStatus" class="gks.clark.inspections.model.ResolutionStatus" />
 		<property name="resolutionWorkOrder" />
 		<property name="resolutionComment" />
+		<property name="resolutionUser" set="false" />
+		<property name="resolutionDate" class="Date" set="false" />
 
 		
 		

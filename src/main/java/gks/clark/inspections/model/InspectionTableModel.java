@@ -64,31 +64,35 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     public static final int WORK_LOCATION = 23;
     public static final int WORK_LOCATION_DESCRIPTION = 24;
     public static final int CREATION_USER = 25;
-    public static final int COMPLETION_DATE = 26;
-    public static final int PRIORITY = 27;
-    public static final int MATERIALS_REQUIRED = 28;
-    public static final int ATTACHED_FILES = 29;
-    public static final int COMPLETION_STATUS = 30;
-    public static final int ISSUE_PRIORITY = 31;
-    public static final int COMMENT = 32;
-    public static final int RESOLUTION_STATUS = 33;
-    public static final int RESOLUTION_WORK_ORDER = 34;
-    public static final int RESOLUTION_COMMENT = 35;
-    public static final int COMPLETE = 36;
-    public static final int RESOLVED = 37;
-    public static final int ATTACHED_FILE_COUNT = 38;
-    public static final int MAP_KEY = 39;
-    public static final int SERVICE_ADDRESS_COMPLETE = 40;
+    public static final int PRIORITY = 26;
+    public static final int MATERIALS_REQUIRED = 27;
+    public static final int ATTACHED_FILES = 28;
+    public static final int COMPLETION_STATUS = 29;
+    public static final int COMPLETION_USER = 30;
+    public static final int COMPLETION_DATE = 31;
+    public static final int ISSUE_PRIORITY = 32;
+    public static final int COMMENT = 33;
+    public static final int RESOLUTION_STATUS = 34;
+    public static final int RESOLUTION_WORK_ORDER = 35;
+    public static final int RESOLUTION_COMMENT = 36;
+    public static final int RESOLUTION_USER = 37;
+    public static final int RESOLUTION_DATE = 38;
+    public static final int COMPLETE = 39;
+    public static final int RESOLVED = 40;
+    public static final int ATTACHED_FILE_COUNT = 41;
+    public static final int MAP_KEY = 42;
+    public static final int SERVICE_ADDRESS_COMPLETE = 43;
     private static final String[] COLUMN_NAMES = {
             "key", "x", "y", "program", "type", "equipmentIdentifier",
             "location", "orderKey", "orderSubKey", "orderNumber", "scheduledTs",
             "entryTs", "customerName", "resPhone", "busPhone", "callFirst",
             "serviceAccount", "serviceAddress", "serviceCity", "serviceZip",
             "request", "reason", "orderDesc", "workLocation",
-            "workLocationDescription", "creationUser", "completionDate",
-            "priority", "materialsRequired", "attachedFiles", "completionStatus",
-            "issuePriority", "comment", "resolutionStatus",
-            "resolutionWorkOrder", "resolutionComment", "complete", "resolved",
+            "workLocationDescription", "creationUser", "priority",
+            "materialsRequired", "attachedFiles", "completionStatus",
+            "completionUser", "completionDate", "issuePriority", "comment",
+            "resolutionStatus", "resolutionWorkOrder", "resolutionComment",
+            "resolutionUser", "resolutionDate", "complete", "resolved",
             "attachedFileCount", "mapKey", "serviceAddressComplete",
         };
 
@@ -108,6 +112,10 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
         switch (column) {
         case COMPLETION_STATUS:
             return gks.clark.inspections.model.CompletionStatus.class;
+
+        case COMPLETION_DATE:
+        case RESOLUTION_DATE:
+            return java.util.Date.class;
 
         case X:
         case Y:
@@ -219,9 +227,6 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
         case CREATION_USER:
             return v.getCreationUser();
 
-        case COMPLETION_DATE:
-            return v.getCompletionDate();
-
         case PRIORITY:
             return v.getPriority();
 
@@ -233,6 +238,12 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
 
         case COMPLETION_STATUS:
             return v.getCompletionStatus();
+
+        case COMPLETION_USER:
+            return v.getCompletionUser();
+
+        case COMPLETION_DATE:
+            return v.getCompletionDate();
 
         case ISSUE_PRIORITY:
             return v.getIssuePriority();
@@ -248,6 +259,12 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
 
         case RESOLUTION_COMMENT:
             return v.getResolutionComment();
+
+        case RESOLUTION_USER:
+            return v.getResolutionUser();
+
+        case RESOLUTION_DATE:
+            return v.getResolutionDate();
 
         case COMPLETE:
             return Boolean.valueOf(v.isComplete());
@@ -270,7 +287,7 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     }
 
     public int getColumnCount() {
-        return 41;
+        return 44;
     }
 
     protected Class<?> getValueClass() {
