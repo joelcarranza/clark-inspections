@@ -42,6 +42,7 @@ import javax.swing.SwingWorker;
 import gks.clark.inspections.model.Inspection;
 import gks.clark.inspections.model.WorkOrder;
 import gks.form.details.DetailsEditor;
+import gks.util.Utils;
 
 /**
  * Editor window for {@link Inspection} object
@@ -81,6 +82,15 @@ public class WorkOrderDetailsEditor extends DetailsEditor<WorkOrder> {
 		DetailsEditor<Object> editor = DetailsEditor.forWindow(window);
 		editor.view(Arrays.asList(inspections));
 	}
+
+	@Override
+	protected void updateView(WorkOrder value) {
+		super.updateView(value);
+		
+		actionManager().setConditional("list", Utils.isNotEmpty(value.getListId()));
+	}
+	
+	
 	
 	
 }

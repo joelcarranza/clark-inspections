@@ -9,6 +9,7 @@
     <canBack>false</canBack>
     <canNext>false</canNext>
     <itemMappable>false</itemMappable>
+    <list>false</list>
   </condition>
   <action key="first">
     <method>actionFirst</method>
@@ -35,6 +36,7 @@
   <action key="openAllInspections">
 	<method>actionOpenAllInspections</method>
 	<icon>folder-open</icon>
+	<enabled>list</enabled>
   </action>
     <toolbar>
     <main>first prev next last | openAllInspections zoom</main>
