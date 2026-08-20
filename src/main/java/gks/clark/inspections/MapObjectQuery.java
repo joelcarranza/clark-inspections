@@ -56,7 +56,7 @@ public class MapObjectQuery {
 		Map<String,Set<String>> keysByLayer = new HashMap<String,Set<String>>();
 		for(MGMapObject mapObject : mapObjects) {
 			MGMapLayer layer = mapObject.getMapLayer();
-			Set<String> keys = keysByLayer.get(layer);
+			Set<String> keys = keysByLayer.get(layer.getName());
 			if(keys == null) {
 				keys = new HashSet<String>();
 				keysByLayer.put(layer.getName(), keys);

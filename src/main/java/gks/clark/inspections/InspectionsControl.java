@@ -66,7 +66,7 @@ public class InspectionsControl extends BasicControl {
 	private AsyncInspectionsControl proxy;
 	
 	public Site[] querySite(MapObjectQuery query) throws DataTransferException {
-		GlobalidSiteFilter f = new GlobalidSiteFilter();
+		
 		ServerLink link = new ServerLink(getHostname(), "/scripts/inspections/lookup_globalid",query.buildQuery());
 		List<String> guids = new ArrayList<String>();
 		ServerLinkInputStream in = link.open();
@@ -78,8 +78,14 @@ public class InspectionsControl extends BasicControl {
 		finally {
 			in.close();
 		}
-		f.setIdString(Utils.join(" ", guids));
-		return querySite(f);
+		if(guids.isEmpty()) {
+			return new Site[0];
+		}
+		else {
+			GlobalidSiteFilter f = new GlobalidSiteFilter();
+			f.setIdString(Utils.join(" ", guids));
+			return querySite(f);
+		}
 	}
 
 	public Site[] querySite(SiteFilter filter) throws DataTransferException {
@@ -140,9 +146,9 @@ public class InspectionsControl extends BasicControl {
         return Arrays.stream(idString.trim().split("\\s+"))
             .map(s -> s.replaceAll("[{}\\-]", "").toUpperCase())
             .filter(s -> s.length() == 32)
-            .map(s -> "{" + s.substring(0,8) + "-" + s.substring(8,12) + "-"
+            .map(s -> s.substring(0,8) + "-" + s.substring(8,12) + "-"
                           + s.substring(12,16) + "-" + s.substring(16,20) + "-"
-                          + s.substring(20) + "}")
+                          + s.substring(20))
             .collect(Collectors.toList());
     }
 

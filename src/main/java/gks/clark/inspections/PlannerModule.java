@@ -78,6 +78,7 @@ import gks.ui.GuiUtils;
 import gks.ui.SimpleDialog;
 import gks.ui.SwingProxy;
 import gks.ui.table.ArrayTableModel;
+import gks.util.Debug;
 import gks.util.Location;
 import gks.util.NavigateInterface;
 import gks.util.TabularModule;
@@ -277,7 +278,10 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	}
 
 	public void actionAddSites() {
-		// ortho:3 (Primary),ortho:11 (secondary), logical:Pole  
+		if(visibleItemType != ItemType.SITE) {
+			throw new RuntimeException();
+		}
+
 		MapLayerSet layers[] = new MapLayerSet[] {
 			new MapLayerSet("ortho", "3"), // primary 
 			new MapLayerSet("ortho", "11"), // secondary
@@ -286,7 +290,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		
 		List<MGMapObject> mapObjects = new ArrayList<MGMapObject>();
 		for(MapLayerSet mls : layers) {
-			mapObjects.addAll(Arrays.asList(getMapControl().getMapObjects(mls)));
+			mapObjects.addAll(Arrays.asList(getMapControl().getSelectedMapObjects(mls)));
 		}
 		if(!mapObjects.isEmpty()) {
 			MapObjectQuery q = MapObjectQuery.fromMapObjects(mapObjects.toArray(new MGMapObject[0]));
@@ -300,6 +304,10 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	}
 
 	public void actionRemoveSites() {
+		if(visibleItemType != ItemType.SITE) {
+			throw new RuntimeException();
+		}
+
 		Site[] sites = tableView().getSelection().toArray(new Site[0]);
 		if(sites.length > 0) {
 			SiteTableModel model = tableView().getTable().getModel(SiteTableModel.class);
@@ -351,6 +359,11 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		tableView().setTableColumnSet(tableModel, WorkOrder.class.getName());
 
 		visibleItemType = ItemType.WORK_ORDER;
+		actionManager().setConditional("workOrdersVisible", true);
+		actionManager().setConditional("sitesVisible", false);
+		actionManager().setConditional("inspectionsVisible", false);
+
+		
 		setTitle("Work Orders");
 
 		workOrderLayerManager.setFeatures(Arrays.asList(workOrders));
@@ -358,18 +371,13 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		inspectionLayerManager.clear();
 		
 		setMapLayer(new MapLayerSet(MapLayerSet.PHYSICAL, workOrderLayerManager.getLayerName()));
-		
-		actionManager().setConditional("workOrder", true);
-		actionManager().setConditional("list", false);
-		actionManager().setConditional("inspection", false);
-		actionManager().setConditional("site", false);
 	}
 
 	
 
 	public void onSitesQueried(Site site[], SiteFilter siteFilter) {
 		this.inspectionListKey = null;
-		
+		actionManager().setConditional("list", false);
 		
 
 		
@@ -378,6 +386,9 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		tableView().setTableColumnSet(tableModel, Site.class.getName());
 
 		visibleItemType = ItemType.SITE;
+		actionManager().setConditional("workOrdersVisible", false);
+		actionManager().setConditional("sitesVisible", true);
+		actionManager().setConditional("inspectionsVisible", false);
 		
 		workOrderLayerManager.setFeature(activeWorkOrder);
 		siteLayerManager.setFeatures(Arrays.asList(site));
@@ -387,13 +398,18 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 		setTitle("Sites");
 
-		actionManager().setConditional("workOrder", false);
-		actionManager().setConditional("site", site.length > 0);
-		actionManager().setConditional("inspection", false);
-		actionManager().setConditional("list", false);
+
+		
 	}
 	
 	public void onSitesAdded(Site site[]) {
+		if(visibleItemType != ItemType.SITE) {
+			throw new RuntimeException();
+		}
+
+		Debug.trcln(0, "sites " + Arrays.asList(site));
+
+	
 		Set<Tuple> siteKeys = new HashSet<Tuple>();
 		for(Site s : tableView().getData(Site.class)) {
 			siteKeys.add(new Tuple(s.getAssetType(), s.getAssetID()));
@@ -407,10 +423,11 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			}
 		}
 		
+		Debug.trcln(0, "sitesToAdd " + sitesToAdd);
+		
 		if(!sitesToAdd.isEmpty()) {		
 			SiteTableModel tableModel = tableView().getTable().getModel(SiteTableModel.class);
 			tableModel.addValues(sitesToAdd.toArray());
-			actionManager().setConditional("site", site.length > 0);
 			
 			siteLayerManager.addFeatures(sitesToAdd);
 		}
@@ -418,12 +435,17 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 
 	public void onExceptionsQueried(Inspection insp[]) {
 		this.inspectionListKey = null;
+		actionManager().setConditional("list", true);
 
 		InspectionTableModel tableModel = new InspectionTableModel();
 		tableModel.setValues(insp);
 		tableView().setTableColumnSet(tableModel, Inspection.class.getName()+"-exception");
 
 		visibleItemType = ItemType.INSPECTION;
+		actionManager().setConditional("workOrdersVisible", false);
+		actionManager().setConditional("sitesVisible", false);
+		actionManager().setConditional("inspectionsVisible", true);
+
 		
 		workOrderLayerManager.clear();
 		siteLayerManager.clear();
@@ -431,21 +453,20 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		setMapLayer(new MapLayerSet(MapLayerSet.PHYSICAL, inspectionLayerManager.getLayerName()));
 		
 		setTitle("Exceptions");
-		
-		actionManager().setConditional("workOrder", false);
-		actionManager().setConditional("list", true);
-		actionManager().setConditional("inspection", insp.length > 0);
-		actionManager().setConditional("site", false);
 	}
 	
 	public void onInspectionsQueried(Inspection insp[], String listKey) {
 		this.inspectionListKey = listKey;
+		actionManager().setConditional("list", true);
 
 		InspectionTableModel tableModel = new InspectionTableModel();
 		tableModel.setValues(insp);
 		tableView().setTableColumnSet(tableModel, Inspection.class.getName());
 
 		visibleItemType = ItemType.INSPECTION;
+		actionManager().setConditional("workOrdersVisible", false);
+		actionManager().setConditional("sitesVisible", false);
+		actionManager().setConditional("inspectionsVisible", true);
 		
 		workOrderLayerManager.clear();
 		siteLayerManager.clear();
@@ -453,11 +474,6 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		setMapLayer(new MapLayerSet(MapLayerSet.PHYSICAL, inspectionLayerManager.getLayerName()));
 		
 		setTitle("Inspections");
-		
-		actionManager().setConditional("workOrder", false);
-		actionManager().setConditional("list", true);
-		actionManager().setConditional("inspection", insp.length > 0);
-		actionManager().setConditional("site", false);
 	}
 
 	public void onListSaved(String listKey) {

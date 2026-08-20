@@ -5,10 +5,10 @@
     <iconExt>png</iconExt>
   </manager>
   <condition>
-	<site>false</site>
-    <inspection>false</inspection>
+	<sitesVisible>false</sitesVisible>
+    <inspectionsVisible>false</inspectionsVisible>
     <list>false</list>
-    <workOrder>false</workOrder>
+    <workOrdersVisible>false</workOrdersVisible>
     <singleItemSelected>false</singleItemSelected>
     <itemsSelected>false</itemsSelected>
     <selectedItemsMappable>false</selectedItemsMappable>
@@ -23,12 +23,12 @@
   <action key="filter">
     <name>Choose Sites...</name>
     <method>actionShowSiteFilter</method>
-    <enabled>workOrder AND singleItemSelected</enabled>
+    <enabled>workOrdersVisible AND singleItemSelected</enabled>
   </action>
   <action key="newList">
 	<name>New List...</name>
     <method>actionNewList</method>
-    <enabled>site</enabled>
+    <enabled>sitesVisible</enabled>
   </action>
   
   <action key="displaySettings">
@@ -39,18 +39,18 @@
   <action key="openList">
 	<name>Open List...</name>
     <method>actionOpenList</method>
-    <enabled>workOrder AND singleItemSelected </enabled>
+    <enabled>workOrdersVisible AND singleItemSelected </enabled>
   </action>
   <action key="addSites">
 	<name>Add Sites to List...</name>
     <method>actionAddSites</method>
-    <enabled>site</enabled>
+    <enabled>sitesVisible</enabled>
     <icon>plus</icon>
   </action>
   <action key="removeSites">
 	<name>Remove Sites from List...</name>
     <method>actionRemoveSites</method>
-    <enabled>site AND itemsSelected</enabled>
+    <enabled>sitesVisible AND itemsSelected</enabled>
     <icon>minus</icon>
   </action>
 

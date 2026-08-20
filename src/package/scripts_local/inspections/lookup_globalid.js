@@ -77,7 +77,7 @@ JavaLink.process = function() {
 		"Pole": STRUCTURE_JUNCTION_QUERY
 	};
 
-	var globlaids = {};
+	var globalIds = {};
 
 	Lang.keys(this.param).forEach(p => {
 		if(p in layersToTables) {
@@ -90,7 +90,7 @@ JavaLink.process = function() {
 					let row;
 					while((row = sth.fetch()) != null) {
 						let id = row[0];
-						globlaids[id] = id;
+						globalIds[id] = id;
 					}
 				});				
 			}
@@ -104,7 +104,7 @@ JavaLink.process = function() {
 	});
 
 
-	Lang.keys(this.param).forEach(gid => {
+	Lang.keys(globalIds).forEach(gid => {
 		this.outputData(gid);
 	});
 }
