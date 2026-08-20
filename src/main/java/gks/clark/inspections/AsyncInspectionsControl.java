@@ -78,4 +78,6 @@ public interface AsyncInspectionsControl {
 
 	public ControlTask attachFiles(File[] files);
 
+	public ControlTask querySite(MapObjectQuery q);
+
 }

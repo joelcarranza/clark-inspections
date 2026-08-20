@@ -53,6 +53,7 @@ import gks.field.control.ControlException;
 import gks.util.FileLink;
 import gks.util.QueryBuilder;
 import gks.util.ServerLink;
+import gks.util.SimpleCode;
 import gks.util.Utils;
 import gks.util.dto.DataTransferException;
 import gks.util.dto.ServerLinkInputStream;
@@ -63,6 +64,23 @@ import gks.util.dto.ServerLinkOutputStream;
  */
 public class InspectionsControl extends BasicControl {
 	private AsyncInspectionsControl proxy;
+	
+	public Site[] querySite(MapObjectQuery query) throws DataTransferException {
+		GlobalidSiteFilter f = new GlobalidSiteFilter();
+		ServerLink link = new ServerLink(getHostname(), "/scripts/inspections/lookup_globalid",query.buildQuery());
+		List<String> guids = new ArrayList<String>();
+		ServerLinkInputStream in = link.open();
+		try {
+			while(in.next()) {
+				guids.add(in.read());
+			}					
+		}
+		finally {
+			in.close();
+		}
+		f.setIdString(Utils.join(" ", guids));
+		return querySite(f);
+	}
 
 	public Site[] querySite(SiteFilter filter) throws DataTransferException {
 		if(filter == null) {

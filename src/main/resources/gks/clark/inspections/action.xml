@@ -41,6 +41,18 @@
     <method>actionOpenList</method>
     <enabled>workOrder AND singleItemSelected </enabled>
   </action>
+  <action key="addSites">
+	<name>Add Sites to List...</name>
+    <method>actionAddSites</method>
+    <enabled>site</enabled>
+    <icon>plus</icon>
+  </action>
+  <action key="removeSites">
+	<name>Remove Sites from List...</name>
+    <method>actionRemoveSites</method>
+    <enabled>site AND itemsSelected</enabled>
+    <icon>minus</icon>
+  </action>
 
   <action key="viewWorkOrders">
 	<name>View Work Orders</name>
@@ -68,10 +80,10 @@
     <enabled>itemsMappable</enabled>
   </action>
   <toolbar>
-    <main>open | zoom zoomAll | displaySettings | refresh</main>
+    <main>open | zoom zoomAll addSites removeSites | displaySettings | refresh</main>
   </toolbar>
   <menubar>
-    <Tools>viewWorkOrders viewExceptions | filter newList openList | displaySettings refresh</Tools>
+    <Tools>viewWorkOrders viewExceptions | filter newList openList addSites removeSites | displaySettings refresh</Tools>
     <Map>zoom zoomAll</Map>
   </menubar>
 </config>

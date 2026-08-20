@@ -36,11 +36,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
@@ -57,14 +53,12 @@ import gks.form.EnabledProperty;
 import gks.form.Form;
 import gks.form.util.AbstractView;
 import gks.map.MapLayerSet;
-import gks.map.proxy.MGMapLayer;
 import gks.map.proxy.MGMapObject;
 import gks.organizer.OrganizerDialog;
 import gks.ui.GKSTextField;
 import gks.ui.GuiUtils;
 import gks.ui.layout.TableLayout;
 import gks.ui.layout.TableLayoutConstraints;
-import gks.util.QueryBuilder;
 import gks.util.ServerLink;
 import gks.util.SimpleCode;
 import gks.util.Utils;
@@ -215,26 +209,17 @@ public class CircuitPicker extends AbstractView implements ActionListener, Enabl
 
 
 	private void setCircuitFromMapObjects(MGMapObject mapObjects[]) {
-		
-		final Map<MGMapLayer,List<String>> keysByLayer = new HashMap<MGMapLayer,List<String>>();
-		for(MGMapObject mapObject:mapObjects) {
-			Utils.putList(keysByLayer, mapObject.getMapLayer(), mapObject.getKey());
-		}
-		
+
+		final MapObjectQuery query = MapObjectQuery.fromMapObjects(mapObjects);
+
 		new SwingWorker<List<SimpleCode>, Void>() {
 
 			@Override
 			protected List<SimpleCode> doInBackground() throws Exception {
-				
-				QueryBuilder q = new QueryBuilder();
-				for(Map.Entry<MGMapLayer,List<String>> e: keysByLayer.entrySet()) {
-					MGMapLayer layer = e.getKey();
-					Set<String> keys = new HashSet<String>(e.getValue());
-					q.append(layer.getName(),Utils.join(",",keys));
-				}
+
 				List<SimpleCode> circuits = new ArrayList<SimpleCode>();
 
-				ServerLink link = new ServerLink(module.getHost(), "/scripts/inspections/lookup_circuits",q);
+				ServerLink link = new ServerLink(module.getHost(), "/scripts/inspections/lookup_circuits",query.buildQuery());
 				ServerLinkInputStream in = link.open();
 				try {
 					while(in.next()) {

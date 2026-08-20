@@ -30,7 +30,9 @@ package gks.clark.inspections;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
+import gks.clark.inspections.model.Site;
 import gks.clark.inspections.model.WorkOrder;
 import gks.map.MapControl;
 import gks.map.event.MapViewListener;
@@ -144,6 +146,19 @@ public class LocalMapLayerManager<T> {
 		redraw();
 	}
 	
+	public void addFeatures(Collection<T> f) {
+		this.features.addAll(f);
+		
+		redraw();
+	}
+	
+	public void removeFeatures(Collection<T> f) {
+		this.features.removeAll(f);
+
+		redraw();
+	}
+
+	
 	public void clear() {
 		this.features.clear();
 		redraw();
@@ -202,6 +217,9 @@ public class LocalMapLayerManager<T> {
 			layer.createMapObject(m.getMapKey(),null,null,style,geometry,mcs);
 		}
 	}
+
+
+
 
 
 

@@ -40,7 +40,9 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -67,6 +69,7 @@ import gks.form.details.DetailsEditor;
 import gks.form.editor.Editor;
 import gks.map.MapLayerSet;
 import gks.map.proxy.MGGeometry;
+import gks.map.proxy.MGMapObject;
 import gks.map.proxy.MGPoint;
 import gks.form.ValueModel;
 import gks.trace.TraceFeature;
@@ -74,9 +77,11 @@ import gks.trace.TraceMapSelectionWindow;
 import gks.ui.GuiUtils;
 import gks.ui.SimpleDialog;
 import gks.ui.SwingProxy;
+import gks.ui.table.ArrayTableModel;
 import gks.util.Location;
 import gks.util.NavigateInterface;
 import gks.util.TabularModule;
+import gks.util.lang.Tuple;
 
 /**
  * Modules for inspections piece
@@ -270,7 +275,39 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			control.proxy().createList(siteList).onComplete(this, "onListSaved").start();
 		}
 	}
-	
+
+	public void actionAddSites() {
+		// ortho:3 (Primary),ortho:11 (secondary), logical:Pole  
+		MapLayerSet layers[] = new MapLayerSet[] {
+			new MapLayerSet("ortho", "3"), // primary 
+			new MapLayerSet("ortho", "11"), // secondary
+			new MapLayerSet("logical", "Pole"), // Pole
+		};
+		
+		List<MGMapObject> mapObjects = new ArrayList<MGMapObject>();
+		for(MapLayerSet mls : layers) {
+			mapObjects.addAll(Arrays.asList(getMapControl().getMapObjects(mls)));
+		}
+		if(!mapObjects.isEmpty()) {
+			MapObjectQuery q = MapObjectQuery.fromMapObjects(mapObjects.toArray(new MGMapObject[0]));
+			control.proxy().querySite(q)
+			.onComplete(PlannerModule.this, "onSitesAdded").start();
+		}
+		else {
+			alert("No available sites in map selection");
+		}
+
+	}
+
+	public void actionRemoveSites() {
+		Site[] sites = tableView().getSelection().toArray(new Site[0]);
+		if(sites.length > 0) {
+			SiteTableModel model = tableView().getTable().getModel(SiteTableModel.class);
+			model.removeValues(sites);		
+			siteLayerManager.removeFeatures(Arrays.asList(sites));
+		}
+	}
+
 	public void actionDisplaySettings(ActionEvent e) {
 		
 		DisplaySettings displaySettings = new DisplaySettings();
@@ -354,6 +391,29 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		actionManager().setConditional("site", site.length > 0);
 		actionManager().setConditional("inspection", false);
 		actionManager().setConditional("list", false);
+	}
+	
+	public void onSitesAdded(Site site[]) {
+		Set<Tuple> siteKeys = new HashSet<Tuple>();
+		for(Site s : tableView().getData(Site.class)) {
+			siteKeys.add(new Tuple(s.getAssetType(), s.getAssetID()));
+		}
+		List<Site> sitesToAdd = new ArrayList<Site>();
+		for(Site s : site) {
+			Tuple k = new Tuple(s.getAssetType(), s.getAssetID());
+			if(!siteKeys.contains(k)) {
+				sitesToAdd.add(s);
+				siteKeys.add(k);
+			}
+		}
+		
+		if(!sitesToAdd.isEmpty()) {		
+			SiteTableModel tableModel = tableView().getTable().getModel(SiteTableModel.class);
+			tableModel.addValues(sitesToAdd.toArray());
+			actionManager().setConditional("site", site.length > 0);
+			
+			siteLayerManager.addFeatures(sitesToAdd);
+		}
 	}
 
 	public void onExceptionsQueried(Inspection insp[]) {
