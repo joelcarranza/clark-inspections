@@ -83,18 +83,17 @@ JavaLink.process = function() {
         'RESOLUTION_WORK_ORDER?',
         'RESOLUTION_COMMENT?',        
       ]);
-     var literals;
+     // bumped on every save so NMDC clients see the inspection has changed
+     var literals = {
+        LOCKVERSION: 'LOCKVERSION+1'
+     };
      if(data['COMPLETION_STATUS']) {
-        literals = {
-            COMPLETION_DATE: 'GETDATE()',
-            COMPLETION_USER: Sql.quote(this.environment['REMOTE_USER']) 
-        }
+        literals.COMPLETION_DATE = 'GETDATE()';
+        literals.COMPLETION_USER = Sql.quote(this.environment['REMOTE_USER']);
      }
      if(data['RESOLUTION_STATUS']) {
-        literals = {
-            RESOLUTION_DATE: 'GETDATE()',
-            RESOLUTION_USER: Sql.quote(this.environment['REMOTE_USER']) 
-        }
+        literals.RESOLUTION_DATE = 'GETDATE()';
+        literals.RESOLUTION_USER = Sql.quote(this.environment['REMOTE_USER']);
      }
 
 
