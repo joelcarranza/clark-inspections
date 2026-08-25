@@ -54,8 +54,8 @@ JavaLink.updateFiles = function(files, id) {
 
   if(newFiles.length > 0) {
     let sth = this.db.prepare("UPDATE MWM_ORDER_FILE SET INSPECTION_ID = ? WHERE ID = ?");
-    newFiles.forEach((id) => {
-      sth.execute(id, id);
+    newFiles.forEach((fileId) => {
+      sth.execute(id, fileId);
     });
     sth.close()
   }
