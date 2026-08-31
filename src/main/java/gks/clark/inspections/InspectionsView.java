@@ -204,7 +204,7 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 			label.setIcon(progressBar);
 		}
 		else {
-			label.setText("No inspections");
+			label.setText("No assessments");
 			label.setIcon(null);
 		}
 	}

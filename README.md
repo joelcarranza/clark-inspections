@@ -32,7 +32,7 @@ Add the following entry to `conf/navlinks.conf`
 	<Tool inspections>
 	    Module  gks.clark.inspections.PlannerModule
 	    ModuleConfig http:/scripts/inspections/module
-	    Tooltip	Inspections Planner Module
+	    Tooltip	Assessments Planner Module
 	    Icon	none
 	</Tool>
 

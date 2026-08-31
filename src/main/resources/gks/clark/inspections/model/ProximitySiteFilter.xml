@@ -26,7 +26,7 @@
 			e.error("A distance must be chosen");
 		}
 		if(!m.getValue("types")) {
-			e.error("One or more Inspection Sites must be chosen");
+			e.error("One or more Assessment Sites must be chosen");
 		}
 		return e;
 	}
@@ -54,7 +54,7 @@
 		</tr>
 
 		<tr>
-			<td>Inspection Sites</td>
+			<td>Assessment Sites</td>
 			<td><checkList id="types" dataClass="gks.clark.inspections.AssetTypeFilter" /></td>
 		</tr>
 	</table>

@@ -55,7 +55,7 @@ function validate(result) {
 		result.error("One or more trace phases must be chosen");
 	}
 	if(!m.getValue("types")) {
-		result.error("One or more Inspection Sites must be chosen");
+		result.error("One or more Assessment Sites must be chosen");
 	}
 	return null;
 }
@@ -107,7 +107,7 @@ function test(v) {
 	
 	<tr>
 		<td/>
-		<td>Inspection Sites</td>
+		<td>Assessment Sites</td>
 		<td columns="2"><checkList id="types" dataClass="gks.clark.inspections.AssetTypeFilter" /></td>
 	</tr>
 

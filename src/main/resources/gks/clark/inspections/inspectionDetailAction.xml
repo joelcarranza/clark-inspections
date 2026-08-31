@@ -28,7 +28,7 @@
   </action>
   <action key="save">
     <method>actionSave</method>
-    <tooltip>Save this inspection</tooltip>
+    <tooltip>Save this assessment</tooltip>
   </action>
     <action key="zoom">
     <method>actionZoom</method>

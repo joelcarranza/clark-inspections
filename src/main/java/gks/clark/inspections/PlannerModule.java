@@ -144,11 +144,11 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		
 		actionViewWorkOrders();
 		
-		workOrderLayerManager = new LocalMapLayerManager<WorkOrder>(getMapControl(), "CPU Inspections - Work Order", "gks/clark/inspections/layer/WorkOrder.xml", false);
+		workOrderLayerManager = new LocalMapLayerManager<WorkOrder>(getMapControl(), "CPU Assessments - Work Order", "gks/clark/inspections/layer/WorkOrder.xml", false);
 
-		siteLayerManager = new LocalMapLayerManager<Site>(getMapControl(), "CPU Inspections - Site", "gks/clark/inspections/layer/Site.xml", true);
+		siteLayerManager = new LocalMapLayerManager<Site>(getMapControl(), "CPU Assessments - Site", "gks/clark/inspections/layer/Site.xml", true);
 
-		inspectionLayerManager = new LocalMapLayerManager<Inspection>(getMapControl(), "CPU Inspections", "gks/clark/inspections/layer/Inspection.xml", false) {
+		inspectionLayerManager = new LocalMapLayerManager<Inspection>(getMapControl(), "CPU Assessments", "gks/clark/inspections/layer/Inspection.xml", false) {
 
 			@Override
 			protected void createMapObject(Inspection insp) {
@@ -473,7 +473,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		inspectionLayerManager.setFeatures(Arrays.asList(insp));
 		setMapLayer(new MapLayerSet(MapLayerSet.PHYSICAL, inspectionLayerManager.getLayerName()));
 		
-		setTitle("Inspections");
+		setTitle("Assessments");
 	}
 
 	public void onListSaved(String listKey) {
@@ -592,7 +592,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		else if (name.equals(WIN_INSPECTION_DETAIL)) {
 			InspectionDetailsEditor view = new InspectionDetailsEditor(this);
 			JFrame f = view.buildAsFrame();
-			f.setTitle("Inspection");
+			f.setTitle("Assessment");
 			f.setPreferredSize(new Dimension(600, 650));
 			return f;
 		} 
