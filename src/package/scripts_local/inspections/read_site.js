@@ -151,13 +151,71 @@ JavaLink.queryElectricLine = function(types) {
 	this.outputQueryResults(sql + ' WHERE ' + where.join(' AND '), bind);
 };
 
+JavaLink.queryTransformer = function(types) {
+	const mode = this.param['MODE'];
+
+	const sql = `SELECT
+			ASSET_TYPE,
+			ASSET_ID,
+			MIN_X,
+			MIN_Y,
+			MAX_X,
+			MAX_Y,
+			type_description,
+			equipment,
+			location
+		FROM INSPECTION_SITE_ELECTRIC_DEVICE_VIEW`;
+
+	let where = [];
+	let bind = [];
+
+	if (mode === 'criteria') {
+		where.push('CIRCUIT = ?');
+		bind.push(this.param['CIRCUIT']);
+
+
+	}
+	else if (mode === 'proximity') {
+		where.push('GEOM.STDistance(geometry::Point(?, ?, 2286)) <= ?');
+		let meters = 0.3048 * +this.param['DISTANCE'];
+		bind = bind.concat([this.param['X'], this.param['Y'], meters]);
+	}
+	else if (mode === 'globalid') {
+		const ids = this.param['GLOBALID'].trim().split(/\s+/);
+		where.push(Sql.whereIn('GLOBALID', ids));
+	}
+	else if (mode === 'trace') {
+		where.push('GLOBALID in (SELECT GLOBALID FROM INSPECTION_SITE_TRACE_RESULTS WHERE TRACE_ID = ?)');
+		bind.push(this.param['TRACE_ID']);
+	}
+	else {
+		throw new Error(`Unsupported MODE: ${mode}`);
+	}
+
+	var whereType = [];
+	if(types.indexOf('OH_TRANSFORMER') != -1) {
+		whereType.push('(ASSETGROUP = 212 AND ASSETTYPE IN (311,312,313,314))');
+	}
+	if(types.indexOf('UG_TRANSFORMER') != -1) {
+		whereType.push('(ASSETGROUP = 212 AND ASSETTYPE IN (316,317,318))');
+	}
+	if(whereType) {
+		where.push('('+whereType.join(' OR ')+')');
+	}
+
+	this.outputQueryResults(sql + ' WHERE ' + where.join(' AND '), bind);
+};
+
 JavaLink.process = function() {
-	let types = this.param.TYPE ? this.param.TYPE.split(',') : ['POLE_PRIMARY','POLE_SECONDARY', 'UG_PRIMARY', 'OH_PRIMARY', 'UG_SECONDARY', 'OH_SECONDARY'];
+	let types = this.param.TYPE ? this.param.TYPE.split(',') : ['POLE_PRIMARY','POLE_SECONDARY', 'UG_PRIMARY', 'OH_PRIMARY', 'UG_SECONDARY', 'OH_SECONDARY', 'OH_TRANSFORMER', 'UG_TRANSFORMER'];
 	if(types.indexOf('POLE_PRIMARY') != -1 || types.indexOf('POLE_SECONDARY') != -1) {
 		this.queryPole(types);
 	}
-	if(types.indexOf('UG_PRIMARY') != -1 || types.indexOf('OH_PRIMARY') != -1 || types.indexOf('UG_SECONDARY') != -1 || types.indexOf('OH_SECONDARY') != -1) {	
+	if(types.indexOf('UG_PRIMARY') != -1 || types.indexOf('OH_PRIMARY') != -1 || types.indexOf('UG_SECONDARY') != -1 || types.indexOf('OH_SECONDARY') != -1) {
 		this.queryElectricLine(types);
+	}
+	if(types.indexOf('OH_TRANSFORMER') != -1 || types.indexOf('UG_TRANSFORMER') != -1) {
+		this.queryTransformer(types);
 	}
 };
 

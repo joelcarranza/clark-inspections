@@ -38,7 +38,9 @@ public enum AssetTypeFilter {
 	OH_PRIMARY("OH Primary"),
 	UG_PRIMARY("UG Primary"),
 	OH_SECONDARY("OH Secondary"),
-	UG_SECONDARY("UG Secondary");
+	UG_SECONDARY("UG Secondary"),
+	OH_TRANSFORMER("OH Transformer"),
+	UG_TRANSFORMER("UG Transformer");
 	
 	private String label;
 
