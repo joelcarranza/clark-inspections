@@ -42,6 +42,7 @@ import javax.swing.SwingWorker;
 import gks.clark.inspections.model.Inspection;
 import gks.clark.inspections.model.WorkOrder;
 import gks.form.details.DetailsEditor;
+import gks.util.TableMapSelectionMediator;
 import gks.util.Utils;
 
 /**
@@ -49,6 +50,7 @@ import gks.util.Utils;
  */
 public class WorkOrderDetailsEditor extends DetailsEditor<WorkOrder> {
 	private final PlannerModule module;
+	private TableMapSelectionMediator inspectionMapSelectionMediator;
 
 	public WorkOrderDetailsEditor(PlannerModule mobileWorkOrdersModule) {
 		module = mobileWorkOrdersModule;
@@ -81,6 +83,31 @@ public class WorkOrderDetailsEditor extends DetailsEditor<WorkOrder> {
 		Window window = module.windowManager().show(PlannerModule.WIN_INSPECTION_DETAIL);
 		DetailsEditor<Object> editor = DetailsEditor.forWindow(window);
 		editor.view(Arrays.asList(inspections));
+	}
+
+	public void showInspectionsOnMap(Inspection[] inspections) {
+		module.setInspectionMapFeatures(inspections);
+	}
+
+	@Override
+	protected void windowShown(Window window) {
+		super.windowShown(window);
+		if (inspectionMapSelectionMediator == null) {
+			InspectionsView view = (InspectionsView) getVisibleForm().getComponentById("inspectionsView");
+			inspectionMapSelectionMediator = new TableMapSelectionMediator(view.getTabularView(), module.getInspectionMapSelection());
+		}
+		else {
+			inspectionMapSelectionMediator.setEnabled(true);
+		}
+	}
+
+	@Override
+	protected void windowHidden(Window window) {
+		super.windowHidden(window);
+		if (inspectionMapSelectionMediator != null) {
+			inspectionMapSelectionMediator.setEnabled(false);
+		}
+		module.setInspectionMapFeatures(new Inspection[0]);
 	}
 
 	@Override

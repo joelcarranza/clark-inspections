@@ -31,12 +31,9 @@
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.BorderFactory;
@@ -44,49 +41,47 @@ import javax.swing.Box;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.SwingWorker;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import gks.clark.inspections.model.Inspection;
 import gks.clark.inspections.model.InspectionTableModel;
-import gks.config.table.TableColumnSet;
 import gks.form.Form;
 import gks.form.util.AbstractView;
-import gks.ui.GKSTable;
 import gks.ui.GuiUtils;
 import gks.ui.table.ArrayTableModel;
+import gks.ui.table.TabularView;
+import gks.ui.table.TabularViewSelectionListener;
 import gks.util.DoubleClickGesture;
-import gks.util.TableSorter;
 import gks.util.Utils;
 
-public class InspectionsView extends AbstractView implements ListSelectionListener {
+public class InspectionsView extends AbstractView {
 
 	protected Object values[];
-	protected GKSTable table;
-	protected JScrollPane scroll;
+	protected TabularView table;
+	private InspectionTableModel tableModel;
 	private WorkOrderDetailsEditor owner;
 	private SwingWorker<Inspection[], Void> loadTask;
 	private JPanel component;
 	private JLabel label;
 	private ProgressBar progressBar;
 	private Inspection[] inspections;
-	
+	private String listId;
+
 	public InspectionsView(Form form) {
 		this.owner = (WorkOrderDetailsEditor)form.getOwner();
-		table = new GKSTable();
-		scroll = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		ArrayTableModel model = new InspectionTableModel();
-		TableSorter sort = new TableSorter(model);
-		table.setModel(sort);
-		sort.addMouseListenerToHeaderInTable(table);
-		TableColumnSet tcs = TableColumnSet.lookup(Inspection.class.getName());
-		tcs.install(table);
-		table.getSelectionModel().addListSelectionListener(this);
-		table.addMouseListener(new DoubleClickGesture() {
-			
+		table = new TabularView(getClass().getName());
+		tableModel = new InspectionTableModel();
+		table.setTableModel(tableModel);
+		table.setTableColumnSet(Inspection.class.getName());
+		table.addSelectionListener(ArrayTableModel.OBJECT_VALUE_COLUMN, new TabularViewSelectionListener() {
+			public void selectionChanged(TabularView view, Collection<?> selectedValues, boolean isAdjusting) {
+				if(!isAdjusting) {
+					fireValueChanged();
+				}
+			}
+		});
+		table.getTable().addMouseListener(new DoubleClickGesture() {
+
 			@Override
 			public void onDoubleClick(MouseEvent e) {
 				InspectionsView.this.onDoubleClick(e);
@@ -100,24 +95,23 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 		north.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
 		north.add(label);
 		north.add(Box.createHorizontalGlue());
-		
+
 		component = new JPanel(new BorderLayout(5, 5));
-		component.add(scroll, BorderLayout.CENTER);
+		component.add(table, BorderLayout.CENTER);
 		component.add(north, BorderLayout.NORTH);
-		
-	
+
+
 	}
-	
+
 	protected void onDoubleClick(MouseEvent e) {
-		Inspection[] sel = (Inspection[]) table.getSelectedValues(ArrayTableModel.OBJECT_VALUE_COLUMN);
-		owner.openInspections(sel);
+		Collection<Inspection> sel = table.getSelection(ArrayTableModel.OBJECT_VALUE_COLUMN, Inspection.class);
+		owner.openInspections(sel.toArray(new Inspection[0]));
 	}
 
 
 
 	public Object getValue() {
-		Object[] sel = table.getSelectedValues(ArrayTableModel.OBJECT_VALUE_COLUMN);
-		return sel;
+		return table.getSelection(ArrayTableModel.OBJECT_VALUE_COLUMN).toArray();
 	}
 
 	public Class<?> getType() {
@@ -125,72 +119,73 @@ public class InspectionsView extends AbstractView implements ListSelectionListen
 	}
 
 	public void setValue(Object value) {
-		table.setSelectedValues(ArrayTableModel.OBJECT_VALUE_COLUMN, new HashSet<Object>(Arrays.asList((Object[])value)));
+		table.select(ArrayTableModel.OBJECT_VALUE_COLUMN, Arrays.asList((Object[])value));
 	}
 
 	public JComponent component() {
 		return component;
 	}
-	
+
+
+	public TabularView getTabularView() {
+		return table;
+	}
 
 	/**
 	 * Set the preferred number of rows to shown in scroll pane. this is useful in setting the
 	 * preferred size of the entire container and thus setting up a default height
-	 */	
+	 */
 	public void setVisibleRowCount(int rows) {
-		Dimension d = table.getPreferredSize();
-		table.setPreferredScrollableViewportSize(new Dimension(d.width,table.getRowHeight()*rows));
+		Dimension d = table.getTable().getPreferredSize();
+		table.getTable().setPreferredScrollableViewportSize(new Dimension(d.width,table.getTable().getRowHeight()*rows));
 	}
 
 
-	public void valueChanged(ListSelectionEvent e) {
-		if(!e.getValueIsAdjusting()) {
-			fireValueChanged();
-		}
-	}
-
-	
 	public void setListId(String listId) {
-		if(Utils.isNotEmpty(listId)) {
-			if(this.loadTask != null) {
-				loadTask.cancel(false);
+		if(!Utils.equals(this.listId, listId)) {
+			this.listId = listId;
+			if(Utils.isNotEmpty(listId)) {
+				if(this.loadTask != null) {
+					loadTask.cancel(false);
+				}
+
+				this.owner.setBusy(true);
+				tableModel.setValues(new Inspection[0]);
+				loadTask = new SwingWorker<Inspection[], Void>() {
+
+					@Override
+					protected Inspection[] doInBackground() throws Exception {
+						return owner.getControl().queryInspection(listId);
+					}
+
+					@Override
+					protected void done() {
+						if(isCancelled()) {
+							return;
+						}
+						InspectionsView.this.owner.setBusy(false);
+						try {
+							Inspection[] results = get();
+							updateView(results);
+						} catch (ExecutionException e) {
+							GuiUtils.alert(component(), e);
+						} catch (InterruptedException ignored) {
+						}
+					}
+				};
+				loadTask.execute();
 			}
-			
-			this.owner.setBusy(true);
-			table.getModel(InspectionTableModel.class).setValues(new Inspection[0]);
-			loadTask = new SwingWorker<Inspection[], Void>() {
-	
-				@Override
-				protected Inspection[] doInBackground() throws Exception {
-					return owner.getControl().queryInspection(listId);
-				}
-	
-				@Override
-				protected void done() {
-					if(isCancelled()) {
-						return;
-					}
-					InspectionsView.this.owner.setBusy(false);
-					try {
-						Inspection[] results = get();
-						updateView(results);
-					} catch (ExecutionException e) {
-						GuiUtils.alert(component(), e);
-					} catch (InterruptedException ignored) {
-					}
-				}
-			};
-			loadTask.execute();
+			else {
+				tableModel.setValues(new Inspection[0]);
+				owner.showInspectionsOnMap(new Inspection[0]);
+			}
 		}
-		else {
-			table.getModel(InspectionTableModel.class).setValues(new Inspection[0]);
-		}
-		
 	}
 
 	protected void updateView(Inspection[] results) {
 		this.inspections = results;
-		table.getModel(InspectionTableModel.class).setValues(results);
+		owner.showInspectionsOnMap(results);
+		tableModel.setValues(results);
 		int completed = 0;
 		int total = results.length;
 		for(Inspection i : results) {

@@ -68,6 +68,7 @@ import gks.form.chooser.Chooser;
 import gks.form.details.DetailsEditor;
 import gks.form.editor.Editor;
 import gks.map.MapLayerSet;
+import gks.map.MapSelection;
 import gks.map.proxy.MGGeometry;
 import gks.map.proxy.MGMapObject;
 import gks.map.proxy.MGPoint;
@@ -479,6 +480,16 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	public void onListSaved(String listKey) {
 		control.proxy().queryInspection(listKey)
 				.onComplete(PlannerModule.this, "onInspectionsQueried", new Object[] { listKey }).start();
+	}
+
+	public void setInspectionMapFeatures(Inspection[] insp) {
+		if(visibleItemType == ItemType.WORK_ORDER) {
+			inspectionLayerManager.setFeatures(Arrays.asList(insp));
+		}
+	}
+
+	public MapSelection getInspectionMapSelection() {
+		return getMapControl().getMapSelection(new MapLayerSet(MapLayerSet.PHYSICAL, inspectionLayerManager.getLayerName()));
 	}
 
 	public Window createWindow(String name) {
