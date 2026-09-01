@@ -60,7 +60,7 @@ function dateFormat(date)
 		</tr>
 		<tr>
 			<td>Address</td>
-			<td><readOnlyArea rows="4" id="serviceAddressComplete" /></td>
+			<td><readOnlyArea rows="4" id="serviceAddress" /></td>
 		</tr>
 		<tr>
 			<td>Request</td>

@@ -48,6 +48,11 @@
     <cu>10</cu>
     <tableSet>gks.clark.inspections.model.Inspection</tableSet>
   </tableColumn>
+  <tableColumn modelColumn="serviceAddress">
+    <header>Address</header>
+    <cu>20</cu>
+    <tableSet>gks.clark.inspections.model.Inspection</tableSet>
+  </tableColumn>
    <tableColumn modelColumn="resolutionStatus">
     <header>Resolution</header>
     <cu>10</cu>
@@ -100,7 +105,11 @@
     <cu>10</cu>
     <tableSet>gks.clark.inspections.model.Inspection-exception</tableSet>
   </tableColumn>
-  
+    <tableColumn modelColumn="serviceAddress">
+    <header>Address</header>
+    <cu>2</cu>
+    <tableSet>gks.clark.inspections.model.Inspection-exception</tableSet>
+  </tableColumn>
    <tableColumn modelColumn="comment">
     <header>Comment</header>
     <cu>10</cu>

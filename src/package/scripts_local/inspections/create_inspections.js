@@ -84,11 +84,30 @@ JavaLink.process = function() {
 	 });
 	 Lang.assert(woListKey, "No ID for WM_INSPECTION_LIST returned");
 
-	 var sth = this.db.prepare(`insert into wm_inspection (LIST_ID, ASSET_TYPE, ASSET_ID, X,Y) VALUES ('${woListKey}',?,?,?,?)`);
-	 data.SITES.forEach((site) => {
-	 	sth.execute(site.TYPE, site.ID, site.X, site.Y);
-	 });
-	 sth.close();
+	 var addressSth = this.db.prepare(`
+	 	select top 1 premiseaddress
+	 	  from mwm_electric_meter
+	 	 where premiseaddress is not null
+	 	   and lat between (? - 0.003) and (? + 0.003)
+	 	   and lon between (? - 0.003) and (? + 0.003)
+	 	   and premiseaddress LIKE '[0-9]%'
+	 	 order by power(abs(lat - ?), 2) + power(abs(lon - ?),2)
+	 `);
+	 var insertSth = this.db.prepare(`insert into wm_inspection (LIST_ID, ASSET_TYPE, ASSET_ID, X, Y, ADDRESS) VALUES ('${woListKey}',?,?,?,?,?)`);
+	 try {
+	 	data.SITES.forEach((site) => {
+	 		let lon = site.X;
+	 		let lat = site.Y;
+	 		addressSth.executeQuery(lat, lat, lon, lon, lat, lon);
+	 		let row = addressSth.fetch();
+	 		let address = row ? row[0] : null;
+	 		insertSth.execute(site.TYPE, site.ID, lon, lat, address);
+	 	});
+	 }
+	 finally {
+	 	addressSth.close();
+	 	insertSth.close();
+	 }
 
 	 this.db.autoCommit = true;
 

@@ -56,44 +56,40 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
     public static final int CALL_FIRST = 15;
     public static final int SERVICE_ACCOUNT = 16;
     public static final int SERVICE_ADDRESS = 17;
-    public static final int SERVICE_CITY = 18;
-    public static final int SERVICE_ZIP = 19;
-    public static final int REQUEST = 20;
-    public static final int REASON = 21;
-    public static final int ORDER_DESC = 22;
-    public static final int WORK_LOCATION = 23;
-    public static final int WORK_LOCATION_DESCRIPTION = 24;
-    public static final int CREATION_USER = 25;
-    public static final int PRIORITY = 26;
-    public static final int MATERIALS_REQUIRED = 27;
-    public static final int ATTACHED_FILES = 28;
-    public static final int COMPLETION_STATUS = 29;
-    public static final int COMPLETION_USER = 30;
-    public static final int COMPLETION_DATE = 31;
-    public static final int ISSUE_PRIORITY = 32;
-    public static final int COMMENT = 33;
-    public static final int RESOLUTION_STATUS = 34;
-    public static final int RESOLUTION_WORK_ORDER = 35;
-    public static final int RESOLUTION_COMMENT = 36;
-    public static final int RESOLUTION_USER = 37;
-    public static final int RESOLUTION_DATE = 38;
-    public static final int COMPLETE = 39;
-    public static final int RESOLVED = 40;
-    public static final int ATTACHED_FILE_COUNT = 41;
-    public static final int MAP_KEY = 42;
-    public static final int SERVICE_ADDRESS_COMPLETE = 43;
+    public static final int REQUEST = 18;
+    public static final int REASON = 19;
+    public static final int ORDER_DESC = 20;
+    public static final int WORK_LOCATION = 21;
+    public static final int WORK_LOCATION_DESCRIPTION = 22;
+    public static final int CREATION_USER = 23;
+    public static final int PRIORITY = 24;
+    public static final int MATERIALS_REQUIRED = 25;
+    public static final int ATTACHED_FILES = 26;
+    public static final int COMPLETION_STATUS = 27;
+    public static final int COMPLETION_USER = 28;
+    public static final int COMPLETION_DATE = 29;
+    public static final int ISSUE_PRIORITY = 30;
+    public static final int COMMENT = 31;
+    public static final int RESOLUTION_STATUS = 32;
+    public static final int RESOLUTION_WORK_ORDER = 33;
+    public static final int RESOLUTION_COMMENT = 34;
+    public static final int RESOLUTION_USER = 35;
+    public static final int RESOLUTION_DATE = 36;
+    public static final int COMPLETE = 37;
+    public static final int RESOLVED = 38;
+    public static final int ATTACHED_FILE_COUNT = 39;
+    public static final int MAP_KEY = 40;
     private static final String[] COLUMN_NAMES = {
             "key", "x", "y", "program", "type", "equipmentIdentifier",
             "location", "orderKey", "orderSubKey", "orderNumber", "scheduledTs",
             "entryTs", "customerName", "resPhone", "busPhone", "callFirst",
-            "serviceAccount", "serviceAddress", "serviceCity", "serviceZip",
-            "request", "reason", "orderDesc", "workLocation",
-            "workLocationDescription", "creationUser", "priority",
-            "materialsRequired", "attachedFiles", "completionStatus",
+            "serviceAccount", "serviceAddress", "request", "reason", "orderDesc",
+            "workLocation", "workLocationDescription", "creationUser",
+            "priority", "materialsRequired", "attachedFiles", "completionStatus",
             "completionUser", "completionDate", "issuePriority", "comment",
             "resolutionStatus", "resolutionWorkOrder", "resolutionComment",
             "resolutionUser", "resolutionDate", "complete", "resolved",
-            "attachedFileCount", "mapKey", "serviceAddressComplete",
+            "attachedFileCount", "mapKey",
         };
 
     public String getColumnName(int column) {
@@ -203,12 +199,6 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
         case SERVICE_ADDRESS:
             return v.getServiceAddress();
 
-        case SERVICE_CITY:
-            return v.getServiceCity();
-
-        case SERVICE_ZIP:
-            return v.getServiceZip();
-
         case REQUEST:
             return v.getRequest();
 
@@ -278,16 +268,13 @@ public class InspectionTableModel extends gks.ui.table.ArrayTableModel {
         case MAP_KEY:
             return v.getMapKey();
 
-        case SERVICE_ADDRESS_COMPLETE:
-            return v.getServiceAddressComplete();
-
         default:
             throw new IllegalArgumentException();
         }
     }
 
     public int getColumnCount() {
-        return 44;
+        return 41;
     }
 
     protected Class<?> getValueClass() {

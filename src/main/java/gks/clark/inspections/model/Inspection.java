@@ -61,8 +61,6 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
     String callFirst;
     String serviceAccount;
     String serviceAddress;
-    String serviceCity;
-    String serviceZip;
     String request;
     String reason;
     String orderDesc;
@@ -179,14 +177,6 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
 
     public String getServiceAddress() {
         return serviceAddress;
-    }
-
-    public String getServiceCity() {
-        return serviceCity;
-    }
-
-    public String getServiceZip() {
-        return serviceZip;
     }
 
     public String getRequest() {
@@ -313,29 +303,6 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         return key;
     }
 
-    public String getServiceAddressComplete() {
-        boolean hasAddress = gks.util.Utils.isNotEmpty(serviceAddress);
-        boolean hasCity = gks.util.Utils.isNotEmpty(serviceCity);
-        boolean hasZip = gks.util.Utils.isNotEmpty(serviceZip);
-        java.util.ArrayList<String> lines = new java.util.ArrayList<String>(2);
-
-        // line 1
-        if (hasAddress) {
-            lines.add(serviceAddress);
-        }
-
-        // line 2
-        if (hasCity && hasZip) {
-            lines.add(serviceCity + ", " + serviceZip);
-        } else if (hasCity) {
-            lines.add(serviceCity);
-        } else if (hasZip) {
-            lines.add(serviceZip);
-        }
-
-        return gks.util.Utils.join("\n", lines);
-    }
-
     /*
     ==========================================================================
     Server Serializable object methods
@@ -361,8 +328,6 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         this.callFirst = stream.read();
         this.serviceAccount = stream.read();
         this.serviceAddress = stream.read();
-        this.serviceCity = stream.read();
-        this.serviceZip = stream.read();
         this.request = stream.read();
         this.reason = stream.read();
         this.orderDesc = stream.read();
@@ -418,8 +383,6 @@ public class Inspection implements gks.util.dto.ServerTransferObject,
         stream.write(this.callFirst);
         stream.write(this.serviceAccount);
         stream.write(this.serviceAddress);
-        stream.write(this.serviceCity);
-        stream.write(this.serviceZip);
         stream.write(this.request);
         stream.write(this.reason);
         stream.write(this.orderDesc);
