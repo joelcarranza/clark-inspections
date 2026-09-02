@@ -73,8 +73,6 @@ public class WorkOrderDetailsEditor extends DetailsEditor<WorkOrder> {
 	}
 
 	public void actionOpenAllInspections() {
-		//InspectionsView view = (InspectionsView) getVisibleForm().getComponentById("inspectionsView");
-		//openInspections(view.getInspections());
 		module.actionOpenList((WorkOrder) getSelectedValue());
 	}
 	
@@ -93,7 +91,7 @@ public class WorkOrderDetailsEditor extends DetailsEditor<WorkOrder> {
 	protected void windowShown(Window window) {
 		super.windowShown(window);
 		if (inspectionMapSelectionMediator == null) {
-			InspectionsView view = (InspectionsView) getVisibleForm().getComponentById("inspectionsView");
+			InspectionsView view = (InspectionsView) getVisibleForm().getComponentById("_inspectionsView");
 			inspectionMapSelectionMediator = new TableMapSelectionMediator(view.getTabularView(), module.getInspectionMapSelection());
 		}
 		else {
