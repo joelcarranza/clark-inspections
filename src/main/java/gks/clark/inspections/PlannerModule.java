@@ -134,6 +134,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		configuration().inject(this);
 
 		control = new InspectionsControl();
+		control.setView(this);
 
 		control.addPropertyChangeListener(SwingProxy.createPropertyChangeListener(this));
 
