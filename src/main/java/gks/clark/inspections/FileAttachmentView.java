@@ -338,8 +338,8 @@ public class FileAttachmentView extends AbstractView implements ActionListener, 
 	}
 
 	public void openAttachment(FileAttachment a) {
-		NavigateInterface nav = form.getNavigate();
-		nav.openFile(a.getPath(), a.getName(),a.getFileType());
+		InspectionDetailsEditor editor = (InspectionDetailsEditor) form.getOwner();
+		editor.openFileAttachment(a);
 	}
 	
 	protected void startControlTask(ControlTask task) {

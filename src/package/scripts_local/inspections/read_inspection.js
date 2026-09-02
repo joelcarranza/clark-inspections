@@ -101,7 +101,7 @@ JavaLink.process = function() {
 		ATTACHMENTS: `SELECT
             F.ID,
             F.NAME,
-            F.PATH,
+            CONCAT('/wo_files/',F.PATH),
             F.CREATE_TS,
             F.CREATOR,
             F.COMMENT

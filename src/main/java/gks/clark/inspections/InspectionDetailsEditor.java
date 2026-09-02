@@ -39,6 +39,7 @@ import javax.swing.SwingWorker;
 
 import gks.clark.inspections.model.Inspection;
 import gks.form.details.DetailsEditor;
+import gks.util.NavigateInterface;
 import gks.util.concurrent.ObservableFuture;
 
 /**
@@ -71,6 +72,10 @@ public class InspectionDetailsEditor extends DetailsEditor<Inspection> {
 	protected void saveTaskCompleted(Runnable actionOnComplete) {
 		module.inspectionUpdated(getSelectedValue());
 		super.saveTaskCompleted(actionOnComplete);
+	}
+
+	public void openFileAttachment(FileAttachment a) {
+		module.openFile(a.getPath(), a.getName(),a.getFileType());
 	}
 	
 	
