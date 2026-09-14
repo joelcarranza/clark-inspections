@@ -96,8 +96,8 @@ JavaLink.process = function() {
 	 var insertSth = this.db.prepare(`insert into wm_inspection (LIST_ID, ASSET_TYPE, ASSET_ID, X, Y, ADDRESS) VALUES ('${woListKey}',?,?,?,?,?)`);
 	 try {
 	 	data.SITES.forEach((site) => {
-	 		let lon = site.X;
-	 		let lat = site.Y;
+	 		let lon = +site.X;
+	 		let lat = +site.Y;
 	 		addressSth.executeQuery(lat, lat, lon, lon, lat, lon);
 	 		let row = addressSth.fetch();
 	 		let address = row ? row[0] : null;
