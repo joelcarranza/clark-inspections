@@ -34,6 +34,7 @@ var Config = require('Config');
 var Sql = require('Sql');
 var Logger = require('Logger');
 var Lang = require('Lang');
+var Inspections = require('Inspections');
 
 JavaLink.useDefaultDataSource();
 
@@ -101,6 +102,10 @@ JavaLink.process = function() {
 
     this.updateFiles(files, data.ID);
 	 this.db.updateRow('WM_INSPECTION', data, 'ID', literals);
+
+   if(data['COMPLETION_STATUS']) {
+      Inspections.inspectionCompleted(this.db, data.ID);
+   }
 };
 
 JavaLink.run();
