@@ -30,7 +30,11 @@ exports.inspectionCompleted = function(db, id) {
 			let listUser = row[4];
 
 			if(total == completed && complFlag == 'N') {
-				db.execute(`UPDATE WM_INSPECTION_LIST SET COMPL_FLAG='Y', COMPL_DATE=GETDATE() WHERE ID=?`, listID);
+				db.execute(`UPDATE WM_INSPECTION_LIST 
+						SET COMPL_FLAG='Y', 
+						    COMPL_DATE=GETDATE(),
+							LOCKVERSION=LOCKVERSION+1 
+						WHERE ID=?`, listID);
 
 				if(orderKey) {
 					db.execute(`UPDATE WM_ORDER 

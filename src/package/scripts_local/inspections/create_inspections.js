@@ -80,6 +80,7 @@ JavaLink.process = function() {
 	 	PROGRAM_TYPE: data.PROGRAM,
 	 	CREATE_USER: remoteUser
 	 }, 'ID', {
+		LOCKVERSION: '1',
 	 	CREATE_DATE: this.db.databaseType.localtimeSql
 	 });
 	 Lang.assert(woListKey, "No ID for WM_INSPECTION_LIST returned");
