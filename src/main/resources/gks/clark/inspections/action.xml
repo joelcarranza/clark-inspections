@@ -26,7 +26,7 @@
     <enabled>workOrdersVisible AND singleItemSelected</enabled>
   </action>
   <action key="newList">
-	<name>New List...</name>
+	<name>Assign List...</name>
     <method>actionNewList</method>
     <enabled>sitesVisible</enabled>
   </action>
