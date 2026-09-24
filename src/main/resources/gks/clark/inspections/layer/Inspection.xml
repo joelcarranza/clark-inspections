@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <layerStyle xmlns="http//www.gatekeeper.com/gsp/1.0/LayerDefinition">
     <scaleRange>
+        <!-- theme is priority values from INSP_ISSUE_PRIORITY -->
         <theme>
-			<themeValue>exception</themeValue>
-            <pointStyle>
-                <symbol>
-                    <name>Markers/Diamond Outline</name>
-                    <width>18px</width>
-					<fillColor>rgb(215,165,0)</fillColor>
-                </symbol>
-            </pointStyle>
-        </theme>
-        <theme>
-			<themeValue>critical</themeValue>
+			<themeValue>C</themeValue>
             <pointStyle>
                 <symbol>
                     <name>Markers/Diamond Outline</name>
@@ -21,13 +12,35 @@
                 </symbol>
             </pointStyle>
         </theme>
+        <theme>
+            <themeValue>H</themeValue>
+            <pointStyle>
+                <symbol>
+                    <name>Markers/Diamond Outline</name>
+                    <width>18px</width>
+                    <fillColor>rgb(215,165,0)</fillColor>
+                </symbol>
+            </pointStyle>
+        </theme>
 
         <theme>
+            <themeValue>L</themeValue>
             <pointStyle>
                 <symbol>
                     <name>Markers/Diamond Outline</name>
                     <width>18px</width>
 					<fillColor>rgb(0,215,0)</fillColor>
+                </symbol>
+            </pointStyle>
+        </theme>
+
+        <!-- shouldn't happen -->
+        <theme>
+            <pointStyle>
+                <symbol>
+                    <name>Markers/Diamond Outline</name>
+                    <width>18px</width>
+                    <fillColor>rgb(215,215,215)</fillColor>
                 </symbol>
             </pointStyle>
         </theme>

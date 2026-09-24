@@ -160,13 +160,8 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 					if(insp.getCompletionStatus() != null) {
 						String compCode = insp.getCompletionStatus().getCode();
 						String priCode = insp.getIssuePriority() != null ? insp.getIssuePriority().getCode() : null;
-						if("X".equals(compCode)) {
-							if("C".equals(priCode)) {
-								style="critical";
-							}
-							else {
-								style = "exception";
-							}
+						if("X".equals(compCode) && priCode != null) {
+							style = priCode;
 						}
 					}
 					layer.createMapObject(insp.getMapKey(),null,null,style,geometry,mcs);
