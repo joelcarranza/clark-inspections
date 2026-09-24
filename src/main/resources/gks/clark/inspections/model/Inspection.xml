@@ -79,6 +79,9 @@ function dateFormat(date)
 					<td>Program</td><td columns="4"><readOnly id="program"/></td>
 				</tr>
 				<tr>
+						<td columns="5"><sep>Field Assessment</sep></td>
+				</tr>
+				<tr>
 					<td>Completion</td><td columns="4"><combo id="completionStatus" dataClass="gks.clark.inspections.model.CompletionStatus" /></td>
 				</tr>
 
@@ -94,6 +97,10 @@ function dateFormat(date)
 				</tr>
 				<tr>
 					<td>Comment</td><td columns="4"><textArea id="comment" length="200"/></td>
+				</tr>
+
+				<tr>
+						<td columns="5"><sep>Planner</sep></td>
 				</tr>
 				<tr>
 					<td>Resolution</td><td columns="4"><combo id="resolutionStatus" dataClass="gks.clark.inspections.model.ResolutionStatus" enabled="$:dot($completionStatus,'code')=='X'" includeNull="true" nullLabel="None" /></td>
