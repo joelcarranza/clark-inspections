@@ -605,14 +605,14 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			InspectionDetailsEditor view = new InspectionDetailsEditor(this);
 			JFrame f = view.buildAsFrame();
 			f.setTitle("Assessment");
-			f.setPreferredSize(new Dimension(600, 650));
+			f.setPreferredSize(new Dimension(600, 725));
 			return f;
 		} 
 		else if (name.equals(WIN_WORK_ORDER_DETAIL)) {
 			WorkOrderDetailsEditor view = new WorkOrderDetailsEditor(this);
 			JFrame f = view.buildAsFrame();
 			f.setTitle("Work Order");
-			f.setPreferredSize(new Dimension(600, 400));
+			f.setPreferredSize(new Dimension(755, 600));
 			return f;
 		} 
 		else {
