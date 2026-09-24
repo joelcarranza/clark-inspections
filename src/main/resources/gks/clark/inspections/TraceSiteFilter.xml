@@ -44,7 +44,7 @@ function beforeUpdate(values) {
 }
 
 function validate(result) {
-	var f = formValues('startFeature', 'direction', 'phases');
+	var f = formValues('startFeature', 'direction', 'phases', 'types');
 	if (!f.startFeature) {
 		result.error("A start feature must be chosen");
 	}
@@ -54,7 +54,7 @@ function validate(result) {
 	if (!f.phases) {
 		result.error("One or more trace phases must be chosen");
 	}
-	if(!m.getValue("types")) {
+	if (!f.types) {
 		result.error("One or more Assessment Sites must be chosen");
 	}
 	return null;
