@@ -274,7 +274,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 			siteIdentifiers.add(si);
 		}
 		siteList.setSites(siteIdentifiers.toArray(new SiteIdentifier[0]));
-		if (Editor.edit(this, siteList, "New List")) {
+		if (Editor.edit(this, siteList, "Assign List")) {
 			control.proxy().createList(siteList).onComplete(this, "onListSaved").start();
 		}
 	}
