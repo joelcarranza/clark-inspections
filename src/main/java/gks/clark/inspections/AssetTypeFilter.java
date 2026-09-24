@@ -35,12 +35,17 @@ package gks.clark.inspections;
 public enum AssetTypeFilter {
 	POLE_PRIMARY("Primary Pole"),
 	POLE_SECONDARY("Secondary Pole"),
+	POLE_TRANSMISSION("Transmission Pole"),
 	OH_PRIMARY("OH Primary"),
 	UG_PRIMARY("UG Primary"),
 	OH_SECONDARY("OH Secondary"),
 	UG_SECONDARY("UG Secondary"),
 	OH_TRANSFORMER("OH Transformer"),
-	UG_TRANSFORMER("UG Transformer");
+	UG_TRANSFORMER("UG Transformer"),
+	OH_SWITCH("OH Switch"),
+	UG_SWITCH("UG Switch"),
+	TRANSMISSION_SWITCH("Transmission Switch"),
+	VAULT("Vault");
 	
 	private String label;
 

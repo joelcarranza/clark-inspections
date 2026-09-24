@@ -35,7 +35,7 @@ var Sql = require('Sql');
 
 JavaLink.useDefaultDataSource();
 
-JavaLink.queryPole = function(types) {
+JavaLink.queryStructureJunction = function(types) {
 	const mode = this.param['MODE'];
 
 	const sql = `SELECT
@@ -48,7 +48,7 @@ JavaLink.queryPole = function(types) {
 			type_description,
 			equipment,
 			location
-		FROM INSPECTION_SITE_POLE_VIEW`;
+		FROM INSPECTION_SITE_STRUCTURE_JUNCTION_VIEW`;
 
 	let where = [];
 	let bind = [];
@@ -82,6 +82,12 @@ JavaLink.queryPole = function(types) {
 	}
 	if(types.indexOf('POLE_SECONDARY') != -1) {
 		whereType.push('ASSETGROUP = 301');
+	}
+	if(types.indexOf('POLE_TRANSMISSION') != -1) {
+		whereType.push('ASSETGROUP = 101');
+	}
+	if(types.indexOf('VAULT') != -1) {
+		whereType.push('(ASSETGROUP = 903 AND ASSETTYPE IN (601))');
 	}
 	if(whereType) {
 		where.push('('+whereType.join(' OR ')+')');
@@ -151,7 +157,7 @@ JavaLink.queryElectricLine = function(types) {
 	this.outputQueryResults(sql + ' WHERE ' + where.join(' AND '), bind);
 };
 
-JavaLink.queryTransformer = function(types) {
+JavaLink.queryDevice = function(types) {
 	const mode = this.param['MODE'];
 
 	const sql = `SELECT
@@ -199,6 +205,15 @@ JavaLink.queryTransformer = function(types) {
 	if(types.indexOf('UG_TRANSFORMER') != -1) {
 		whereType.push('(ASSETGROUP = 212 AND ASSETTYPE IN (316,317,318))');
 	}
+	if(types.indexOf('OH_SWITCH') != -1) {
+		whereType.push('(ASSETGROUP = 211 AND ASSETTYPE IN (301,302))');
+	}
+	if(types.indexOf('UG_SWITCH') != -1) {
+		whereType.push('(ASSETGROUP = 211 AND ASSETTYPE IN (303))');
+	}
+	if(types.indexOf('TRANSMISSION_SWITCH') != -1) {
+		whereType.push('ASSETGROUP = 107');
+	}
 	if(whereType) {
 		where.push('('+whereType.join(' OR ')+')');
 	}
@@ -207,15 +222,15 @@ JavaLink.queryTransformer = function(types) {
 };
 
 JavaLink.process = function() {
-	let types = this.param.TYPE ? this.param.TYPE.split(',') : ['POLE_PRIMARY','POLE_SECONDARY', 'UG_PRIMARY', 'OH_PRIMARY', 'UG_SECONDARY', 'OH_SECONDARY', 'OH_TRANSFORMER', 'UG_TRANSFORMER'];
-	if(types.indexOf('POLE_PRIMARY') != -1 || types.indexOf('POLE_SECONDARY') != -1) {
-		this.queryPole(types);
+	let types = this.param.TYPE ? this.param.TYPE.split(',') : ['POLE_PRIMARY','POLE_SECONDARY', 'UG_PRIMARY', 'OH_PRIMARY', 'UG_SECONDARY', 'OH_SECONDARY', 'OH_TRANSFORMER', 'UG_TRANSFORMER', 'POLE_TRANSMISSION', 'VAULT', 'OH_SWITCH', 'UG_SWITCH', 'TRANSMISSION_SWITCH'];
+	if(types.indexOf('POLE_PRIMARY') != -1 || types.indexOf('POLE_SECONDARY') != -1 || types.indexOf('POLE_TRANSMISSION') != -1 || types.indexOf('VAULT') != -1) {
+		this.queryStructureJunction(types);
 	}
 	if(types.indexOf('UG_PRIMARY') != -1 || types.indexOf('OH_PRIMARY') != -1 || types.indexOf('UG_SECONDARY') != -1 || types.indexOf('OH_SECONDARY') != -1) {
 		this.queryElectricLine(types);
 	}
-	if(types.indexOf('OH_TRANSFORMER') != -1 || types.indexOf('UG_TRANSFORMER') != -1) {
-		this.queryTransformer(types);
+	if(types.indexOf('OH_TRANSFORMER') != -1 || types.indexOf('UG_TRANSFORMER') != -1 || types.indexOf('OH_SWITCH') != -1 || types.indexOf('UG_SWITCH') != -1 || types.indexOf('TRANSMISSION_SWITCH') != -1) {
+		this.queryDevice(types);
 	}
 };
 

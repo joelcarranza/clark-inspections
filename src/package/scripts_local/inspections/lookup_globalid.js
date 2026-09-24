@@ -74,7 +74,8 @@ JavaLink.process = function() {
 		"Switch": DEVICE_QUERY,
 		"Transformer": DEVICE_QUERY,
 		"Voltage Regulators": DEVICE_QUERY,
-		"Pole": STRUCTURE_JUNCTION_QUERY
+		"Pole": STRUCTURE_JUNCTION_QUERY,
+		"Underground Structure": STRUCTURE_JUNCTION_QUERY		
 	};
 
 	var globalIds = {};
