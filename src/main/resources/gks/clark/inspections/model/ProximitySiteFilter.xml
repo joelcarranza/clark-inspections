@@ -46,6 +46,7 @@
 		<tr>
 			<td>Longitude</td>
 			<td><readOnly id="lon" /></td>
+			<td><gks.clark.inspections.SelectionPointView /></td>
 		</tr>
 		<tr>
 			<td>Distance</td>

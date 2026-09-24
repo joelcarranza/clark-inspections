@@ -35,7 +35,7 @@ public class ChoosePointView implements FormComponent, ActionListener, MapDigiti
 		this.form = form;
 		form.addPropertyChangeListener(Form.PROPERTY_ACTIVE, this);
 		owner = (PlannerModule) form.getOwner();
-		button = new JButton("Choose...");
+		button = new JButton("From Map Point...");
 		button.addActionListener(this);
 		updateView();
 	}
