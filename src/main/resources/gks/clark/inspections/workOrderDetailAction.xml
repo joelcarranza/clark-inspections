@@ -38,7 +38,13 @@
 	<icon>folder-open</icon>
 	<enabled>list</enabled>
   </action>
-    <toolbar>
-    <main>first prev next last | openAllInspections zoom</main>
+
+  <action key="chooseSites">
+  <method>actionShowSiteFilter</method>
+  <icon>diamond-enter</icon>
+  </action>
+
+  <toolbar>
+    <main>first prev next last | openAllInspections chooseSites zoom</main>
   </toolbar>
 </config>

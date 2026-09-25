@@ -29,6 +29,7 @@
 	<name>Assign List...</name>
     <method>actionNewList</method>
     <enabled>sitesVisible</enabled>
+    <icon>list</icon>
   </action>
   
   <action key="displaySettings">
@@ -80,7 +81,7 @@
     <enabled>itemsMappable</enabled>
   </action>
   <toolbar>
-    <main>open | zoom zoomAll addSites removeSites | displaySettings | refresh</main>
+    <main>open | zoom zoomAll | addSites removeSites newList | refresh</main>
   </toolbar>
   <menubar>
     <Tools>viewWorkOrders viewExceptions | filter newList openList addSites removeSites | displaySettings refresh</Tools>
