@@ -42,7 +42,7 @@ JavaLink.process = function() {
 			i.X,
 			i.Y,
 			l.program_type,
-			s.asset_type,
+			s.source,
 			s.equipment,
 			s.location,
 			a.order_key,
@@ -79,7 +79,7 @@ JavaLink.process = function() {
 		JOIN WM_INSPECTION_LIST l on i.list_id = l.id
 		LEFT JOIN WM_ORDER o on l.program_order_key = o.order_key
 		LEFT JOIN WM_ASSIGNMENT a ON A.ORDER_KEY = o.ORDER_KEY
-		LEFT JOIN INSPECTION_SITE s ON i.asset_id = s.asset_id`;
+		LEFT JOIN INSPECTION_SITE s ON i.asset_id = s.globalid`;
 
 	let where = [];
 	let bind = [];

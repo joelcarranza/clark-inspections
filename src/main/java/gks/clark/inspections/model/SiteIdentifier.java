@@ -42,7 +42,7 @@ public class SiteIdentifier implements gks.util.dto.DataTransferObject {
      Fields
      ==========================================================================
     */
-    String assetType;
+    String assetSource;
     String assetID;
     double lon;
     double lat;
@@ -60,12 +60,12 @@ public class SiteIdentifier implements gks.util.dto.DataTransferObject {
      Getter and setters
      ==========================================================================
     */
-    public void setAssetType(String assetType) {
-        this.assetType = assetType;
+    public void setAssetSource(String assetSource) {
+        this.assetSource = assetSource;
     }
 
-    public String getAssetType() {
-        return assetType;
+    public String getAssetSource() {
+        return assetSource;
     }
 
     public void setAssetID(String assetID) {
@@ -99,7 +99,7 @@ public class SiteIdentifier implements gks.util.dto.DataTransferObject {
     */
     public void parseFromStream(gks.util.dto.DataTransferInputStream stream)
         throws gks.util.dto.DataTransferException {
-        this.assetType = stream.read();
+        this.assetSource = stream.read();
         this.assetID = stream.read();
         this.lon = stream.readd();
         this.lat = stream.readd();
@@ -107,7 +107,7 @@ public class SiteIdentifier implements gks.util.dto.DataTransferObject {
 
     public void serializeToStream(gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
-        stream.write(this.assetType);
+        stream.write(this.assetSource);
         stream.write(this.assetID);
         stream.write(this.lon);
         stream.write(this.lat);

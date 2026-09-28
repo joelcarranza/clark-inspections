@@ -43,7 +43,7 @@ public class Site implements gks.util.dto.ServerTransferObject,
      Fields
      ==========================================================================
     */
-    String assetType;
+    String assetSource;
     String assetID;
     Double minX;
     Double minY;
@@ -79,8 +79,8 @@ public class Site implements gks.util.dto.ServerTransferObject,
      Getter and setters
      ==========================================================================
     */
-    public String getAssetType() {
-        return assetType;
+    public String getAssetSource() {
+        return assetSource;
     }
 
     public String getAssetID() {
@@ -116,11 +116,11 @@ public class Site implements gks.util.dto.ServerTransferObject,
     }
 
     public String getMapKey() {
-        return assetType + ":" + assetID;
+        return assetSource + ":" + assetID;
     }
 
     public String getKey() {
-        return assetType + ":" + assetID;
+        return assetSource + ":" + assetID;
     }
 
     /*
@@ -130,7 +130,7 @@ public class Site implements gks.util.dto.ServerTransferObject,
     */
     public void parseFromStream(gks.util.dto.DataTransferInputStream stream)
         throws gks.util.dto.DataTransferException {
-        this.assetType = stream.read();
+        this.assetSource = stream.read();
         this.assetID = stream.read();
         this.minX = stream.readDouble();
         this.minY = stream.readDouble();
@@ -143,7 +143,7 @@ public class Site implements gks.util.dto.ServerTransferObject,
 
     public void serializeToStream(gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
-        stream.write(this.assetType);
+        stream.write(this.assetSource);
         stream.write(this.assetID);
         stream.write(this.minX);
         stream.write(this.minY);
@@ -157,7 +157,7 @@ public class Site implements gks.util.dto.ServerTransferObject,
     public void serializeModifiableToStream(
         gks.util.dto.DataTransferOutputStream stream)
         throws gks.util.dto.DataTransferException {
-        stream.write(this.assetType);
+        stream.write(this.assetSource);
         stream.write(this.assetID);
     }
 

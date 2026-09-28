@@ -260,7 +260,7 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 		for(Site s : tableView().getData(Site.class)) {
 			SiteIdentifier si = new SiteIdentifier();
 			si.setAssetID(s.getAssetID());
-			si.setAssetType(s.getAssetType());
+			si.setAssetSource(s.getAssetSource());
 			double x = (s.getMinX() + s.getMaxX()) / 2;
 			double y = (s.getMinY() + s.getMaxY()) / 2;
 			MGPoint ll = getMapControl().getMap().mcsToLonLat(x,y);
@@ -409,11 +409,11 @@ public class PlannerModule extends TabularModule implements PropertyChangeListen
 	
 		Set<Tuple> siteKeys = new HashSet<Tuple>();
 		for(Site s : tableView().getData(Site.class)) {
-			siteKeys.add(new Tuple(s.getAssetType(), s.getAssetID()));
+			siteKeys.add(new Tuple(s.getAssetSource(), s.getAssetID()));
 		}
 		List<Site> sitesToAdd = new ArrayList<Site>();
 		for(Site s : site) {
-			Tuple k = new Tuple(s.getAssetType(), s.getAssetID());
+			Tuple k = new Tuple(s.getAssetSource(), s.getAssetID());
 			if(!siteKeys.contains(k)) {
 				sitesToAdd.add(s);
 				siteKeys.add(k);

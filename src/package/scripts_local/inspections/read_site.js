@@ -39,8 +39,8 @@ JavaLink.queryStructureJunction = function(types) {
 	const mode = this.param['MODE'];
 
 	const sql = `SELECT
-			ASSET_TYPE,
-			ASSET_ID,
+			SOURCE,
+			GLOBALID,
 			MIN_X,
 			MIN_Y,
 			MAX_X,
@@ -100,8 +100,8 @@ JavaLink.queryElectricLine = function(types) {
 	const mode = this.param['MODE'];
 
 	const sql = `SELECT
-			ASSET_TYPE,
-			ASSET_ID,
+			SOURCE,
+			GLOBALID,
 			MIN_X,
 			MIN_Y,
 			MAX_X,
@@ -161,8 +161,8 @@ JavaLink.queryDevice = function(types) {
 	const mode = this.param['MODE'];
 
 	const sql = `SELECT
-			ASSET_TYPE,
-			ASSET_ID,
+			SOURCE,
+			GLOBALID,
 			MIN_X,
 			MIN_Y,
 			MAX_X,

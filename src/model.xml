@@ -48,7 +48,7 @@
 	<bean class="gks.clark.inspections.model.SiteIdentifier">
 		<implement>gks.util.dto.DataTransferObject</implement>
 		
-		<property name="assetType"/>
+		<property name="assetSource"/>
 		<property name="assetID"/>
 		<property name="lon" class="double" />
 		<property name="lat" class="double" />
@@ -172,7 +172,7 @@
 		<implement>gks.util.Mappable</implement>
 		
 		<generateTableModel class="gks.clark.inspections.model.SiteTableModel" />
-		<property name="assetType" set="false" key="true"/>
+		<property name="assetSource" set="false" key="true"/>
 		<property name="assetID" set="false" key="true"/>
 		<property name="minX" class="Double" set="false"/>
 		<property name="minY" class="Double" set="false"/>
@@ -184,13 +184,13 @@
 
 		<derivedProperty name="mapKey">
 			<getter>
-				return assetType+":"+assetID;
+				return assetSource+":"+assetID;
 			</getter>
 		</derivedProperty>
 		
 		<derivedProperty name="key">
 			<getter>
-				return assetType+":"+assetID;
+				return assetSource+":"+assetID;
 			</getter>
 		</derivedProperty>
 		<include>

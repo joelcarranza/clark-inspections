@@ -38,7 +38,7 @@ package gks.clark.inspections.model;
  */
 public class SiteTableModel extends gks.ui.table.ArrayTableModel {
     private static final long serialVersionUID = 1L;
-    public static final int ASSET_TYPE = 0;
+    public static final int ASSET_SOURCE = 0;
     public static final int ASSET_ID = 1;
     public static final int MIN_X = 2;
     public static final int MIN_Y = 3;
@@ -50,7 +50,7 @@ public class SiteTableModel extends gks.ui.table.ArrayTableModel {
     public static final int MAP_KEY = 9;
     public static final int KEY = 10;
     private static final String[] COLUMN_NAMES = {
-            "assetType", "assetID", "minX", "minY", "maxX", "maxY",
+            "assetSource", "assetID", "minX", "minY", "maxX", "maxY",
             "typeDescription", "equipment", "location", "mapKey", "key",
         };
 
@@ -83,8 +83,8 @@ public class SiteTableModel extends gks.ui.table.ArrayTableModel {
         gks.clark.inspections.model.Site v = (gks.clark.inspections.model.Site) value;
 
         switch (column) {
-        case ASSET_TYPE:
-            return v.getAssetType();
+        case ASSET_SOURCE:
+            return v.getAssetSource();
 
         case ASSET_ID:
             return v.getAssetID();

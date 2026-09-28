@@ -46,7 +46,7 @@ JavaLink.process = function() {
         'CREW',
         {
             name: 'SITES', fields: [
-                'TYPE',
+                'SOURCE',
                 'ID',
                 'X',
                 'Y'
@@ -94,7 +94,7 @@ JavaLink.process = function() {
 	 	   and premiseaddress LIKE '[0-9]%'
 	 	 order by power(abs(lat - ?), 2) + power(abs(lon - ?),2)
 	 `);
-	 var insertSth = this.db.prepare(`insert into wm_inspection (LIST_ID, ASSET_TYPE, ASSET_ID, X, Y, ADDRESS) VALUES ('${woListKey}',?,?,?,?,?)`);
+	 var insertSth = this.db.prepare(`insert into wm_inspection (LIST_ID, ASSET_SOURCE, ASSET_ID, X, Y, ADDRESS) VALUES ('${woListKey}',?,?,?,?,?)`);
 	 try {
 	 	data.SITES.forEach((site) => {
 	 		let lon = +site.X;
@@ -102,7 +102,7 @@ JavaLink.process = function() {
 	 		addressSth.executeQuery(lat, lat, lon, lon, lat, lon);
 	 		let row = addressSth.fetch();
 	 		let address = row ? row[0] : null;
-	 		insertSth.execute(site.TYPE, site.ID, lon, lat, address);
+	 		insertSth.execute(site.SOURCE, site.ID, lon, lat, address);
 	 	});
 	 }
 	 finally {
